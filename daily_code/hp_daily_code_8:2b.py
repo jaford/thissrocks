@@ -3,10 +3,8 @@ Classes!
 
 I wanted to make a page where I can practice OOP. This topic is hard 
 for me and I want to get better! I will use this file as an example!
-
 """
 import re
-
 
 print('-----------Practice 1-----------')
 """
