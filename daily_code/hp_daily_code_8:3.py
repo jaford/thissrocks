@@ -38,3 +38,68 @@ and see if I can list it, print it, and do other things with it!
 """
 print('-----------Practice 2-----------')
 
+#creating the list
+list_1 = []
+
+#appending intances to list!
+list_1.append(Cat('Forest', 4, 'Tabi', 'Orange'))
+list_1.append(Cat('Izzy', 8, 'Tabi', 'Grey'))
+
+for x in list_1:
+    print(x.name, x.breed, x.age, cat_1.fur_color)
+
+"""
+Going to make a new class that does some sort of calculation! 
+Then using the list.append to print out the results! 
+"""
+print('-----------Practice 3-----------')
+
+
+class Math:
+    def __init__(self, x, y):
+        self.x = x 
+        self.y = y
+        
+    def Sum(self):
+        print(self.x + self.y)
+
+    def Sub(self):
+        print(self.x - self.y)
+
+    def Multi(self):
+        print(self.x * self.y)
+
+    def Div(self):
+        print(self.x / self.y)
+
+
+#creating the list
+list_2 = []
+
+#appending intances to list!
+list_2.append(Math(5, 5))
+list_2.append(Math(10, 5))
+list_2.append(Math(2, 20))
+list_2.append(Math(42, 7))
+
+print('-----------This is Addition-----------')
+for object in list_2:
+    #Calling the method in the Class
+    object.Sum()
+
+print('-----------This is Subtraction-----------')
+for object in list_2:
+    #Calling the method in the Class
+    object.Sub()
+
+print('-----------This is Multiplcation-----------')
+for object in list_2:
+    #Calling the method in the Class
+    object.Multi()
+
+print('-----------This is Division-----------')
+for object in list_2:
+    #Calling the method in the Class
+    object.Div()
+
+
