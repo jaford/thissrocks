@@ -12,3 +12,4 @@ for file in all_files:
     destination = directory_path + file
     if os.path_isfile(source): 
         shutil.move(source, destination)
+        print('----Your files have been moved!----')

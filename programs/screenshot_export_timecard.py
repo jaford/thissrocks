@@ -1,6 +1,7 @@
 import os
 import shutil
 
+daily_code_8_31
 old_file_name = '/Users/hunterpimparatana/Desktop/Screenshot 2022-08-31 at 11.11.00 AM.png'
 new_file_name = '/Volumes/Workspace/CEDocs/TimeCard/August_31st.png'
 
