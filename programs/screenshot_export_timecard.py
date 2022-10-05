@@ -2,8 +2,8 @@ import os
 import shutil
 
 
-old_file_name = '/Users/hunterpimparatana/Desktop/Screenshot 2022-09-15 at 6.34.37 PM.png'
-new_file_name = '/Volumes/Workspace/CEDocs/TimeCard/September_15th.png'
+old_file_name = '/Users/hunterpimparatana/Desktop/Screenshot 2022-09-27 at 6.00.41 PM.png'
+new_file_name = '/Volumes/Workspace/CEDocs/TimeCard/September_27th.png'
 
 # os.rename(old_file_name, new_file_name)
 # We can also check whether it the file already exists!
