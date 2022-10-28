@@ -13,7 +13,7 @@ with open('demo_dict.txt', 'r') as x:
     y = re.findall(pattern, x_read)
     print(y)
 
-    #
+
     # for line in x:
     #     match = re.match(pattern, x_read)
     # print(match)
