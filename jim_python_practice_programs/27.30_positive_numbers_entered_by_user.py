@@ -8,7 +8,7 @@ def positive_number():
     # check if user input is less than 0. If yes, skip the number
         if number < 0:
             print('Your number is less than or equal to 0.  Terminating program')
-        continue
+            break
 
         print(number)
 
