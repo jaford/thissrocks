@@ -1,4 +1,4 @@
-# Replace ___ with your code
+# Write a program that will check whether a number is prime or not
 def check_prime():
     number = int(input('Enter a number: '))
 

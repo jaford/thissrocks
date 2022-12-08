@@ -1,4 +1,4 @@
-# Replace ___ with your code
+# Write a program that will list the factors of a given number
 def factors():
     n = int(input('What number do you want to get factors for? '))
 

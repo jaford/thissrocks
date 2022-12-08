@@ -1,4 +1,4 @@
-# Replace ___ with your code
+# Write a program that will list the Fibonacci sequence less than n
 def fib_num_user():
 
     n = int(input('Enter a number: '))

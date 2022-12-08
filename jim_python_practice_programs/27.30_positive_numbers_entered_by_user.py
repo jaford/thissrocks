@@ -1,4 +1,4 @@
-# Replace ___ with your code
+# Write a program that will list if a user has entered a positive number
 def positive_number():
 # run a while loop that is always True
     while True:
@@ -7,13 +7,9 @@ def positive_number():
 
     # check if user input is less than 0. If yes, skip the number
         if number < 0:
-            continue
+            print('Your number is less than or equal to 0.  Terminating program')
+        continue
 
-    # check if user input is 0. If yes, terminate the loop
-        if number == 0:
-            break
-
-    # print the number
-    print(number)
+        print(number)
 
 positive_number()

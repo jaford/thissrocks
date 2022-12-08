@@ -1,4 +1,4 @@
-# Replace ___ with your code
+# Write a program that will list the Fibonacci sequence
 def fib_num():
     n = int(input('Enter a number: '))
     t1 = 1

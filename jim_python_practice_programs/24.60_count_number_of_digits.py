@@ -1,4 +1,4 @@
-# Replace ___ with your code
+# Write a program that will count the number of digits in a number
 
 number = int(input('Enter a number: '))
 

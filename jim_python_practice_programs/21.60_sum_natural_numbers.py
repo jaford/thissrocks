@@ -1,4 +1,4 @@
-# Replace ___ with your code
+# Write a program to find the natural sum of a number
 def natural_sum():
     n = int(input('Input a number: '))
 

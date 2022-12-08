@@ -1,4 +1,4 @@
-# Replace ___ with your code
+# Weite a program that will list the multiples of a number except if its divisible by 3
 def multiples_of_three():
     n = int(input('Enter a number: '))
 
