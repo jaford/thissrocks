@@ -24,22 +24,31 @@ import keyboard
 from termios import tcflush, TCIFLUSH
 from playsound import playsound
 
-def metronome_help(info_list):
+def metronome_help(info_txt):
     """
-    You have entered the help page for the Metronome App!\n
-    To leave this page press "q" to return back to the metronome.\n
-    Start by entering a BPM. Choose a note value bellow:\n"Quarter" \n"Eighth"\n"Sixteenth"    
-    """ 
-    return info_list
+    \n----Welcome to the help page----\n\
+Step 1: Start by entering a BPM. (This can be any positive value)\n
+Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in 8ths\n"Sixteenth" = Counts in 16ths\n
+Step 3: Enter the amount of beats in each measure.\n(This can be any whole number)\n
+    \n----Current Known Bugs (as of 1/23/2023)----\n\
+While metronome is running, you can press "Q" or "q" to restart the metronome but it does not always reconize the input.\n
+The current fix is to use "CTRL + C" to break the loop.\n
+Using this help method is not really a good idea for a more info page. Just thought it was a cool idea.
+    """
+    return info_txt
 
 while True:
-    print('\nWelcome to my simple metronome program!')
-    print('Start by entering a BPM.\nChoose a note value bellow: \n"Quarter"\n"Eighth"\n"Sixteenth"\n')
-    print('Enter the amount of beats in each measure. This can be any whole number!\n')
-    print('To restart program press "CTRL + C" or "Q"')
-    print('You can even type in "help" at anypoint to show instructions!')
-    print('(May need to press "Q" multiple times in order for metronome while it is running!\n')
+    intro_text = '----How to use----\nStep 1: Start by entering a BPM. (This can be any positive value)\n'\
+        'Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in'\
+        ' 8ths\n"Sixteenth" = Counts in 16ths\n'\
+        'Step 3: Enter the amount of beats in each measure. (This can be any whole number)\n'\
+        '\n----Extra Info----\nYou can even type in "help" at anypoint to show extra instructions!'\
+        'To restart program press "CTRL + C" or "Q"\n'\
+        'May need to press "Q" multiple times to quit \n'\
+        'This is a current bug and it is being addressed! (01/21/2023)\n'\
 
+    print(u'\n---- Welcome to my Metronome Program! ----\n')
+    print(intro_text)
     while True:
         try:
             # Attempted to clear keyboard inputs by setting the variable to None. Did not work :(
