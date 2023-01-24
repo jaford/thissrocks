@@ -126,7 +126,7 @@ while True:
             try:
                 while True:
                     if keyboard.is_pressed('Q') or keyboard.is_pressed('q'):
-                        print('\nYou have restarted the Metronome\nTo exit, enter "Q"\n')
+                        print('\n----You have restarted the Metronome----\nTo exit, enter "Q"\n')    
                         break
                     for x in range(0,beat_num):
                         tdiff = tnext - datetime.datetime.now()
@@ -136,8 +136,8 @@ while True:
                         sys.stdout.write("\033[K") #Clear to the end of line
                         print(y, end='\r')
             except KeyboardInterrupt as key_err:
-                print('\nKeyboard Interrupt Error: {}\nYou have restarted Metronome.\n'.format(key_err))    
-
+                print('\nKeyboard Interrupt Error: {}\n----You have restarted Metronome----\n'.format(key_err))
+                
         except Exception as err: 
             colorlog.error('A error occured --> : "{}"\n'.format(err))
             colorlog.warning('You have entered a non-supported format for BPM: {}\n'.format(user_bpm_input))
