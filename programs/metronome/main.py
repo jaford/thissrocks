@@ -37,6 +37,39 @@ Using this help method is not really a good idea for a more info page. Just thou
     """
     return info_txt
 
+def metronomeValues(user_note_val):
+    while True:
+        if user_note_val == 'quarter':
+            user_bpm = float(user_bpm_input)
+            sec_val = (60/user_bpm)
+            beat_val = 4
+            break
+        elif user_note_val == 'eighth':
+            user_bpm = float(user_bpm_input)
+            sec_val = (30/user_bpm)
+            beat_val = 8
+            break
+        elif user_note_val == 'sixteenth':
+            user_bpm = float(user_bpm_input)
+            sec_val = (15/user_bpm)
+            beat_val = 16
+            break
+        else: 
+            print('Note value was not reconized: {}\n'.format(user_note_val))
+            break  
+
+        while beat_val in time_sign_list:
+            if beat_val == 4:
+                break
+            elif beat_val == 8:
+                break
+            elif beat_val == 16:
+                break              
+            else:   
+                print('You have choosen a incorrect value: {}\nAlso it would surprise me if you got here tbh.'.format(beat_val))
+                break
+    return sec_val, beat_val
+
 while True:
     intro_text = '----How to use----\nStep 1: Start by entering a BPM. (This can be any positive value)\n'\
         'Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in'\
@@ -56,6 +89,7 @@ while True:
             user_bpm_input  = None
             user_note_val   = None
             user_time_sign  = None 
+            sec_val         = None
             beat_val        = None 
             time_sign_list  = [4, 8, 16]
 
@@ -84,36 +118,8 @@ while True:
                 break
             beat_num = int(user_beat_num)
 
-            while True:
-                if user_note_val == 'quarter':
-                    user_bpm = float(user_bpm_input)
-                    sec_val = (60/user_bpm)
-                    beat_val = 4
-                    break
-                elif user_note_val == 'eighth':
-                    user_bpm = float(user_bpm_input)
-                    sec_val = (30/user_bpm)
-                    beat_val = 8
-                    break
-                elif user_note_val == 'sixteenth':
-                    user_bpm = float(user_bpm_input)
-                    sec_val = (15/user_bpm)
-                    beat_val = 16
-                    break
-                else: 
-                    print('Note value was not reconized: {}\n'.format(user_note_val))
-                    break     
-            while beat_val in time_sign_list:
-                if beat_val == 4:
-                    break
-                elif beat_val == 8:
-                    break
-                elif beat_val == 16:
-                    break              
-                else:   
-                    print('You have choosen a incorrect value: {}\nAlso it would surprise me if you got here tbh.'.format(beat_val))
-                    break
-            
+            sec_val, beat_val = metronomeValues(user_note_val)
+   
             print('\nBPM: {}\nNote Value: {}\nYour time signature is {}/{}\n'.format(user_bpm_input, user_note_val, beat_num, beat_val))
             tstep = datetime.timedelta(seconds=sec_val)
             tnext = datetime.datetime.now() + tstep
