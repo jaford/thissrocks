@@ -28,7 +28,7 @@ def metronome_help(info_txt):
     """
     \n----Welcome to the help page----\n\
 Step 1: Start by entering a BPM. (This can be any positive value)\n
-Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in 8ths\n"Sixteenth" = Counts in 16ths\n
+Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in 8ths\n"Sixteenth" = Counts in 16ths\n"Thirty-second" = Counts in 32nds\n
 Step 3: Enter the amount of beats in each measure.\n(This can be any whole number)\n
     \n----Current Known Bugs (as of 1/23/2023)----\n\
 While metronome is running, you can press "Q" or "q" to restart the metronome but it does not always reconize the input.\n
@@ -54,6 +54,11 @@ def metronomeValues(user_note_val):
             sec_val = (15/user_bpm)
             beat_val = 16
             break
+        elif user_note_val == 'thirty-second' or user_note_val == 'thirty second':
+            user_bpm = float(user_bpm_input)
+            sec_val = (7.5/user_bpm)
+            beat_val = 32
+            break
         else: 
             print('Note value was not reconized: {}\n'.format(user_note_val))
             break  
@@ -64,7 +69,9 @@ def metronomeValues(user_note_val):
             elif beat_val == 8:
                 break
             elif beat_val == 16:
-                break              
+                break        
+            elif beat_val == 32:
+                break        
             else:   
                 print('You have choosen a incorrect value: {}\nAlso it would surprise me if you got here tbh.'.format(beat_val))
                 break
@@ -73,7 +80,7 @@ def metronomeValues(user_note_val):
 while True:
     intro_text = '----How to use----\nStep 1: Start by entering a BPM. (This can be any positive value)\n'\
         'Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in'\
-        ' 8ths\n"Sixteenth" = Counts in 16ths\n'\
+        ' 8ths\n"Sixteenth" = Counts in 16ths\n"Thirty-second" = Counts in 32nds\n'\
         'Step 3: Enter the amount of beats in each measure. (This can be any whole number)\n'\
         '\n----Extra Info----\nYou can even type in "help" at anypoint to show extra instructions!'\
         'To restart program press "CTRL + C" or "Q"\n'\
@@ -91,7 +98,7 @@ while True:
             user_time_sign  = None 
             sec_val         = None
             beat_val        = None 
-            time_sign_list  = [4, 8, 16]
+            time_sign_list  = [4, 8, 16, 32]
 
             user_bpm_input = input('Enter BPM: ').lower()
             if user_bpm_input == 'q':
