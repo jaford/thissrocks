@@ -24,7 +24,7 @@ import keyboard
 from termios import tcflush, TCIFLUSH
 from playsound import playsound
 
-def metronome_help(info_txt):
+def metronomeHelp(info_txt):
     """
     \n----Welcome to the help page----\n\
 Step 1: Start by entering a BPM. (This can be any positive value)\n
@@ -77,6 +77,26 @@ def metronomeValues(user_note_val):
                 break
     return sec_val, beat_val
 
+def metronomeCounter(user_bpm_input, user_note_val, beat_num, beat_val):
+    print('\nBPM: {}\nNote Value: {}\nYour time signature is {}/{}\n'.format(user_bpm_input, user_note_val, beat_num, beat_val))
+    tstep = datetime.timedelta(seconds=sec_val)
+    tnext = datetime.datetime.now() + tstep
+    try:
+        while True:
+            if keyboard.is_pressed('Q') or keyboard.is_pressed('q'):
+                print('\n----You have restarted the Metronome----\nTo exit, enter "Q"\n')    
+                break
+            for x in range(0,beat_num):
+                tdiff = tnext - datetime.datetime.now()
+                time.sleep(tdiff.total_seconds())
+                tnext = tnext + tstep
+                y = '\r' + 'Beep ' + 'Boop ' * x
+                sys.stdout.write("\033[K") #Clear to the end of line
+                print(y, end='\r')
+    except KeyboardInterrupt as key_err:
+        print('\nKeyboard Interrupt Error: {}\n----You have restarted Metronome----\n'.format(key_err))
+    return tstep, tnext
+
 while True:
     intro_text = '----How to use----\nStep 1: Start by entering a BPM. (This can be any positive value)\n'\
         'Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in'\
@@ -105,7 +125,7 @@ while True:
                 print('You have quit the program.\n')       
                 exit()
             if user_bpm_input == 'help':
-                help(metronome_help)
+                help(metronomeHelp)
                 break
 
             user_note_val = input('Enter a note value: ').lower()
@@ -113,7 +133,7 @@ while True:
                 print('You have quit the program.\n')       
                 exit()
             if user_note_val == 'help':
-                help(metronome_help)
+                help(metronomeHelp)
                 break
                 
             user_beat_num = input('Enter your how many beats per measure: ').lower()
@@ -121,32 +141,15 @@ while True:
                 print('You have quit the program.\n')       
                 exit()
             if user_beat_num == 'help':
-                help(metronome_help)
+                help(metronomeHelp)
                 break
             beat_num = int(user_beat_num)
 
-            sec_val, beat_val = metronomeValues(user_note_val)
+            sec_val, beat_val   = metronomeValues(user_note_val)
+            tstep, tnext        = metronomeCounter(user_bpm_input, user_note_val, beat_num, beat_val)
    
-            print('\nBPM: {}\nNote Value: {}\nYour time signature is {}/{}\n'.format(user_bpm_input, user_note_val, beat_num, beat_val))
-            tstep = datetime.timedelta(seconds=sec_val)
-            tnext = datetime.datetime.now() + tstep
-            try:
-                while True:
-                    if keyboard.is_pressed('Q') or keyboard.is_pressed('q'):
-                        print('\n----You have restarted the Metronome----\nTo exit, enter "Q"\n')    
-                        break
-                    for x in range(0,beat_num):
-                        tdiff = tnext - datetime.datetime.now()
-                        time.sleep(tdiff.total_seconds())
-                        tnext = tnext + tstep
-                        y = 'Beep ' + 'Boop ' * x
-                        sys.stdout.write("\033[K") #Clear to the end of line
-                        print(y, end='\r')
-            except KeyboardInterrupt as key_err:
-                print('\nKeyboard Interrupt Error: {}\n----You have restarted Metronome----\n'.format(key_err))
-                
         except Exception as err: 
-            colorlog.error('A error occured --> : "{}"\n'.format(err))
+            colorlog.error('\nA error occured --> : "{}"\n'.format(err))
             colorlog.warning('You have entered a non-supported format for BPM: {}\n'.format(user_bpm_input))
             colorlog.warning('You have entered a non-supported format Note Value: {}\n'.format(user_note_val))
             colorlog.warning('You have entered a non-supported format Beat Value: {}\n'.format(beat_val))
