@@ -41,7 +41,8 @@ def scaleKeyValue(root_note):
         print('Some sort of error catchs')
     return scale_type
 
-note_names = ['A', 'Bb', 'B', 'C', 'Dd', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab']
+notes_flat_name = ['A', 'Bb', 'B', 'C', 'Dd', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab']
+notes_sharp_name = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 
 user_note_input = input('Enter a Note: ')
 if user_note_input == 'q' or user_note_input == 'Q':
