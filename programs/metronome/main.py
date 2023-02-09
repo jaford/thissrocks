@@ -77,8 +77,47 @@ def metronomeValues(user_note_val):
                 break
     return sec_val, beat_val
 
+def metronomeMath(user_bpm_input, user_note_val, sec_val, beat_num, beat_val):
+
+    print('\n----Here are some cool math things that correlate with beat duration & conversions!----\n(This is for the current inputed items)\n')
+    user_bpm = int(user_bpm_input)
+    quarter_val = (60/user_bpm)
+    eighth_val = (30/user_bpm)
+    sixteenth_val = (15/user_bpm)
+    thirty_second_val = (7.5/user_bpm)
+    milisec = sec_val / 1000
+
+    print('----Here is a list of the second duration for some note values----\nQuarter Note: {}\nEighth Note: {}\nSixteenth Note: {}\nThirty Second Note: {}\n'.format(quarter_val, eighth_val, sixteenth_val, thirty_second_val))
+    print('---The second duration of your entered values ({} & {})----\nBeat length in seconds: {}\nBeat length in mili-seconds: {}\n'.format(user_note_val, beat_num, sec_val, milisec))
+    print('----Here is the fancy music terms that your BPM is definded as!----\nTemp: {}\nTime Signiture: {}/{}'.format(user_bpm_input, beat_num, beat_val))
+    if user_bpm < 24:
+        print('Marking: Larghissimo\nMeaning: Extremely slow\n')
+    elif 25 <= user_bpm <= 40:
+        print('Marking: Grave\nMeaning: Very slow\n')
+    elif 40 <= user_bpm <= 60:
+        print('Marking: Largo\nMeaning: Slow\n')
+    elif 60 <= user_bpm <= 66:
+        print('Marking: Larghetto\nMeaning: Moderately slow\n')
+    elif 66 <= user_bpm <= 76:
+        print('Marking: Adagio\nMeaning: Slow and expressive\n')
+    elif 76 <= user_bpm <= 108:
+        print('Marking: Andante\nMeaning: At a walking pace\n')       
+    elif 108 <= user_bpm <= 120:
+        print('Marking: Moderato\nMeaning: At a moderate speed\n')
+    elif 120 <= user_bpm <= 156:
+        print('Marking: Allegro\nMeaning: Fast (or bright)\n')
+    elif 156 <= user_bpm <= 176:
+        print('Marking: Vivace\nMeaning: Fast (or lively)\n')
+    elif 168 <= user_bpm <= 200:
+        print('Marking: Presto\nMeaning: Very fast\n')
+    else: 
+        print('Marking: Prestissimo\nMeaning: Extremely fast\n')
+
+    print('----You have restarted the metronome!----\n')
+    return quarter_val, eighth_val, sixteenth_val, thirty_second_val
+
 def metronomeCounter(user_bpm_input, user_note_val, beat_num, beat_val):
-    print('\nBPM: {}\nNote Value: {}\nYour time signature is {}/{}\n'.format(user_bpm_input, user_note_val, beat_num, beat_val))
+    print('\nBPM: {}\nNote Value: {}\nTime signature: {}/{}\n'.format(user_bpm_input, user_note_val, beat_num, beat_val))
     tstep = datetime.timedelta(seconds=sec_val)
     tnext = datetime.datetime.now() + tstep
     try:
@@ -106,6 +145,7 @@ while True:
         'To restart program press "CTRL + C" or "Q"\n'\
         'May need to press "Q" multiple times to quit \n'\
         'This is a current bug and it is being addressed! (01/21/2023)\n'\
+        'To access some more info of the current entered fields, type in "!info" after entering all the values\n'\
 
     print(u'\n---- Welcome to my Metronome Program! ----\n')
     print(intro_text)
@@ -145,9 +185,20 @@ while True:
                 break
             beat_num = int(user_beat_num)
 
-            sec_val, beat_val   = metronomeValues(user_note_val)
-            tstep, tnext        = metronomeCounter(user_bpm_input, user_note_val, beat_num, beat_val)
-   
+            print('\nHere are your values!\nBPM: {}\nNote Value: {}\nNumber of beats per measure: {}'.format(user_bpm_input, user_note_val, user_beat_num))
+            user_start = input('Are you ready to continue?(Y/N)\n').lower()
+            if user_start == 'y':
+                sec_val, beat_val   = metronomeValues(user_note_val)
+                tstep, tnext        = metronomeCounter(user_bpm_input, user_note_val, beat_num, beat_val)
+            elif user_start == '!info':
+                sec_val, beat_val   = metronomeValues(user_note_val)
+                metronomeMath(user_bpm_input, user_note_val, sec_val, beat_num, beat_val)
+            elif user_start == 'n':
+                print('\n----You have quit the metronome!----\n')
+                exit()
+            else:
+                print('\n----You have restarted the metronome!----\n')
+
         except Exception as err: 
             colorlog.error('\nA error occured --> : "{}"\n'.format(err))
             colorlog.warning('You have entered a non-supported format for BPM: {}\n'.format(user_bpm_input))
