@@ -86,9 +86,12 @@ def metronomeMath(user_bpm_input, user_note_val, sec_val, beat_num, beat_val):
     sixteenth_val = (15/user_bpm)
     thirty_second_val = (7.5/user_bpm)
     milisec = sec_val / 1000
+    tstep = datetime.timedelta(seconds=sec_val)
+    tstep.total_seconds()
 
     print('----Here is a list of the second duration for some note values----\nQuarter Note: {}\nEighth Note: {}\nSixteenth Note: {}\nThirty Second Note: {}\n'.format(quarter_val, eighth_val, sixteenth_val, thirty_second_val))
-    print('---The second duration of your entered values ({} & {})----\nBeat length in seconds: {}\nBeat length in mili-seconds: {}\n'.format(user_note_val, beat_num, sec_val, milisec))
+    print('----The second duration of your entered values ({} & {})----\nBeat length in seconds: {}\nBeat length in mili-seconds: {}\n'.format(user_note_val, beat_num, sec_val, milisec))
+    print('----Here is the timeDelta numbers of your selected input----\nSeconds of each beat: {}\n'.format(tstep))
     print('----Here is the fancy music terms that your BPM is definded as!----\nTemp: {}\nTime Signiture: {}/{}'.format(user_bpm_input, beat_num, beat_val))
     if user_bpm < 24:
         print('Marking: Larghissimo\nMeaning: Extremely slow\n')
@@ -113,8 +116,8 @@ def metronomeMath(user_bpm_input, user_note_val, sec_val, beat_num, beat_val):
     else: 
         print('Marking: Prestissimo\nMeaning: Extremely fast\n')
 
-    print('----You have restarted the metronome!----\n')
-    return quarter_val, eighth_val, sixteenth_val, thirty_second_val
+    print('----The metronome has restarted----\n')
+    return quarter_val, eighth_val, sixteenth_val, thirty_second_val, tstep
 
 def metronomeCounter(user_bpm_input, user_note_val, beat_num, beat_val):
     print('\nBPM: {}\nNote Value: {}\nTime signature: {}/{}\n'.format(user_bpm_input, user_note_val, beat_num, beat_val))
