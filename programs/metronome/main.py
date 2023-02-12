@@ -63,18 +63,6 @@ def metronomeValues(user_note_val):
             print('Note value was not reconized: {}\n'.format(user_note_val))
             break  
 
-        while beat_val in time_sign_list:
-            if beat_val == 4:
-                break
-            elif beat_val == 8:
-                break
-            elif beat_val == 16:
-                break        
-            elif beat_val == 32:
-                break        
-            else:   
-                print('You have choosen a incorrect value: {}\nAlso it would surprise me if you got here tbh.'.format(beat_val))
-                break
     return sec_val, beat_val
 
 def metronomeMath(user_bpm_input, user_note_val, sec_val, beat_num, beat_val):
