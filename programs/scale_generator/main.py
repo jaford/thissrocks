@@ -1,57 +1,44 @@
-def scaleNoteValues(user_note_input):
+'''
+Most of this code is from Kai tbh but at this moment I have a handful of items to test! It is getting late so I am stopping for now lol
 
-    if user_note_input == 'A':
-        root_note = user_note_input
-    elif user_note_input == 'Bb':
-        root_note = user_note_input
-    elif user_note_input == 'B':
-        root_note = user_note_input
-    elif user_note_input == 'C':
-        root_note = user_note_input
-    elif user_note_input == 'Db':
-        root_note = user_note_input
-    elif user_note_input == 'D':
-        root_note = user_note_input
-    elif user_note_input == 'Eb':
-        root_note = user_note_input
-    elif user_note_input == 'E':
-        root_note = user_note_input
-    elif user_note_input == 'F':
-        root_note = user_note_input
-    elif user_note_input == 'Gb':
-        root_note = user_note_input
-    elif user_note_input == 'G':
-        root_note = user_note_input
-    elif user_note_input == 'Ab':
-        root_note = user_note_input
-    else:
-        print('Some sort of error catchs')
+'''
+def scaleIntervals(userScaleInput):
     
-    return root_note
+    majorInterval = [2, 2, 1, 2, 2, 2, 1] # major scale by interval
+    minorInterval = [2, 1, 2, 2, 1, 2, 2] # minor scale by interval 
 
-def scaleKeyValue(root_note):
-
-    if user_scale_input == 'chromatic':
-        scale_type = user_scale_input
-    elif user_scale_input == 'major':
-        scale_type = user_scale_input
-    elif user_scale_input == 'minor':
-        scale_type = user_scale_input
+    scale = userScaleInput.lower()
+    if scale == 'major':
+        interval = majorInterval
+    elif scale == 'minor':
+        interval = minorInterval
     else:
-        print('Some sort of error catchs')
-    return scale_type
+        print('This scale does not exist! {}'.format(userNoteInput))
+        return
 
-notes_flat_name = ['A', 'Bb', 'B', 'C', 'Dd', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab']
-notes_sharp_name = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
+    return interval
 
-user_note_input = input('Enter a Note: ')
-if user_note_input == 'q' or user_note_input == 'Q':
-        print('You have quit the program.\n')       
-        exit()
-user_scale_input = input('Enter a Scale: ').lower()
-if user_scale_input == 'q':
-        print('You have quit the program.\n')       
-        exit()
+def findNotes(userNoteInput, interval):
 
-root_note   = scaleNoteValues(user_note_input)
-scale_type  = scaleKeyValue(root_note) 
+    if userSharpOrFlat == 'sharp':
+        scaleView = sharpNotes
+    elif userSharpOrFlat == 'flat':
+        scaleView = flatNotes
+    else: 
+        print('Entered incorrect value: {}'.format(userSharpOrFlat))
+
+    note = userNoteInput
+    generatedScale = [] # Creating an empty list
+    generatedScale.append(note) # add user inputted note to list
+    for i in range(6):
+        note = scaleView[(scaleView.index(note) + interval[i]) % 12]
+        generatedScale.append(note)
+    return generatedScale
+
+sharpNotes  = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] # All notes in western music in sharps 
+flatNotes   = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'] # All notes in western music in flats 
+
+userScaleInput  = input('Pick a Scale: ')
+userNoteInput   = input('Pick a Note: ')
+userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower()
+

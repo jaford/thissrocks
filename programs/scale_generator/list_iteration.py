@@ -27,7 +27,7 @@ state = input('Enter State: ').lower()
 print(findCity(cities))
 '''
 
-'''
+
 chromaticScale = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] # chromatic scale
 majorInterval = [2, 2, 1, 2, 2, 2, 1] # major scale by interval
 minorInterval = [2, 1, 2, 2, 1, 2, 2] # minor scale by interval
@@ -44,7 +44,7 @@ def findScale(note, scale): # find scale by note and desired scale
         return
     scale = [] # create empty list
     scale.append(note) # add user inputted note to list
-    for i in range(6): 
+    for i in range(6): # The Range is (6) due to us already having the first note
         note = chromaticScale[(chromaticScale.index(note) + interval[i]) % 12] # find note by interval
         scale.append(note)
     return scale # return scale
@@ -52,5 +52,5 @@ def findScale(note, scale): # find scale by note and desired scale
 note = input('Enter a note: ')
 scale = input('Enter a scale: ')
 print(findScale(note, scale))
-'''
+
 
