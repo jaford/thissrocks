@@ -138,7 +138,7 @@ while True:
         'This is a current bug and it is being addressed! (01/21/2023)\n'\
         'To access some more info of the current entered fields, type in "!info" after entering all the values\n'\
 
-    print(u'\n---- Welcome to my Metronome Program! ----\n')
+    print('\n----♪ Welcome to my Metronome Program! ♪----\n')
     print(intro_text)
     while True:
         try:
