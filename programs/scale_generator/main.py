@@ -59,7 +59,15 @@ def scaleIntervals(userScaleInput):
     return interval
 
 def findNotes(userNoteInput, userScaleInput, interval):
-
+    def appendingScale(note, scaleLength, interval):
+        scale = [] # Creating an empty list
+        scale.append(note) # add user inputted note to list
+        for i in range(scaleLength - 1):
+            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
+            scale.append(note)
+        print('\nHere are the notes in the {} {} scale: \n{}\n\n----You have restarted the program!----\n'.format(note, userScaleInput, scale))
+        return appendingScale
+    
     if userSharpOrFlat == 'sharp':
         scaleView = sharpNotes
     elif userSharpOrFlat == 'flat':
@@ -67,23 +75,12 @@ def findNotes(userNoteInput, userScaleInput, interval):
     else: 
         print('Entered incorrect value: {}'.format(userSharpOrFlat))
 
+    note = userNoteInput
     scaleLength = len(interval)
     if scaleLength == 5:
-        note = userNoteInput
-        scale = [] # Creating an empty list
-        scale.append(note) # add user inputted note to list
-        for i in range(scaleLength - 1):
-            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
-            scale.append(note)
-        print('\nHere are the notes in the {} {} scale: \n{}\n\n----You have restarted the program!----\n'.format(note, userScaleInput, scale))
+        appendingScale = appendingScale(note, scaleLength, interval)
     elif scaleLength == 7:
-        note = userNoteInput
-        scale = [] # Creating an empty list
-        scale.append(note) # add user inputted note to list
-        for i in range(scaleLength - 1):
-            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
-            scale.append(note)
-        print('\nHere are the notes in the {} {} scale: \n{}\n\n----Enter another scale!----\nIf you wish to quit, type in "q"\n'.format(note, userScaleInput, scale))
+        appendingScale = appendingScale(note, scaleLength, interval)
     else:
         print('If you got here I would be very surprized! But here is your condition that would get you here! {}'.format(scaleLength))
 
@@ -115,7 +112,7 @@ while True:
             if userScaleInput == 'q':
                 print('You have quit the program.\n')       
                 exit()
-            userNoteInput   = input('Pick a Note: ')
+            userNoteInput = input('Pick a Note: ')
             if userNoteInput == 'q':
                 print('You have quit the program.\n')
                 exit()
@@ -127,8 +124,8 @@ while True:
             print('\nHere are your values!\nScale: {}\nNote: {}\nSharp (#) or Flat (b): {}'.format(userScaleInput, userNoteInput, userSharpOrFlat))
             userStart = input('Are you ready to continue?(Y/N)\n').lower()
             if userStart == 'y':
-                interval = scaleIntervals(userScaleInput)
-                scale = findNotes(userNoteInput, userScaleInput, interval)
+                interval    = scaleIntervals(userScaleInput)
+                scale       = findNotes(userNoteInput, userScaleInput, interval)
             elif userStart == '!info':
                 print('WILL ADD THIS LATER BUT SINCE ITS NOT HERE...\nBYE BYE...\n')
                 exit()
