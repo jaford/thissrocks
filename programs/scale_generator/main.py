@@ -30,8 +30,8 @@ def scaleIntervals(userScaleInput):
     lydianInterval      = [2, 2, 2, 1, 2, 2, 1] # Lydian mode by interval W W W H W W H 
     mixolydianInterval  = [2, 2, 1, 1, 2, 1, 2] # Mixolydian mode by interval W W H W W H W
     locrianInterval     = [1, 2, 2, 1, 2, 2, 2] # Locrian mode by interval H W W H W W W 
-    majorPentatonic     = [1, 1, 2, 1, 2] # M2 M2 m3 M2 m3
-    minorPentatonic     = [2, 1, 1, 2, 1] # m3 M2 M2 m3 M2
+    majorPentatonic     = [2, 2, 3, 2, 3] # M2 M2 m3 M2 m3
+    minorPentatonic     = [3, 2, 2, 3, 2] # m3 M2 M2 m3 M2
 
     scale = userScaleInput.lower()
     if scale == 'major' or scale == 'ionian':
@@ -69,7 +69,6 @@ def findNotes(userNoteInput, userScaleInput, interval):
 
     scaleLength = len(interval)
     if scaleLength == 5:
-        print('You have a pentatonic: {}'.format(scaleLength))
         note = userNoteInput
         scale = [] # Creating an empty list
         scale.append(note) # add user inputted note to list
@@ -132,6 +131,7 @@ while True:
                 scale = findNotes(userNoteInput, userScaleInput, interval)
             elif userStart == '!info':
                 print('WILL ADD THIS LATER BUT SINCE ITS NOT HERE...\nBYE BYE...\n')
+                exit()
             elif userStart == 'n':
                 print('\n----You have quit the program!----\n')
                 exit()
