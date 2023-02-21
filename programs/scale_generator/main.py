@@ -58,6 +58,33 @@ def scaleIntervals(userScaleInput):
 
     return interval
 
+def findChords(scale, userScaleInput):
+    '''
+    Chord degrees for keys. 
+    Example: 
+    Minor Key
+    I   = minor 
+    II  = diminished or minor seventh flat five 
+    III = major or major seventh 
+    IV  = minor
+    VI  = minor
+    VI  = major 
+    VII = major
+    '''
+
+    majorKeyChords = ['Major', 'Minor', 'Minor', 'Major', 'Major', 'Minor', 'Diminished']
+    minorKeyChords = ['Minor', 'Diminished', 'Major', 'Minor', 'Minor', 'Major', 'Major']
+
+    keySignatures = userScaleInput 
+    if keySignatures == 'major' or keySignatures == 'ionian':
+        chords = '\n'.join('{} {}'.format(scale, majorKeyChords) for scale, majorKeyChords in zip(scale, majorKeyChords))
+    elif keySignatures == 'minor' or keySignatures == 'aeolian':
+        chords = '\n'.join('{} {}'.format(scale, minorKeyChords) for scale, minorKeyChords in zip(scale, minorKeyChords))
+    else:
+        print('If you got here I would be very surprized! But here is your condition that would get you here! {}'.format(keySignatures))
+
+    return chords
+
 def findNotes(userNoteInput, userScaleInput, interval):
 
     if userSharpOrFlat == 'sharp':
@@ -128,6 +155,14 @@ while True:
                 scale       = findNotes(userNoteInput, userScaleInput, interval)
                 scale = ', '.join(scale)
                 print('\nHere are the notes in the {} {} scale: \n{}\n\n----Pick another scale!----\nEnter "q" at anytime to close program!\n'.format(userNoteInput, userScaleInput, scale))
+                userStartChords = input('Do you want to see the Chords?(Y/N)\n').lower()
+                if userStartChords == 'y':
+                    chords = findChords(scale, userScaleInput)
+                    print(chords)
+                elif userStart == 'n':
+                    print('\n----You have quit the program!----\n')
+                    exit()
+
             elif userStart == '!info':
                 print('WILL ADD THIS LATER BUT SINCE ITS NOT HERE...\nBYE BYE...\n')
                 exit()
