@@ -59,28 +59,28 @@ def scaleIntervals(userScaleInput):
     return interval
 
 def findNotes(userNoteInput, userScaleInput, interval):
-    def appendingScale(note, scaleLength, interval):
-        scale = [] # Creating an empty list
-        scale.append(note) # add user inputted note to list
-        for i in range(scaleLength - 1):
-            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
-            scale.append(note)
-        print('\nHere are the notes in the {} {} scale: \n{}\n\n----You have restarted the program!----\n'.format(note, userScaleInput, scale))
-        return appendingScale
-    
+
     if userSharpOrFlat == 'sharp':
         scaleView = sharpNotes
     elif userSharpOrFlat == 'flat':
         scaleView = flatNotes
     else: 
         print('Entered incorrect value: {}'.format(userSharpOrFlat))
-
+        
     note = userNoteInput
     scaleLength = len(interval)
     if scaleLength == 5:
-        appendingScale = appendingScale(note, scaleLength, interval)
+        scale = [] # Creating an empty list
+        scale.append(note) # add user inputted note to list
+        for i in range(scaleLength - 1):
+            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
+            scale.append(note)
     elif scaleLength == 7:
-        appendingScale = appendingScale(note, scaleLength, interval)
+        scale = [] # Creating an empty list
+        scale.append(note) # add user inputted note to list
+        for i in range(scaleLength - 1):
+            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
+            scale.append(note)
     else:
         print('If you got here I would be very surprized! But here is your condition that would get you here! {}'.format(scaleLength))
 
@@ -126,6 +126,8 @@ while True:
             if userStart == 'y':
                 interval    = scaleIntervals(userScaleInput)
                 scale       = findNotes(userNoteInput, userScaleInput, interval)
+                scale = ', '.join(scale)
+                print('\nHere are the notes in the {} {} scale: \n{}\n\n----Pick another scale!----\nEnter "q" at anytime to close program!\n'.format(userNoteInput, userScaleInput, scale))
             elif userStart == '!info':
                 print('WILL ADD THIS LATER BUT SINCE ITS NOT HERE...\nBYE BYE...\n')
                 exit()
@@ -133,7 +135,7 @@ while True:
                 print('\n----You have quit the program!----\n')
                 exit()
             else:
-                print('\n----You have restarted the program!----\n')
+                print('\n----You have entered a incorrect input! "{}"----\n'.format(userStart))
             
         except Exception as err: 
             colorlog.error('\nA error occured --> : "{}"\n'.format(err))
