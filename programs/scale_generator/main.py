@@ -13,9 +13,15 @@ def scaleIntervals(userScaleInput):
     Note:
     Wholestep   = 2
     Halfstep    = 1
-
     Example:
-    Dorian is W H W W W H W which would be 2 1 2 2 2 1 2 in the indexing list! 
+    Dorian = W H W W W H W 
+    Which is = 2 1 2 2 2 1 2 in the indexing list! 
+
+    Pentatonics only have 5 notes in their scale. These next lists will be in orders of 5
+    Example: 
+    M = Major
+    m = Minor
+    major pentatonic scale = M2 M2 m3 M2 m3
     '''
     majorInterval       = [2, 2, 1, 2, 2, 2, 1] # major scale by interval W W H W W W H
     minorInterval       = [2, 1, 2, 2, 1, 2, 2] # minor scale by interval W H W W H W W
@@ -24,6 +30,8 @@ def scaleIntervals(userScaleInput):
     lydianInterval      = [2, 2, 2, 1, 2, 2, 1] # Lydian mode by interval W W W H W W H 
     mixolydianInterval  = [2, 2, 1, 1, 2, 1, 2] # Mixolydian mode by interval W W H W W H W
     locrianInterval     = [1, 2, 2, 1, 2, 2, 2] # Locrian mode by interval H W W H W W W 
+    majorPentatonic     = [2, 2, 3, 2, 3] # M2 M2 m3 M2 m3
+    minorPentatonic     = [3, 2, 2, 3, 2] # m3 M2 M2 m3 M2
 
     scale = userScaleInput.lower()
     if scale == 'major' or scale == 'ionian':
@@ -39,7 +47,11 @@ def scaleIntervals(userScaleInput):
     elif scale == 'mixolydian':
         interval = mixolydianInterval 
     elif scale == 'locrian':
-        interval = locrianInterval       
+        interval = locrianInterval    
+    elif scale == 'major pentatonic' or scale == 'major-pentatonic':
+        interval = majorPentatonic 
+    elif scale == 'minor pentatonic' or scale == 'minor-pentatonic':
+        interval = minorPentatonic          
     else:
         print('This "{}" scale does not exist or has not been added!'.format(userNoteInput))
         return
@@ -54,24 +66,36 @@ def findNotes(userNoteInput, userScaleInput, interval):
         scaleView = flatNotes
     else: 
         print('Entered incorrect value: {}'.format(userSharpOrFlat))
-
+        
     note = userNoteInput
-    scale = [] # Creating an empty list
-    scale.append(note) # add user inputted note to list
-    for i in range(6):
-        note = scaleView[(scaleView.index(note) + interval[i]) % 12]
-        scale.append(note)
-    print('\nHere are the notes in the {} {} scale: \n{}\n\n----You have restarted the program!----\n'.format(note, userScaleInput, scale))
+    scaleLength = len(interval)
+    if scaleLength == 5:
+        scale = [] # Creating an empty list
+        scale.append(note) # add user inputted note to list
+        for i in range(scaleLength - 1):
+            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
+            scale.append(note)
+    elif scaleLength == 7:
+        scale = [] # Creating an empty list
+        scale.append(note) # add user inputted note to list
+        for i in range(scaleLength - 1):
+            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
+            scale.append(note)
+    else:
+        print('If you got here I would be very surprized! But here is your condition that would get you here! {}'.format(scaleLength))
+
     return scale
 
 while True:
-    intro_text = '\n----♪ Welcome to my Scale Program! ♪----\n\n----How to use----\nStep 1: Start by entering a Scale. (At the moment we only have major & minor)\n'\
+    intro_text = '\n----♪ Welcome to my Scale Program! ♪----\n\n----How to use----\nStep 1: Start by entering a Scale. Type in info to list out the differnt scales aviable!\n'\
         'Step 2: Choose your note! This can be any note in the western scale.\n'\
         'Step 3: Enter how you want to see the notes! Either in sharps (#) or flats (b)\n'\
+        '\n----♪ Current Scales in program ♪----\n'\
+        'Major\nMinor\nDorian\nPhrygian\nLydian\nMixolydian\nLocrian\nMajor Pentatonic\nMinor Pentatonic\n'\
         '\n----Extra Info----\nYou can even type in "help" at anypoint to show extra instructions! (This is a feature later in time)\n'\
         'To quit the program press "CTRL + C" or "q"\n'\
         'As of now, add more scales, create a pentatonics list, and maybe a info page that shows relative minor or major.\n'\
-   
+
     print(intro_text)
     while True:
         try:
@@ -88,7 +112,7 @@ while True:
             if userScaleInput == 'q':
                 print('You have quit the program.\n')       
                 exit()
-            userNoteInput   = input('Pick a Note: ')
+            userNoteInput = input('Pick a Note: ')
             if userNoteInput == 'q':
                 print('You have quit the program.\n')
                 exit()
@@ -100,15 +124,18 @@ while True:
             print('\nHere are your values!\nScale: {}\nNote: {}\nSharp (#) or Flat (b): {}'.format(userScaleInput, userNoteInput, userSharpOrFlat))
             userStart = input('Are you ready to continue?(Y/N)\n').lower()
             if userStart == 'y':
-                interval = scaleIntervals(userScaleInput)
-                scale = findNotes(userNoteInput, userScaleInput, interval)
+                interval    = scaleIntervals(userScaleInput)
+                scale       = findNotes(userNoteInput, userScaleInput, interval)
+                scale = ', '.join(scale)
+                print('\nHere are the notes in the {} {} scale: \n{}\n\n----Pick another scale!----\nEnter "q" at anytime to close program!\n'.format(userNoteInput, userScaleInput, scale))
             elif userStart == '!info':
                 print('WILL ADD THIS LATER BUT SINCE ITS NOT HERE...\nBYE BYE...\n')
+                exit()
             elif userStart == 'n':
                 print('\n----You have quit the program!----\n')
                 exit()
             else:
-                print('\n----You have restarted the program!----\n')
+                print('\n----You have entered a incorrect input! "{}"----\n'.format(userStart))
             
         except Exception as err: 
             colorlog.error('\nA error occured --> : "{}"\n'.format(err))
