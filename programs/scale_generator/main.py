@@ -167,7 +167,7 @@ while True:
                 userStartChords = input('Do you want to see the Chords? (Y/N)\n').lower()
                 if userStartChords == 'y':
                     scale   = findNotes(userNoteInput, userScaleInput, interval) # Calling this again in order to get the scale as a list
-                    chords,   = findChords(scale, userScaleInput)
+                    chords   = findChords(scale, userScaleInput)
                     print('\nHere are your chrods in the {} {} scale!\n{}\n----Enter another scale----\n'.format(userNoteInput, userScaleInput, chords))
                 elif userStartChords == 'n' or userStartChords == 'q':
                     print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
