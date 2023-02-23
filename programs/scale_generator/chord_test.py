@@ -14,18 +14,28 @@ VII = major
 
 '''
 majorKeyChords = [
+        'Major', 
         'Minor', 
-        'Diminished', 
-        'Major',
-        'Minor',
         'Minor',
         'Major',
-        'Major'
+        'Major',
+        'Minor',
+        'Diminished'
+]
+
+aMajorKeyNotes = [        
+        'A', 
+        'B', 
+        'C#',
+        'D',
+        'E',
+        'F',
+        'G#'
 ]
 
 majorInterval = [2, 2, 1, 2, 2, 2, 1]
 
-majorChordList = '\n'.join('{} {}'.format(majorInterval, majorKeyChords) for majorInterval, majorKeyChords in zip(majorInterval, majorKeyChords))
+majorChordList = '\n'.join('{} {}'.format(aMajorKeyNotes, majorKeyChords) for aMajorKeyNotes, majorKeyChords in zip(aMajorKeyNotes, majorKeyChords))
 
 print(majorChordList)
 
