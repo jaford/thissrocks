@@ -140,9 +140,18 @@ while True:
             flatNotes       = None
             interval        = None
             scale           = None
+            notes           = None
 
             sharpNotes  = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] # All notes in western music in sharps 
             flatNotes   = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'] # All notes in western music in flats 
+
+            # This could be over complacating it lolol I could add a dictionary to for other multiple list to attempt to make code way more excessable!
+            notes = dict(
+                {
+                    'Sharps': sharpNotes,
+                    'Flats': flatNotes
+                }
+            )
             userScaleInput  = input('Pick a Scale or Mode: ')
             if userScaleInput == 'q':
                 print('You have quit the program.\n')       

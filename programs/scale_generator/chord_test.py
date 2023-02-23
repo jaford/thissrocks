@@ -73,11 +73,35 @@ new_dict = dict(
 print(new_dict)
 print(type(new_dict))
 for x in new_dict:
-  print(x)
-  print(type(x))
-  notes = new_dict[x]
-  print(notes)
-  print(type(notes))
+        print(x)
+        print(type(x))
+        notes = new_dict[x]
+        print(notes)
+        print(type(notes))
 
 majorChordList = '\n'.join('{} {}'.format(aMajorKeyNotes, majorKeyChords) for aMajorKeyNotes, majorKeyChords in zip(aMajorKeyNotes, majorKeyChords))
 print(majorChordList)
+
+
+sharpNotes  = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] # All notes in western music in sharps 
+flatNotes   = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'] # All notes in western music in flats 
+notes = dict(
+        {
+        'Sharps': sharpNotes,
+        'Flats': flatNotes
+        }
+)
+
+for x in notes:
+        print('Here 1')
+        print(notes)
+        print(type(notes))
+        if 'Sharps' in notes:
+                print('Here 2')
+                print(sharpNotes)
+                print(type(sharpNotes))
+                if 'C#' in sharpNotes:
+                        print('Here 3')
+                        print('C# is in this list')
+                        print(type(sharpNotes))
+
