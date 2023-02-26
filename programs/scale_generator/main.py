@@ -39,7 +39,7 @@ def scaleIntervals(userScaleInput):
         interval = minorInterval
     elif scale == 'dorian':
         interval = dorianInterval
-    elif scale == 'phrgian':
+    elif scale == 'phrygian':
         interval = phrygianInterval
     elif scale == 'lydian':
         interval = lydianInterval
@@ -57,8 +57,16 @@ def scaleIntervals(userScaleInput):
 
     return interval
 
+def scaleAppending(scaleView, note, scaleLength):
+    scale = [] # Creating an empty list
+    scale.append(note) # add user inputted note to list
+    for i in range(scaleLength - 1):
+        note = scaleView[(scaleView.index(note) + interval[i]) % 12]
+        scale.append(note)
 
-def findNotes(userNoteInput, userScaleInput, interval):
+    return scale
+
+def findScale(userNoteInput, userScaleInput, interval):
 
     if userSharpOrFlat == 'sharp':
         scaleView = sharpNotes
@@ -70,29 +78,19 @@ def findNotes(userNoteInput, userScaleInput, interval):
     note = userNoteInput
     scaleLength = len(interval)
     if scaleLength == 5:
-        scale = [] # Creating an empty list
-        scale.append(note) # add user inputted note to list
-        for i in range(scaleLength - 1):
-            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
-            scale.append(note)
+        scale = scaleAppending(scaleView, note, scaleLength)
     elif scaleLength == 7:
-        scale = [] # Creating an empty list
-        scale.append(note) # add user inputted note to list
-        for i in range(scaleLength - 1):
-            note = scaleView[(scaleView.index(note) + interval[i]) % 12]
-            scale.append(note)
+        scale = scaleAppending(scaleView, note, scaleLength)
     else:
         print('If you got here I would be very surprized! But here is your condition that would get you here! {}'.format(scaleLength))
 
     return scale
 
-def creatingChords(scale, keySignatures):
+def chordsList(scale, key):
+    chordAppending = '\n'.join('{} {}'.format(scale, key) for scale, key in zip(scale, key))
+    return chordAppending 
 
-    chordAppending = '\n'.join('{} {}'.format(scale, majorKeyChords) for scale, majorKeyChords in zip(scale, majorKeyChords))
-
-    return chordAppending
-
-def findChords(scale, userScaleInput):
+def findChords(scale, interval, userScaleInput):
     '''
     Chord degrees for keys. 
     Example: 
@@ -106,24 +104,46 @@ def findChords(scale, userScaleInput):
     VII = major
     '''
 
-    majorKeyChords = ['Major', 'Minor', 'Minor', 'Major', 'Major', 'Minor', 'Diminished']
-    minorKeyChords = ['Minor', 'Diminished', 'Major', 'Minor', 'Minor', 'Major', 'Major']
+    majorKeyChords      = ['Major', 'Minor', 'Minor', 'Major', 'Major', 'Minor', 'Diminished']
+    minorKeyChords      = ['Minor', 'Diminished', 'Major', 'Minor', 'Minor', 'Major', 'Major']
+    dorianKeyChords     = ['Minor', 'Minor', 'Major', 'Major', 'Minor', 'Diminished', 'Major']
+    phrygianKeyChords   = ['Minor', 'Major', 'Major', 'Minor', 'Diminished', 'Major', 'Minor']
+    lydianKeyChords     = ['Major', 'Major', 'Minor', 'Diminished', 'Major', 'Minor', 'Minor']
+    mixolydianKeyChords = ['Major', 'Minor', 'Diminished', 'Major', 'Minor', 'Minor', 'Major']
+    locrianKeyChords    = ['Major', 'Major', 'Minor', 'Diminished', 'Major', 'Minor', 'Minor']
 
     keySignatures = userScaleInput.lower() 
     if keySignatures == 'major' or keySignatures == 'ionian':
-        chords = '\n'.join('{} {}'.format(scale, majorKeyChords) for scale, majorKeyChords in zip(scale, majorKeyChords))
-        # chords = chordAppending(scale, keySignatures)
+        key = majorKeyChords
+        chords = chordsList(scale, key)
     elif keySignatures == 'minor' or keySignatures == 'aeolian':
-        chords = '\n'.join('{} {}'.format(scale, minorKeyChords) for scale, minorKeyChords in zip(scale, minorKeyChords))
+        key = minorKeyChords
+        chords = chordsList(scale, key)
+    elif keySignatures == 'dorian':
+        key = dorianKeyChords
+        chords = chordsList(scale, key)
+    elif keySignatures == 'phrygian':
+        key = phrygianKeyChords
+        chords = chordsList(scale, key)
+    elif keySignatures == 'lydian':
+        key = lydianKeyChords
+        chords = chordsList(scale, key)
+    elif keySignatures == 'mixolydian':
+        key = mixolydianKeyChords
+        chords = chordsList(scale, key)
+    elif keySignatures == 'locrian':
+        key = locrianKeyChords
+        chords = chordsList(scale, key)
     else:
         print('If you got here I would be very surprized! But here is your condition that would get you here! {}'.format(keySignatures))
 
     return chords
 
 while True:
-    intro_text = '\n----♪ Welcome to my Scale Program! ♪----\n\n----How to use----\nStep 1: Start by entering a Scale. Type in info to list out the differnt scales aviable!\n'\
-        'Step 2: Choose your note! This can be any note in the western scale.\n'\
-        'Step 3: Enter how you want to see the notes! Either in sharps (#) or flats (b)\n'\
+    intro_text = '\n----♪ Welcome to my Scale Program! ♪----\n\n----How to use----\n'\
+        'Step 1: Enter how you want to see the notes! Either in sharps (#) or flats (b)\n'\
+        'Step 2: Enter a Scale. Type in info to list out the differnt scales aviable!\n'\
+        'Step 3: Choose your note! This can be any note in the western scale.\n'\
         '\n----♪ Current Scales in program ♪----\n'\
         'Major (Ionian)\nMinor (Aeolian)\nDorian\nPhrygian\nLydian\nMixolydian\nLocrian\nMajor Pentatonic\nMinor Pentatonic\n'\
         '\n----Extra Info----\nYou can even type in "help" at anypoint to show extra instructions! (This is a feature later in time)\n'\
@@ -152,16 +172,16 @@ while True:
                     'Flats': flatNotes
                 }
             )
-            userScaleInput  = input('Pick a Scale or Mode: ')
+            userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower()
+            if userSharpOrFlat == 'q':
+                print('You have quit the program.\n')
+                exit()
+            userScaleInput = input('Pick a Scale or Mode: ')
             if userScaleInput == 'q':
                 print('You have quit the program.\n')       
                 exit()
-            userNoteInput = input('Pick a Note: ')
+            userNoteInput = input('Pick a Note: ').strip()
             if userNoteInput == 'q':
-                print('You have quit the program.\n')
-                exit()
-            userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower()
-            if userSharpOrFlat == 'q':
                 print('You have quit the program.\n')
                 exit()
 
@@ -169,14 +189,14 @@ while True:
             userStart = input('Are you ready to continue? (Y/N)\n').lower()
             if userStart == 'y':
                 interval    = scaleIntervals(userScaleInput)
-                scale       = findNotes(userNoteInput, userScaleInput, interval)
+                scale       = findScale(userNoteInput, userScaleInput, interval)
                 if isinstance(scale, list):
                     scale = ', '.join(scale)
                     print('\nHere are the notes in the {} {} scale: \n{}\n'.format(userNoteInput, userScaleInput, scale))
                 userStartChords = input('Do you want to see the Chords? (Y/N)\n').lower()
                 if userStartChords == 'y':
-                    scale   = findNotes(userNoteInput, userScaleInput, interval) # Calling this again in order to get the scale as a list
-                    chords   = findChords(scale, userScaleInput)
+                    scale   = findScale(userNoteInput, userScaleInput, interval) # Calling this again in order to get the scale as a list
+                    chords  = findChords(scale, userScaleInput)
                     print('\nHere are your chrods in the {} {} scale!\n{}\n----Enter another scale----\n'.format(userNoteInput, userScaleInput, chords))
                 elif userStartChords == 'n' or userStartChords == 'q':
                     print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
