@@ -1,14 +1,10 @@
 '''
-This is finally the workable version that prints line by line 
-in seconds the quarter notes in BPM! A lot easier than I thought! 
+This is finally the workable version that prints line by line
 
-Had to use "pip install colorlog"! For me "pip3 install colorlog" since I am on a 
-newer version of python!
-
-Used module "keyboard" pip3 install keyboard.
-
-Important notes:
+Important notes as of (15.02.2023):
 Must run in sudo to have keyboard module work!
+File for the click sound for metronome is the absolute path! #Must address in the future!
+Current issues are that that I can not seem to import the sound module. So far it crashes and states that time delta is negative? Not to sure what in tarnation is happening. :(
 
 Module List to install:
 pip3 install keyboard
@@ -19,6 +15,7 @@ import time
 import datetime
 import colorlog
 import logging
+import os
 import sys, signal
 import keyboard
 from termios import tcflush, TCIFLUSH
@@ -61,20 +58,8 @@ def metronomeValues(user_note_val):
             break
         else: 
             print('Note value was not reconized: {}\n'.format(user_note_val))
-            break  
+            break 
 
-        while beat_val in time_sign_list:
-            if beat_val == 4:
-                break
-            elif beat_val == 8:
-                break
-            elif beat_val == 16:
-                break        
-            elif beat_val == 32:
-                break        
-            else:   
-                print('You have choosen a incorrect value: {}\nAlso it would surprise me if you got here tbh.'.format(beat_val))
-                break
     return sec_val, beat_val
 
 def metronomeMath(user_bpm_input, user_note_val, sec_val, beat_num, beat_val):
@@ -129,6 +114,9 @@ def metronomeCounter(user_bpm_input, user_note_val, beat_num, beat_val):
                 print('\n----You have restarted the Metronome----\nTo exit, enter "Q"\n')    
                 break
             for x in range(0,beat_num):
+                # Leaving this here for future implacation! 
+                # playsound('programs/metronome/metronomeSounds/metronome-85688.mp3')
+                # playsound('/Users/hunterpimparatana/Documents/practice_code/source/thissrocks/programs/metronome/metronomeSounds/metronome-85688.mp3')  
                 tdiff = tnext - datetime.datetime.now()
                 time.sleep(tdiff.total_seconds())
                 tnext = tnext + tstep
@@ -136,7 +124,7 @@ def metronomeCounter(user_bpm_input, user_note_val, beat_num, beat_val):
                 sys.stdout.write("\033[K") #Clear to the end of line
                 print(y, end='\r')
     except KeyboardInterrupt as key_err:
-        print('\nKeyboard Interrupt Error: {}\n----You have restarted Metronome----\n'.format(key_err))
+        print('----You have restarted Metronome----\n'.format(key_err))
     return tstep, tnext
 
 while True:
@@ -150,7 +138,7 @@ while True:
         'This is a current bug and it is being addressed! (01/21/2023)\n'\
         'To access some more info of the current entered fields, type in "!info" after entering all the values\n'\
 
-    print(u'\n---- Welcome to my Metronome Program! ----\n')
+    print('\n----♪ Welcome to my Metronome Program! ♪----\n')
     print(intro_text)
     while True:
         try:
@@ -161,7 +149,7 @@ while True:
             user_time_sign  = None 
             sec_val         = None
             beat_val        = None 
-            time_sign_list  = [4, 8, 16, 32]
+            time_sign_list  = [4, 8, 16, 32] # Probably get rid of this list since I do not really to access it. Maybe the other branch can over engineer it! 
 
             user_bpm_input = input('Enter BPM: ').lower()
             if user_bpm_input == 'q':
