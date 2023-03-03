@@ -5,6 +5,7 @@ I have only included a handful of scales for the sake of simplifying. Possibly a
 import colorlog
 import os
 import sys, signal
+import json
 from termios import tcflush, TCIFLUSH
 
 def scaleIntervals(userScaleInput, scaleNames):
@@ -111,16 +112,6 @@ def findChords(scale, intervals, userScaleInput, chordsInKeys):
             
     return chords
 
-# List of global varibles
-userScaleInput  = None
-userNoteInput   = None
-userSharpOrFlat = None
-sharpNotes      = None
-flatNotes       = None
-intervals       = None
-scale           = None
-notes           = None
-
 '''
 Note:
 Wholestep   = 2
@@ -211,6 +202,19 @@ while True:
     while True:
         try:
             tcflush(sys.stdin, TCIFLUSH)
+            # List of global varibles
+            userSharpOrFlat = None
+            userScaleInput  = None
+            userNoteInput   = None
+            sharpNotes      = None
+            flatNotes       = None
+            intervals       = None
+            scale           = None
+            notes           = None
+
+            fileRead = open('data.json')
+            data = json.load(fileRead) 
+
             userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower()
             if userSharpOrFlat == 'q':
                 print('You have quit the program.\n')
@@ -255,4 +259,5 @@ while True:
             colorlog.warning('\nThis is not a supported Scale: {}'.format(userScaleInput))
             colorlog.warning('\nThis is not a supported Note: {}'.format(userNoteInput))
             colorlog.warning('\nThis is not a Sharp or Flat: {}\n'.format(userSharpOrFlat))
+            fileRead.close()
             pass
