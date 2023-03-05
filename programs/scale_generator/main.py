@@ -9,49 +9,48 @@ import json
 from termios import tcflush, TCIFLUSH
 
 def parseData(data):
-    for i in data:
-        if i == 'Sharps' and i == 'Flats':
-            notes = {}
-            sharpNotes  = data['Sharps']
-            flatNotes   = data['Flats']
-            notes['Shaprs'] = sharpNotes
-            notes['Flats'] = flatNotes
-        if i == 'majorIntervals' and i == 'minorIntervals' and i == 'dorianIntervals' and i == 'phrygianIntervals' and i == 'lydianIntervals' and i == 'mixolydianIntervals' and i == 'locrianIntervals' and i == 'majorPentatonics' and i == 'minorPentatonics':
-            scaleNames = {}
-            majorIntervals      = data['majorIntervals']
-            minorIntervals      = data['minorIntervals']
-            dorianIntervals     = data['dorianIntervals']
-            phrygianIntervals   = data['phrygianIntervals']
-            lydianIntervals     = data['lydianIntervals']
-            mixolydianIntervals = data['mixolydianIntervals']
-            locrianIntervals    = data['locrianIntervals']
-            majorPentatonics    = data['majorPentatonics']   
-            minorPentatonics    = data['minorPentatonics']  
-            scaleNames['major']             = majorIntervals
-            scaleNames['minor']             = minorIntervals
-            scaleNames['dorian']            = dorianIntervals
-            scaleNames['phrygian']          = phrygianIntervals
-            scaleNames['liydian']           = lydianIntervals
-            scaleNames['mixoliydian']       = mixolydianIntervals
-            scaleNames['locrian']           = locrianIntervals
-            scaleNames['major pentatonic']  = majorPentatonics
-            scaleNames['minor pentatonic']  = minorPentatonics
-        if i == 'major' and i == 'minor' and i == 'dorian' and i == 'phrygian' and i == 'liydian' and i == 'mixoliydian' and i == 'locrian':
-            chordsInKeys = {}
-            majorKeyChords      = data['major']
-            minorKeyChords      = data['minor']
-            dorianKeyChords     = data['dorian']
-            phrygianKeyChords   = data['phrygian']
-            lydianKeyChords     = data['liydian']
-            mixolydianKeyChords = data['mixoliydian']
-            locrianKeyChords    = data['locrian']
-            chordsInKeys['major']       = majorKeyChords
-            chordsInKeys['minor']       = minorKeyChords
-            chordsInKeys['dorian']      = dorianKeyChords
-            chordsInKeys['phrygian']    = phrygianKeyChords
-            chordsInKeys['liydian']     = lydianKeyChords
-            chordsInKeys['mixoliydian'] = mixolydianKeyChords
-            chordsInKeys['locrian']     = locrianKeyChords
+    if ('Sharps' and 'Flats') in data:
+        notes = {}
+        sharpNotes  = data['Sharps']
+        flatNotes   = data['Flats']
+        notes['Shaprs'] = sharpNotes
+        notes['Flats'] = flatNotes
+    if ('majorIntervals' and 'minorIntervals' and 'dorianIntervals' and 'phrygianIntervals' and 'lydianIntervals' and 'mixolydianIntervals' and 'locrianIntervals' and 'majorPentatonics' and 'minorPentatonics') in data:
+        scaleNames = {}
+        majorIntervals      = data['majorIntervals']
+        minorIntervals      = data['minorIntervals']
+        dorianIntervals     = data['dorianIntervals']
+        phrygianIntervals   = data['phrygianIntervals']
+        lydianIntervals     = data['lydianIntervals']
+        mixolydianIntervals = data['mixolydianIntervals']
+        locrianIntervals    = data['locrianIntervals']
+        majorPentatonics    = data['majorPentatonics']   
+        minorPentatonics    = data['minorPentatonics']  
+        scaleNames['major']             = majorIntervals
+        scaleNames['minor']             = minorIntervals
+        scaleNames['dorian']            = dorianIntervals
+        scaleNames['phrygian']          = phrygianIntervals
+        scaleNames['liydian']           = lydianIntervals
+        scaleNames['mixoliydian']       = mixolydianIntervals
+        scaleNames['locrian']           = locrianIntervals
+        scaleNames['major pentatonic']  = majorPentatonics
+        scaleNames['minor pentatonic']  = minorPentatonics
+    if ( 'major' and 'minor' and 'dorian' and 'phrygian' and 'liydian' and 'mixoliydian' and 'locrian') in data:
+        chordsInKeys = {}
+        majorKeyChords      = data['major']
+        minorKeyChords      = data['minor']
+        dorianKeyChords     = data['dorian']
+        phrygianKeyChords   = data['phrygian']
+        lydianKeyChords     = data['liydian']
+        mixolydianKeyChords = data['mixoliydian']
+        locrianKeyChords    = data['locrian']
+        chordsInKeys['major']       = majorKeyChords
+        chordsInKeys['minor']       = minorKeyChords
+        chordsInKeys['dorian']      = dorianKeyChords
+        chordsInKeys['phrygian']    = phrygianKeyChords
+        chordsInKeys['liydian']     = lydianKeyChords
+        chordsInKeys['mixoliydian'] = mixolydianKeyChords
+        chordsInKeys['locrian']     = locrianKeyChords
 
     return notes, scaleNames, chordsInKeys
     
@@ -127,31 +126,31 @@ def findChords(scale, intervals, userScaleInput, chordsInKeys):
     keySignatures = userScaleInput.lower() 
     while True:
         if keySignatures == 'major' in chordsInKeys or keySignatures == 'ionian' in chordsInKeys:
-            key = majorKeyChords
+            key = chordsInKeys['major']
             chords = chordsList(scale, key)
             break
         elif keySignatures == 'minor' in chordsInKeys or keySignatures == 'aeolian' in chordsInKeys:
-            key = minorKeyChords
+            key = chordsInKeys['minor']
             chords = chordsList(scale, key)
             break
         elif keySignatures == 'dorian'in chordsInKeys:
-            key = dorianKeyChords
+            key = chordsInKeys['dorian']
             chords = chordsList(scale, key)
             break
         elif keySignatures == 'phrygian'in chordsInKeys:
-            key = phrygianKeyChords
+            key = chordsInKeys['phrygian']
             chords = chordsList(scale, key)
             break
         elif keySignatures == 'lydian'in chordsInKeys:
-            key = lydianKeyChords
+            key = chordsInKeys['lydian']
             chords = chordsList(scale, key)
             break
         elif keySignatures == 'mixolydian'in chordsInKeys:
-            key = mixolydianKeyChords
+            key = chordsInKeys['mixolydian']
             chords = chordsList(scale, key)
             break
         elif keySignatures == 'locrian'in chordsInKeys:
-            key = locrianKeyChords
+            key = chordsInKeys['locrian']
             chords = chordsList(scale, key)
             break
         else:
@@ -190,7 +189,7 @@ III = major or major seventh
 IV  = minor
 VI  = minor
 VI  = major 
-VII = major
+VII = major–
 '''
 sharpNotes              = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] # All notes in western music in sharps 
 flatNotes               = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'] # All notes in western music in flats 
@@ -260,7 +259,6 @@ while True:
             fileRead = open('data.json')
             data = json.load(fileRead)
             notes, scaleNames, chordsInKeys = parseData(data)
-            fileRead.close()
 
             userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower()
             if userSharpOrFlat == 'q':
@@ -300,7 +298,7 @@ while True:
                 exit()
             else:
                 print('\n----You have entered a incorrect input! "{}"----\n'.format(userStart))
-            
+            fileRead.close()
         except Exception as err: 
             colorlog.error('\nA error occured --> : "{}"\n'.format(err))
             colorlog.warning('\nThis is not a supported Scale: {}'.format(userScaleInput))

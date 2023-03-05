@@ -2,7 +2,7 @@ import json
 
 def parseData(data):
     for i in data:
-        if (i == 'Sharps' and i == 'Flats'):
+        if (i == 'Sharps' and i == 'Flats') in data:
             notes = {}
             sharpNotes  = data['Sharps']
             flatNotes   = data['Flats']
@@ -10,7 +10,7 @@ def parseData(data):
             notes['Flats'] = flatNotes
             print(notes)
             print(type(notes))
-        if (i == 'majorIntervals' and i == 'minorIntervals' and i == 'dorianIntervals' and i == 'phrygianIntervals' and i == 'lydianIntervals' and i == 'mixolydianIntervals' and i == 'locrianIntervals' and i == 'majorPentatonics' and i == 'minorPentatonics'):
+        if (i == 'majorIntervals' and i == 'minorIntervals' and i == 'dorianIntervals' and i == 'phrygianIntervals' and i == 'lydianIntervals' and i == 'mixolydianIntervals' and i == 'locrianIntervals' and i == 'majorPentatonics' and i == 'minorPentatonics') in data:
             scaleNames = {}
             majorIntervals      = data['majorIntervals']
             minorIntervals      = data['minorIntervals']
@@ -32,7 +32,7 @@ def parseData(data):
             scaleNames['minor pentatonic']  = minorPentatonics
             print(scaleNames)
             print(type(scaleNames))
-        if (i == 'major' and i == 'minor' and i == 'dorian' and i == 'phrygian' and i == 'liydian' and i == 'mixoliydian' and i == 'locrian'):
+        if (i == 'major' and i == 'minor' and i == 'dorian' and i == 'phrygian' and i == 'liydian' and i == 'mixoliydian' and i == 'locrian') in data:
             chordsInKeys = {}
             majorKeyChords      = data['major']
             minorKeyChords      = data['minor']
