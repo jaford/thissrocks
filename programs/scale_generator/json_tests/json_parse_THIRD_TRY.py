@@ -1,7 +1,7 @@
 import json
 
 def testFunc(file_contents):
-    f = open('/data/data.json')
+    f = open('data.json')
     file_contents = json.load(f)
     print(file_contents)
     print(type(file_contents))
