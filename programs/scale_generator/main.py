@@ -8,6 +8,53 @@ import sys, signal
 import json
 from termios import tcflush, TCIFLUSH
 
+def parseData(data):
+    for i in data:
+        if i == 'Sharps' and i == 'Flats':
+            notes = {}
+            sharpNotes  = data['Sharps']
+            flatNotes   = data['Flats']
+            notes['Shaprs'] = sharpNotes
+            notes['Flats'] = flatNotes
+        if i == 'majorIntervals' and i == 'minorIntervals' and i == 'dorianIntervals' and i == 'phrygianIntervals' and i == 'lydianIntervals' and i == 'mixolydianIntervals' and i == 'locrianIntervals' and i == 'majorPentatonics' and i == 'minorPentatonics':
+            scaleNames = {}
+            majorIntervals      = data['majorIntervals']
+            minorIntervals      = data['minorIntervals']
+            dorianIntervals     = data['dorianIntervals']
+            phrygianIntervals   = data['phrygianIntervals']
+            lydianIntervals     = data['lydianIntervals']
+            mixolydianIntervals = data['mixolydianIntervals']
+            locrianIntervals    = data['locrianIntervals']
+            majorPentatonics    = data['majorPentatonics']   
+            minorPentatonics    = data['minorPentatonics']  
+            scaleNames['major']             = majorIntervals
+            scaleNames['minor']             = minorIntervals
+            scaleNames['dorian']            = dorianIntervals
+            scaleNames['phrygian']          = phrygianIntervals
+            scaleNames['liydian']           = lydianIntervals
+            scaleNames['mixoliydian']       = mixolydianIntervals
+            scaleNames['locrian']           = locrianIntervals
+            scaleNames['major pentatonic']  = majorPentatonics
+            scaleNames['minor pentatonic']  = minorPentatonics
+        if i == 'major' and i == 'minor' and i == 'dorian' and i == 'phrygian' and i == 'liydian' and i == 'mixoliydian' and i == 'locrian':
+            chordsInKeys = {}
+            majorKeyChords      = data['major']
+            minorKeyChords      = data['minor']
+            dorianKeyChords     = data['dorian']
+            phrygianKeyChords   = data['phrygian']
+            lydianKeyChords     = data['liydian']
+            mixolydianKeyChords = data['mixoliydian']
+            locrianKeyChords    = data['locrian']
+            chordsInKeys['major']       = majorKeyChords
+            chordsInKeys['minor']       = minorKeyChords
+            chordsInKeys['dorian']      = dorianKeyChords
+            chordsInKeys['phrygian']    = phrygianKeyChords
+            chordsInKeys['liydian']     = lydianKeyChords
+            chordsInKeys['mixoliydian'] = mixolydianKeyChords
+            chordsInKeys['locrian']     = locrianKeyChords
+
+    return notes, scaleNames, chordsInKeys
+    
 def scaleIntervals(userScaleInput, scaleNames):
     scale = userScaleInput.lower()
     while True:
@@ -111,7 +158,15 @@ def findChords(scale, intervals, userScaleInput, chordsInKeys):
             print('If you got here I would be very surprized! But here is your condition that would get you here! {}'.format(keySignatures))
             
     return chords
-
+# List of global varibles possibly used once in a class?
+# userSharpOrFlat = None
+# userScaleInput  = None
+# userNoteInput   = None
+# sharpNotes      = None
+# flatNotes       = None
+# intervals       = None
+# scale           = None
+# notes           = None
 '''
 Note:
 Wholestep   = 2
@@ -202,18 +257,10 @@ while True:
     while True:
         try:
             tcflush(sys.stdin, TCIFLUSH)
-            # List of global varibles
-            userSharpOrFlat = None
-            userScaleInput  = None
-            userNoteInput   = None
-            sharpNotes      = None
-            flatNotes       = None
-            intervals       = None
-            scale           = None
-            notes           = None
-
             fileRead = open('data.json')
-            data = json.load(fileRead) 
+            data = json.load(fileRead)
+            notes, scaleNames, chordsInKeys = parseData(data)
+            fileRead.close()
 
             userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower()
             if userSharpOrFlat == 'q':
@@ -259,5 +306,4 @@ while True:
             colorlog.warning('\nThis is not a supported Scale: {}'.format(userScaleInput))
             colorlog.warning('\nThis is not a supported Note: {}'.format(userNoteInput))
             colorlog.warning('\nThis is not a Sharp or Flat: {}\n'.format(userSharpOrFlat))
-            fileRead.close()
             pass
