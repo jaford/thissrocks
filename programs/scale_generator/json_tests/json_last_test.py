@@ -1,6 +1,82 @@
 import json
 import pprint
+'''
 
+Note:
+Wholestep   = 2
+Halfstep    = 1
+Example:
+Dorian = W H W W W H W 
+Which is = 2 1 2 2 2 1 2 in the indexing list! 
+
+Pentatonics only have 5 notes in their scale. These next lists will be in orders of 5
+Example: 
+M = Major
+m = Minor
+major pentatonic scale = M2 M2 m3 M2 m3
+
+Chord degrees for keys. 
+Example: 
+Minor Key
+I   = minor 
+II  = diminished or minor seventh flat five 
+III = major or major seventh 
+IV  = minor
+VI  = minor
+VI  = major 
+VII = major–
+
+sharpNotes              = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] # All notes in western music in sharps 
+flatNotes               = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'] # All notes in western music in flats 
+majorIntervals          = [2, 2, 1, 2, 2, 2, 1] # major scale by intervals W W H W W W H
+minorIntervals          = [2, 1, 2, 2, 1, 2, 2] # minor scale by intervals W H W W H W W
+dorianIntervals         = [2, 1, 2, 2, 2, 1, 2] # Dorian mode by intervals W H W W W H W
+phrygianIntervals       = [1, 2, 2, 2, 1, 2, 2] # Phrygian mode by intervals H W W W H W W
+lydianIntervals         = [2, 2, 2, 1, 2, 2, 1] # Lydian mode by intervals W W W H W W H 
+mixolydianIntervals     = [2, 2, 1, 1, 2, 1, 2] # Mixolydian mode by intervals W W H W W H W
+locrianIntervals        = [1, 2, 2, 1, 2, 2, 2] # Locrian mode by intervals H W W H W W W 
+majorPentatonics        = [2, 2, 3, 2, 3] # M2 M2 m3 M2 m3
+minorPentatonics        = [3, 2, 2, 3, 2] # m3 M2 M2 m3 M2
+majorKeyChords          = ['Major', 'Minor', 'Minor', 'Major', 'Major', 'Minor', 'Diminished']
+minorKeyChords          = ['Minor', 'Diminished', 'Major', 'Minor', 'Minor', 'Major', 'Major']
+dorianKeyChords         = ['Minor', 'Minor', 'Major', 'Major', 'Minor', 'Diminished', 'Major']
+phrygianKeyChords       = ['Minor', 'Major', 'Major', 'Minor', 'Diminished', 'Major', 'Minor']
+lydianKeyChords         = ['Major', 'Major', 'Minor', 'Diminished', 'Major', 'Minor', 'Minor']
+mixolydianKeyChords     = ['Major', 'Minor', 'Diminished', 'Major', 'Minor', 'Minor', 'Major']
+locrianKeyChords        = ['Major', 'Major', 'Minor', 'Diminished', 'Major', 'Minor', 'Minor']
+
+chordsInKeys = dict(
+    {
+        'major'                 : majorKeyChords,
+        'minor'                 : minorKeyChords,
+        'dorian'                : dorianKeyChords,
+        'phrygian'              : phrygianKeyChords,
+        'liydian'               : lydianKeyChords,
+        'mixoliydian'           : mixolydianKeyChords,
+        'locrian'               : locrianKeyChords
+    }
+)
+# Possibly for practice put this another file.
+scaleNames = dict(
+        {
+                'major'                 : majorIntervals,
+                'minor'                 : minorIntervals,
+                'dorian'                : dorianIntervals,
+                'phrygian'              : phrygianIntervals,
+                'liydian'               : lydianIntervals,
+                'mixoliydian'           : mixolydianIntervals,
+                'locrian'               : locrianIntervals,
+                'major pentatonic'      : majorPentatonics,
+                'minor pentatonic'      : minorPentatonics
+        }
+)
+notes = dict(
+    {
+        'Sharps': sharpNotes,
+        'Flats': flatNotes
+    }
+)
+'''
 def parseData(data):
     if ('Sharps' and 'Flats') in data:
         notes = {}
