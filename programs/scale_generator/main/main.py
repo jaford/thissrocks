@@ -2,13 +2,15 @@
 The creation of looping through the notes was done by Kai! I changed a section where you can have it diveded by groups of 5 and 7 note scales. 
 I have only included a handful of scales for the sake of simplifying. Possibly add more in the future. 
 '''
-import colorlog
-import os
+# from parseData import *
+
 import sys, signal
+import os
+import colorlog
 import json
 from termios import tcflush, TCIFLUSH
 
-# class scaeGenerator(): 
+# sys.path.instert(0, 'programs/modules')
 
 def parseData(data):
     if ('Sharps' and 'Flats') in data:
