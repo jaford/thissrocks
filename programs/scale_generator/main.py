@@ -8,6 +8,8 @@ import sys, signal
 import json
 from termios import tcflush, TCIFLUSH
 
+# class scaeGenerator(): 
+
 def parseData(data):
     if ('Sharps' and 'Flats') in data:
         notes = {}
@@ -99,7 +101,6 @@ def scaleAppending(scaleView, note, scaleLength):
     return scale
 
 def findScale(userNoteInput, userSharpOrFlat, intervals, notes):
-
     if userSharpOrFlat == 'sharp':
         scaleView = notes['Sharps']
     elif userSharpOrFlat == 'flat':
@@ -180,9 +181,10 @@ while True:
     while True:
         try:
             tcflush(sys.stdin, TCIFLUSH)
-            fileRead = open('data.json')
+            # open('data.json') works only in terminal?
             # This absolute path is used to debug in VSCODE for whatever reason
             # fileRead = open('/Users/hunterpimparatana/Documents/practice_code/source/thissrocks/programs/scale_generator/data.json')
+            fileRead = open('data.json')
             data = json.load(fileRead)
             notes, scaleNames, chordsInKeys = parseData(data)
 
@@ -190,20 +192,26 @@ while True:
             if userSharpOrFlat == 'q':
                 print('You have quit the program.\n')
                 exit()
-
-            userScaleInput = input('Pick a Scale or Mode: ')
+            breakFlag = False
             while True:
-                if userScaleInput == '!info':
-                    if isinstance(scaleNames, dict):
-                        scaleInfo = ', '.join(scaleNames)
-                        print('\nHere is the list of scales that are usable in this program\n{}\n'.format(scaleInfo))
-                elif userScaleInput == 'q':
-                    print('You have quit the program.\n')       
-                    exit()
-                elif isinstance(userSharpOrFlat, str):
-                    break 
-                else: 
-                    print('Using "{}" is not reconizable'.format(userScaleInput))
+                while True:     
+                    print('\nEnter "!info" for a list of all the current scales!')
+                    userScaleInput = input('Pick a Scale or Mode: ')
+                    if userScaleInput == '!info':
+                        if isinstance(scaleNames, dict):
+                            scaleInfo = ', '.join(scaleNames)
+                            print('\n--------\nList of useable scales in this program:\n{}\n--------\n'.format(scaleInfo))
+                            break
+                    elif userScaleInput == 'q':
+                        print('You have quit the program.\n')       
+                        exit()
+                    elif isinstance(userSharpOrFlat, str):
+                        breakFlag = True
+                        break 
+                    else: 
+                        print('Using "{}" is not reconizable'.format(userScaleInput))
+                if breakFlag:
+                    break
             userNoteInput = input('Pick a Note: ').strip()
             if userNoteInput == 'q':
                 print('You have quit the program.\n')
