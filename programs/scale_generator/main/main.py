@@ -2,15 +2,19 @@
 The creation of looping through the notes was done by Kai! I changed a section where you can have it diveded by groups of 5 and 7 note scales. 
 I have only included a handful of scales for the sake of simplifying. Possibly add more in the future. 
 '''
-# from parseData import *
-
 import sys, signal
 import os
 import colorlog
 import json
 from termios import tcflush, TCIFLUSH
 
-# sys.path.instert(0, 'programs/modules')
+'''
+sys.path.append('..')
+from functions.parseData import parseData
+
+Error that I get on the line above in VSCode. It still runs somehow even with the error? May need to ask someone for help!
+Unable to import 'functions.parseData'pylint(import-error)
+'''
 
 def parseData(data):
     if ('Sharps' and 'Flats') in data:
@@ -106,7 +110,7 @@ def findScale(userNoteInput, userSharpOrFlat, intervals, notes):
     if userSharpOrFlat == 'sharp':
         scaleView = notes['Sharps']
     elif userSharpOrFlat == 'flat':
-        scaleView = notes['flats']
+        scaleView = notes['Flats']
     else: 
         print('Entered incorrect value: {}'.format(userSharpOrFlat))
         
@@ -201,8 +205,11 @@ while True:
                     userScaleInput = input('Pick a Scale or Mode: ')
                     if userScaleInput == '!info':
                         if isinstance(scaleNames, dict):
-                            scaleInfo = ', '.join(scaleNames)
-                            print('\n--------\nList of useable scales in this program:\n{}\n--------\n'.format(scaleInfo))
+                            print('\nUseable scales in this program:\n--------')
+                            for x, y in scaleNames.items():
+                                scaleInfo = x.capitalize() 
+                                print('{}'.format(scaleInfo))
+                            print('--------\n')
                             break
                     elif userScaleInput == 'q':
                         print('You have quit the program.\n')       
