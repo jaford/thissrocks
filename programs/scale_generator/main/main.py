@@ -8,10 +8,11 @@ import colorlog
 import json
 from termios import tcflush, TCIFLUSH
 
+# This worked in my test script but for some reason it does not here? Using the same syntax and calling the function is the same regaurdless? 
+# Might need to ask for hekp on this. This may be a VsCode thing? I am not to sure. 
+# sys.path.append('..')
+# from functions.parseData import parseData
 '''
-sys.path.append('..')
-from functions.parseData import parseData
-
 Error that I get on the line above in VSCode. It still runs somehow even with the error? May need to ask someone for help!
 Unable to import 'functions.parseData'pylint(import-error)
 '''
@@ -61,7 +62,7 @@ def parseData(data):
         chordsInKeys['locrian']     = locrianKeyChords
 
     return notes, scaleNames, chordsInKeys
-    
+
 def scaleIntervals(userScaleInput, scaleNames):
     scale = userScaleInput.lower()
     while True:
@@ -92,12 +93,26 @@ def scaleIntervals(userScaleInput, scaleNames):
         elif scale == 'minor pentatonic' in scaleNames or scale == 'minor-pentatonic' in scaleNames:
             intervals = scaleNames['minor pentatonic']         
         else:
-            print('This "{}" scale does not exist or has not been added!'.format(userNoteInput))
+            print('This "{}" scale does not exist or has not been added!'.format(userScaleInput))
             break
 
     return intervals
 
-def scaleAppending(scaleView, note, scaleLength):
+def intervalConv(intervals, scales):
+    intervalDistance = []
+    for x in intervals:
+        if x == 1:
+            halfNote = 'Half' 
+            intervalDistance.append(halfNote)
+        elif x == 2:
+            wholeNote = 'Whole'
+            intervalDistance.append(wholeNote)
+        else:
+            print('This list has a value not supported: {}'.format(x))
+
+    return intervalDistance
+
+def scaleAppending(scaleView, note, scaleLength, intervals):
     scale = [] # Creating an empty list
     scale.append(note) # add user inputted note to list
     for i in range(scaleLength - 1):
@@ -117,9 +132,9 @@ def findScale(userNoteInput, userSharpOrFlat, intervals, notes):
     note = userNoteInput
     scaleLength = len(intervals)
     if scaleLength == 5:
-        scale = scaleAppending(scaleView, note, scaleLength)
+        scale = scaleAppending(scaleView, note, scaleLength, intervals)
     elif scaleLength == 7:
-        scale = scaleAppending(scaleView, note, scaleLength)
+        scale = scaleAppending(scaleView, note, scaleLength, intervals)
     else:
         print('If you got here I would be very surprized! But here is your condition that would get you here! {}'.format(scaleLength))
 
@@ -189,7 +204,7 @@ while True:
             tcflush(sys.stdin, TCIFLUSH)
             # open('data.json') works only in terminal?
             # This absolute path is used to debug in VSCODE for whatever reason
-            # fileRead = open('/Users/hunterpimparatana/Documents/practice_code/source/thissrocks/programs/scale_generator/data.json')
+            # fileRead = open('/Users/hunterpimparatana/Documents/practice_code/source/thissrocks/programs/scale_generator/main/data.json')
             fileRead = open('data.json')
             data = json.load(fileRead)
             notes, scaleNames, chordsInKeys = parseData(data)
@@ -209,7 +224,7 @@ while True:
                             for x, y in scaleNames.items():
                                 scaleInfo = x.capitalize() 
                                 print('{}'.format(scaleInfo))
-                            print('--------\n')
+                            print('--------')
                             break
                     elif userScaleInput == 'q':
                         print('You have quit the program.\n')       
@@ -238,11 +253,22 @@ while True:
                 if userStartChords == 'y':
                     scale   = findScale(userNoteInput, userSharpOrFlat, intervals, notes) # Calling this again in order to get the scale as a list
                     chords  = findChords(scale, intervals, userScaleInput, chordsInKeys)
-                    print('\nHere are your chrods in the {} {} scale!\n{}\n----Enter another scale----\n'.format(userNoteInput, userScaleInput, chords))
+                    print('\nHere are your chrods in the {} {} scale!\n{}\n'.format(userNoteInput, userScaleInput, chords))
                 elif userStartChords == 'n' or userStartChords == 'q':
                     print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
                 else:
                     print('\n----You have entered a incorrect statement "{}"----\n'.format(userStartChords))
+                userShowIntervals = input('Do you want to see the Intervals? (Y/N)\n').lower()
+                if userShowIntervals == 'y':
+                    intervalDistance = intervalConv(intervals, scale)
+                    if isinstance(intervalDistance, list):
+                        # Create a prettier way to print this! Without modules! Possibly lol
+                        intervals = ', '.join(intervalDistance)
+                        print('\nHere are the Whole and Half order in the {} {} scale: \n{}\n----Enter a new scale----\n'.format(userNoteInput, userScaleInput, intervals))
+                elif userShowIntervals == 'n' or userShowIntervals == 'q':
+                    print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
+                else:
+                    print('\n----You have entered a incorrect statement "{}"----\n'.format(userShowIntervals))
             elif userStart == '!info':
                 print('WILL ADD THIS LATER BUT SINCE ITS NOT HERE...\nBYE BYE...\n')
                 exit()
