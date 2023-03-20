@@ -1,0 +1,36 @@
+.img-center-style {
+    align-content: center;
+    width: 50%;
+    height: 50%;
+}
+
+.img-style-boarders {
+    border: 5px solid #ddd;
+    border-radius: 10px;
+    padding: 2.5px;
+    width: 50%;
+}
+.img-style-boarders:hover {
+    box-shadow: 0 0 5px 2px #04AA6D;
+}
+
+.rotate {
+    animation: rotation 2s;
+}
+  
+.linear {
+animation-timing-function: linear;
+}
+  
+.infinite {
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
