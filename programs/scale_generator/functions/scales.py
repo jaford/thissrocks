@@ -1,3 +1,5 @@
+import colorlog
+
 def scaleIntervals(userScaleInput, scaleNames):
     scale = userScaleInput.lower()
     while True:
@@ -28,7 +30,7 @@ def scaleIntervals(userScaleInput, scaleNames):
         elif scale == 'minor pentatonic' in scaleNames or scale == 'minor-pentatonic' in scaleNames:
             intervals = scaleNames['minor pentatonic']         
         else:
-            print('This "{}" scale does not exist or has not been added!'.format(userScaleInput))
+            colorlog.warning('\nThis is not a supported scale: "{}"'.format(userScaleInput))
             break
 
     return intervals
@@ -57,14 +59,19 @@ def scaleAppending(scaleView, note, scaleLength, intervals):
     return scale
 
 def findScale(userNoteInput, userSharpOrFlat, intervals, notes):
+
     if userSharpOrFlat == 'sharp':
         scaleView = notes['Sharps']
     elif userSharpOrFlat == 'flat':
         scaleView = notes['Flats']
     else: 
-        print('Entered incorrect value: {}'.format(userSharpOrFlat))
+        colorlog.warning('\nThis is not a supported input: "{}"'.format(userSharpOrFlat))
         
     note = userNoteInput
+    if note in scaleView:
+        pass
+    else:
+        colorlog.warning('\nThis is not a supported Note: "{}"'.format(note))
     scaleLength = len(intervals)
     if scaleLength == 5:
         scale = scaleAppending(scaleView, note, scaleLength, intervals)
