@@ -22,10 +22,10 @@ Spend some time creating a environment to run this program correctly without err
 This still works just vscode is reading these lines bellow as errors rather than being a actual error when I run the program. 
 '''
 sys.path.append('..')
-from functions.parseData import parseData
-from functions.chords import chordsList, findChords
-from functions.scales import scaleIntervals, intervalConv, scaleAppending, findScale
-
+from functions.parseData    import parseData
+from functions.chords       import chordsList, findChords
+from functions.scales       import scaleIntervals, intervalConv, scaleAppending, findScale
+from functions.lineRomove   import deleteLastLine
 # List of global varibles possibly used once in a class?
 # userSharpOrFlat = None
 # userScaleInput  = None
@@ -90,15 +90,21 @@ while True:
 
             print('\nHere are your values!\nScale: {}\nNote: {}\nSharp (#) or Flat (b): {}'.format(userScaleInput, userNoteInput, userSharpOrFlat))
             userStart = input('Are you ready to continue? (Y/N)\n').lower().strip()
+            if isinstance(userStart, str):
+                lineAmount = len(userStart.splitlines()) + 2
+                deleteLastLine(lineAmount)
             if userStart == 'y':
                 intervals   = scaleIntervals(userScaleInput, scaleNames)
                 scale       = findScale(userNoteInput, userSharpOrFlat, intervals, notes)
                 if isinstance(scale, list):
-                    scale = ', '.join(scale)
-                    print('\nHere are the notes in the {} {} scale: \n{}\n'.format(userNoteInput, userScaleInput, scale))
+                    scaleStr = ', '.join(scale)
+                    print('\nHere are the notes in the {} {} scale: \n{}\n'.format(userNoteInput, userScaleInput, scaleStr))
+                    
                 userStartChords = input('Do you want to see the Chords? (Y/N)\n').lower().strip()
+                if isinstance(userStartChords, str):
+                    lineAmount = len(userStartChords.splitlines()) + 2
+                    deleteLastLine(lineAmount)
                 if userStartChords == 'y':
-                    scale   = findScale(userNoteInput, userSharpOrFlat, intervals, notes) # Calling this again in order to get the scale as a list
                     chords  = findChords(scale, intervals, userScaleInput, chordsInKeys)
                     print('\nHere are your chrods in the {} {} scale:\n{}\n'.format(userNoteInput, userScaleInput, chords))
                 elif userStartChords == 'n' or userStartChords == 'q':
@@ -106,11 +112,14 @@ while True:
                 else:
                     print('\n----You have entered a incorrect statement "{}"----\n'.format(userStartChords))
                 userShowIntervals = input('Do you want to see the Intervals? (Y/N)\n').lower().strip()
+
+                if isinstance(userShowIntervals, str):
+                    lineAmount = len(userShowIntervals.splitlines()) + 2
+                    deleteLastLine(lineAmount)
                 if userShowIntervals == 'y':
                     intervalDistance = intervalConv(intervals, scale)
                     if isinstance(intervalDistance, list):
-                        # Create a prettier way to print this! Without modules! Possibly lol
-                        intervals = ', '.join(intervalDistance)
+                        intervals = ('\n'.join(map(str, intervalDistance)))
                         print('\nHere are the note distances: {} {} scale: \n{}'.format(userNoteInput, userScaleInput, intervals))
                         print('\n\n----Find a new scale----\n\n')
                 elif userShowIntervals == 'n' or userShowIntervals == 'q':
