@@ -9,15 +9,23 @@ import json
 from termios import tcflush, TCIFLUSH
 
 # This worked in my test script but for some reason it does not here? Using the same syntax and calling the function is the same regaurdless? 
-# Might need to ask for hekp on this. This may be a VsCode thing? I am not to sure. 
+# Might need to ask for hekp on this. This may be a VsCode thing? I am not to sure.
+'''
+Error that I get on the line above in VSCode. It still runs somehow even with the error? May need to ask someone for help!
+Unable to import 'functions.parseData'pylint(import-error)
+(New note as of 03.21)
+Based upon what I had found online these are some things to try to fix this VSCODE Error.
+Update Python3 (DONE)
+Create a virtual environment to see if I can change the interpating path. The create page does not show since I may not have the correct things installed. 
+Spend some time creating a environment to run this program correctly without errors.
+
+This still works just vscode is reading these lines bellow as errors rather than being a actual error when I run the program. 
+'''
 sys.path.append('..')
 from functions.parseData import parseData
 from functions.chords import chordsList, findChords
 from functions.scales import scaleIntervals, intervalConv, scaleAppending, findScale
-'''
-Error that I get on the line above in VSCode. It still runs somehow even with the error? May need to ask someone for help!
-Unable to import 'functions.parseData'pylint(import-error)
-'''
+
 # List of global varibles possibly used once in a class?
 # userSharpOrFlat = None
 # userScaleInput  = None
@@ -48,7 +56,7 @@ while True:
             data = json.load(fileRead)
             notes, scaleNames, chordsInKeys = parseData(data)
 
-            userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower()
+            userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower().strip()
             if userSharpOrFlat == 'q':
                 print('You have quit the program.\n')
                 exit()
@@ -81,14 +89,14 @@ while True:
                 exit()
 
             print('\nHere are your values!\nScale: {}\nNote: {}\nSharp (#) or Flat (b): {}'.format(userScaleInput, userNoteInput, userSharpOrFlat))
-            userStart = input('Are you ready to continue? (Y/N)\n').lower()
+            userStart = input('Are you ready to continue? (Y/N)\n').lower().strip()
             if userStart == 'y':
                 intervals   = scaleIntervals(userScaleInput, scaleNames)
                 scale       = findScale(userNoteInput, userSharpOrFlat, intervals, notes)
                 if isinstance(scale, list):
                     scale = ', '.join(scale)
                     print('\nHere are the notes in the {} {} scale: \n{}\n'.format(userNoteInput, userScaleInput, scale))
-                userStartChords = input('Do you want to see the Chords? (Y/N)\n').lower()
+                userStartChords = input('Do you want to see the Chords? (Y/N)\n').lower().strip()
                 if userStartChords == 'y':
                     scale   = findScale(userNoteInput, userSharpOrFlat, intervals, notes) # Calling this again in order to get the scale as a list
                     chords  = findChords(scale, intervals, userScaleInput, chordsInKeys)
@@ -97,7 +105,7 @@ while True:
                     print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
                 else:
                     print('\n----You have entered a incorrect statement "{}"----\n'.format(userStartChords))
-                userShowIntervals = input('Do you want to see the Intervals? (Y/N)\n').lower()
+                userShowIntervals = input('Do you want to see the Intervals? (Y/N)\n').lower().strip()
                 if userShowIntervals == 'y':
                     intervalDistance = intervalConv(intervals, scale)
                     if isinstance(intervalDistance, list):
