@@ -1,3 +1,13 @@
+import json
+
+def fileRead():
+    # I beleive this is correct for reading in a file? Not to sure about the close method! 
+    fileRead = open('data.json')
+    data = json.load(fileRead)
+    fileRead.close()
+
+    return data
+
 def parseData(data):
     if ('Sharps' and 'Flats') in data:
         notes = {}

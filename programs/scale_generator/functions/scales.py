@@ -59,7 +59,6 @@ def scaleAppending(scaleView, note, scaleLength, intervals):
     return scale
 
 def findScale(userNoteInput, userSharpOrFlat, intervals, notes):
-
     if userSharpOrFlat == 'sharp':
         scaleView = notes['Sharps']
     elif userSharpOrFlat == 'flat':
