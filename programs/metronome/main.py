@@ -24,6 +24,7 @@ from playsound import playsound
 sys.path.append('..')
 from functions.metronomeCounter import metronomeCounter, metronomeValues
 from functions.metronomeInfo    import metronomeHelp, metronomeMath
+from functions.deleteLastLine   import deleteLastLine
 
 while True:
     intro_text = '----How to use----\nStep 1: Start by entering a BPM. (This can be any positive value)\n'\
@@ -38,6 +39,10 @@ while True:
 
     print('\n----♪ Welcome to my Metronome Program! ♪----\n')
     print(intro_text)
+    userStart = input('Are you ready to continue? (Y/N)\n').lower().strip()
+    if isinstance(userStart, str):
+        lineAmount = len(userStart.splitlines()) + 2
+        deleteLastLine(lineAmount)
     while True:
         try:
             # Attempted to clear keyboard inputs by setting the variable to None. Did not work :(
