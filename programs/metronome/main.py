@@ -1,11 +1,4 @@
 '''
-This is finally the workable version that prints line by line
-
-Important notes as of (15.02.2023):
-Must run in sudo to have keyboard module work!
-File for the click sound for metronome is the absolute path! #Must address in the future!
-Current issues are that that I can not seem to import the sound module. So far it crashes and states that time delta is negative? Not to sure what in tarnation is happening. :(
-
 Module List to install:
 pip3 install keyboard
 pip3 install colorlog
@@ -28,10 +21,8 @@ from functions.deleteLastLine   import deleteLastLine
 
 bpmInput  = None
 NoteVal   = None
-user_time_sign  = None 
-secVal         = None
-beatVal        = None 
-time_sign_list  = [4, 8, 16, 32] # Probably get rid of this list since I do not really to access it. Maybe the other branch can over engineer it! 
+secVal          = None
+beatVal         = None 
 introText = '\n----♪ Welcome to my Metronome Program! ♪----\n'\
     '----How to use----\nStep 1: Start by entering a BPM. (This can be any positive value)\n'\
     'Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in'\
