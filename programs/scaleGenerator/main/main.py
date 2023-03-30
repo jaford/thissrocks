@@ -1,6 +1,9 @@
 '''
 The creation of looping through the notes was done by Kai! I changed a section where you can have it diveded by groups of 5 and 7 note scales. 
 I have only included a handful of scales for the sake of simplifying. Possibly add more in the future. 
+
+IMPORTANT NOTE:
+File read function is not being used! :(
 '''
 import sys, signal
 import os
@@ -12,6 +15,7 @@ from functions.parseData    import parseData, fileRead
 from functions.chords       import chordsList, findChords
 from functions.scales       import scaleIntervals, intervalConv, scaleAppending, findScale
 from functions.lineRomove   import deleteLastLine
+from functions.userInputs   import userValueInputs
 
 # List of global varibles possibly used once in a class?
 # userSharpOrFlat = None
@@ -52,39 +56,8 @@ while True:
                 fileRead = open('data.json')
                 data = json.load(fileRead)
                 notes, scaleNames, chordsInKeys = parseData(data)
-
-                userSharpOrFlat = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower().strip()
-                if userSharpOrFlat == 'q':
-                    print('You have quit the program.\n')
-                    exit()
-                breakFlag = False
-                while True:
-                    while True:     
-                        print('Enter "!info" for a list of all the current scales!')
-                        userScaleInput = input('Pick a Scale or Mode: ')
-                        if userScaleInput == '!info':
-                            if isinstance(scaleNames, dict):
-                                print('\nUseable scales in this program:\n--------')
-                                for x, y in scaleNames.items():
-                                    scaleInfo = x.capitalize() 
-                                    print('{}'.format(scaleInfo))
-                                print('--------')
-                                break
-                        elif userScaleInput == 'q':
-                            print('You have quit the program.\n')       
-                            exit()
-                        elif isinstance(userSharpOrFlat, str):
-                            breakFlag = True
-                            break 
-                        else: 
-                            print('Using "{}" is not reconizable'.format(userScaleInput))
-                    if breakFlag:
-                        break
-                userNoteInput = input('Pick a Note: ').strip()
-                if userNoteInput == 'q':
-                    print('You have quit the program.\n')
-                    exit()
-
+                userSharpOrFlat, userScaleInput, userNoteInput = userValueInputs()
+                
                 print('\nHere are your values!\nScale: {}\nNote: {}\nSharp (#) or Flat (b): {}'.format(userScaleInput, userNoteInput, userSharpOrFlat))
                 userStart = input('Are you ready to continue? (Y/N)\n').lower().strip()
                 if isinstance(userStart, str):
