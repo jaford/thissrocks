@@ -56,7 +56,7 @@ while True:
                 fileRead = open('data.json')
                 data = json.load(fileRead)
                 notes, scaleNames, chordsInKeys = parseData(data)
-                userSharpOrFlat, userScaleInput, userNoteInput = userValueInputs()
+                userSharpOrFlat, userScaleInput, userNoteInput = userValueInputs(scaleNames)
                 
                 print('\nHere are your values!\nScale: {}\nNote: {}\nSharp (#) or Flat (b): {}'.format(userScaleInput, userNoteInput, userSharpOrFlat))
                 userStart = input('Are you ready to continue? (Y/N)\n').lower().strip()
