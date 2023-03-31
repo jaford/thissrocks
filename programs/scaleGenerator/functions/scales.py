@@ -38,7 +38,7 @@ def scaleIntervals(userScaleInput, scaleNames):
 def intervalConv(intervals, scales):
     intervalDistance = []
     for x in intervals:
-        if x == 1:
+        if x == 1: 
             halfNote = 'Half' 
             intervalDistance.append(halfNote)
         elif x == 2:
@@ -59,7 +59,6 @@ def scaleAppending(scaleView, note, scaleLength, intervals):
     return scale
 
 def findScale(userNoteInput, userSharpOrFlat, intervals, notes):
-
     if userSharpOrFlat == 'sharp':
         scaleView = notes['Sharps']
     elif userSharpOrFlat == 'flat':

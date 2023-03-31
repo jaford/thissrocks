@@ -1,3 +1,15 @@
+import json
+
+# def fileRead():
+#     # Attempted to use a function to open a file and close it but it sounds like that might not be possible. 
+#     # Or this is just very hard to do. 
+#     # I beleive this is correct for reading in a file? Not to sure about the close method! 
+#     fileRead = open('data.json')
+#     data = json.load(fileRead)
+#     fileRead.close()
+
+#     return data
+
 def parseData(data):
     if ('Sharps' and 'Flats') in data:
         notes = {}
