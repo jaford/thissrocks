@@ -11,11 +11,11 @@ import colorlog
 import json
 sys.path.append('..')
 from termios import tcflush, TCIFLUSH
-from functions.parseData    import parseData, fileRead
-from functions.chords       import chordsList, findChords
-from functions.scales       import scaleIntervals, intervalConv, scaleAppending, findScale
-from functions.lineRomove   import deleteLastLine
-from functions.userInputs   import userValueInputs
+from functions.parseData    import parseData
+from functions.userInputs   import userValueInputs, userInitiation
+from functions.lineRemove   import deleteLastLine
+# from functions.chords       import chordsList, findChords
+# from functions.scales       import scaleIntervals, intervalConv, scaleAppending, findScale
 
 # List of global varibles possibly used once in a class?
 # userSharpOrFlat = None
@@ -57,53 +57,54 @@ while True:
                 data = json.load(fileRead)
                 notes, scaleNames, chordsInKeys = parseData(data)
                 userSharpOrFlat, userScaleInput, userNoteInput = userValueInputs(scaleNames)
+                userInitiation(notes, scaleNames, chordsInKeys, userSharpOrFlat, userScaleInput, userNoteInput)
                 
-                print('\nHere are your values!\nScale: {}\nNote: {}\nSharp (#) or Flat (b): {}'.format(userScaleInput, userNoteInput, userSharpOrFlat))
-                userStart = input('Are you ready to continue? (Y/N)\n').lower().strip()
-                if isinstance(userStart, str):
-                    lineAmount = len(userStart.splitlines()) - 1 
-                    deleteLastLine(lineAmount)
-                if userStart == 'y':
-                    intervals   = scaleIntervals(userScaleInput, scaleNames)
-                    scale       = findScale(userNoteInput, userSharpOrFlat, intervals, notes)
-                    if isinstance(scale, list):
-                        scaleStr = ', '.join(scale)
-                        print('\nHere are the notes in the {} {} scale: \n{}\n'.format(userNoteInput, userScaleInput, scaleStr))
+                # print('\nHere are your values!\nScale: {}\nNote: {}\nSharp (#) or Flat (b): {}'.format(userScaleInput, userNoteInput, userSharpOrFlat))
+                # userStart = input('Are you ready to continue? (Y/N)\n').lower().strip()
+                # if isinstance(userStart, str):
+                #     lineAmount = len(userStart.splitlines()) - 1 
+                #     deleteLastLine(lineAmount)
+                # if userStart == 'y':
+                #     intervals   = scaleIntervals(userScaleInput, scaleNames)
+                #     scale       = findScale(userNoteInput, userSharpOrFlat, intervals, notes)
+                #     if isinstance(scale, list):
+                #         scaleStr = ', '.join(scale)
+                #         print('\nHere are the notes in the {} {} scale: \n{}\n'.format(userNoteInput, userScaleInput, scaleStr))
                         
-                    userStartChords = input('Do you want to see the Chords? (Y/N)\n').lower().strip()
-                    if isinstance(userStartChords, str):
-                        lineAmount = len(userStartChords.splitlines())
-                        deleteLastLine(lineAmount)
-                    if userStartChords == 'y':
-                        chords  = findChords(scale, intervals, userScaleInput, chordsInKeys)
-                        print('\nHere are your chords in the {} {} scale:\n{}\n'.format(userNoteInput, userScaleInput, chords))
-                    elif userStartChords == 'n' or userStartChords == 'q':
-                        print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
-                    else:
-                        print('\n----You have entered a incorrect statement "{}"----\n'.format(userStartChords))
+                #     userStartChords = input('Do you want to see the Chords? (Y/N)\n').lower().strip()
+                #     if isinstance(userStartChords, str):
+                #         lineAmount = len(userStartChords.splitlines())
+                #         deleteLastLine(lineAmount)
+                #     if userStartChords == 'y':
+                #         chords  = findChords(scale, intervals, userScaleInput, chordsInKeys)
+                #         print('\nHere are your chords in the {} {} scale:\n{}\n'.format(userNoteInput, userScaleInput, chords))
+                #     elif userStartChords == 'n' or userStartChords == 'q':
+                #         print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
+                #     else:
+                #         print('\n----You have entered a incorrect statement "{}"----\n'.format(userStartChords))
 
-                    userShowIntervals = input('Do you want to see the Intervals? (Y/N)\n').lower().strip()
-                    if isinstance(userShowIntervals, str):
-                        lineAmount = len(userShowIntervals.splitlines())
-                        deleteLastLine(lineAmount)
-                    if userShowIntervals == 'y':
-                        intervalDistance = intervalConv(intervals, scale)
-                        if isinstance(intervalDistance, list):
-                            intervals = ('\n'.join(map(str, intervalDistance)))
-                            print('\nHere are the note distances in the {} {} scale: \n{}'.format(userNoteInput, userScaleInput, intervals))
-                            print('\n\n----Find a new scale----\n\n')
-                    elif userShowIntervals == 'n' or userShowIntervals == 'q':
-                        print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
-                    else:
-                        print('\n----You have entered a incorrect statement "{}"----\n'.format(userShowIntervals))
-                elif userStart == '!info':
-                    print('WILL ADD THIS LATER BUT SINCE ITS NOT HERE...\nBYE BYE...\n')
-                    exit()
-                elif userStart == 'n' or userStart == 'q':
-                    print('\n----You have quit the program!----\n')
-                    exit()
-                else:
-                    print('\n----You have entered a incorrect input! "{}"----\n'.format(userStart))
+                #     userShowIntervals = input('Do you want to see the Intervals? (Y/N)\n').lower().strip()
+                #     if isinstance(userShowIntervals, str):
+                #         lineAmount = len(userShowIntervals.splitlines())
+                #         deleteLastLine(lineAmount)
+                #     if userShowIntervals == 'y':
+                #         intervalDistance = intervalConv(intervals, scale)
+                #         if isinstance(intervalDistance, list):
+                #             intervals = ('\n'.join(map(str, intervalDistance)))
+                #             print('\nHere are the note distances in the {} {} scale: \n{}'.format(userNoteInput, userScaleInput, intervals))
+                #             print('\n\n----Find a new scale----\n\n')
+                #     elif userShowIntervals == 'n' or userShowIntervals == 'q':
+                #         print('\n----Enter another Scale! If you wish to exit, press "q"----\n')
+                #     else:
+                #         print('\n----You have entered a incorrect statement "{}"----\n'.format(userShowIntervals))
+                # elif userStart == '!info':
+                #     print('WILL ADD THIS LATER BUT SINCE ITS NOT HERE...\nBYE BYE...\n')
+                #     exit()
+                # elif userStart == 'n' or userStart == 'q':
+                #     print('\n----You have quit the program!----\n')
+                #     exit()
+                # else:
+                #     print('\n----You have entered a incorrect input! "{}"----\n'.format(userStart))
             except Exception as err: 
                 colorlog.error('\nA error occured --> : "{}"\n'.format(err))
                 print('Re-enter you values once more!\n')

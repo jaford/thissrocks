@@ -1,2 +1,2 @@
-from module1 import addition
-from module2 import userInput
+from .module1 import addition, subtraction
+from .module2 import userInput
