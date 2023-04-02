@@ -1,8 +1,10 @@
 import time
 import datetime
 import keyboard
+import logging
 import sys, signal
 from termios import tcflush, TCIFLUSH
+logging.basicConfig(level=logging.DEBUG)
 # from metronomeInfo import metronomeHelp, metronomeMath
 
 def userInputs():
@@ -16,6 +18,15 @@ def userInputs():
         print('Will add functionality once error is fixed! :)')
 
     noteVal = input('Enter a note value: ').lower()
+    if noteVal == 'quarter':
+        beatVal = 4
+    elif noteVal == 'eighth':
+        beatVal = 8
+    elif noteVal == 'sixteenth':
+        beatVal = 16
+    elif noteVal == 'thirty-second' or noteVal == 'thirty second':
+        beatVal = 32
+    
     if noteVal == 'q':
         print('You have quit the program.\n')       
         exit()
@@ -32,7 +43,7 @@ def userInputs():
         # help(metronomeHelp)
         print('Will add functionality once error is fixed! :)')
 
-    return beatNum, noteVal, bpmInput
+    return beatNum, noteVal, bpmInput, beatVal
 
 def metronomeValues(noteVal, bpmInput):
     while True:
@@ -66,6 +77,8 @@ def metronomeCounter(bpmInput, noteVal, beatNum, beatVal, secVal):
     print('\nBPM: {}\nNote Value: {}\nTime signature: {}/{}\n'.format(bpmInput, noteVal, beatNum, beatVal))
     tstep = datetime.timedelta(seconds=secVal)
     tnext = datetime.datetime.now() + tstep
+    logging.debug('\ntstep: {}\ntnext {}\n'.format(tstep, tnext))
+
     try:
         while True:
             if keyboard.is_pressed('Q') or keyboard.is_pressed('q'):
@@ -81,6 +94,14 @@ def metronomeCounter(bpmInput, noteVal, beatNum, beatVal, secVal):
                 y = '\r' + 'Beep ' + 'Boop ' * x
                 sys.stdout.write("\033[K") #Clear to the end of line
                 print(y, end='\r')
+            print('\n\nsecVal: {}\ntstep: {}\ntnext: {}\ntdiff: {}\ny: {}\nx: {}\n'.format(secVal, tstep, tnext, tdiff, y, x))
+            # secVal = float(secVal)
+            # tstep = tstep.total_seconds()
+            # tnext = tnext.total_seconds()
+            # tdiff = tdiff.total_seconds()
+            # y = float(y)
+            # x = float(x)
+            # print('These are the converted values to floats:\n\nsecVal: {}\ntstep: {}\ntnext: {}\ntdiff: {}\ny: {}\nx: {}\n'.format(secVal, tstep, tnext, tdiff, y, x))
     except KeyboardInterrupt as key_err:
         print('----You have restarted Metronome----\n'.format(key_err))
     return tstep, tnext

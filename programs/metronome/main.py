@@ -19,10 +19,10 @@ from functions.metronomeCounter import metronomeCounter, metronomeValues, userIn
 from functions.metronomeInfo    import metronomeHelp, metronomeMath
 from functions.deleteLastLine   import deleteLastLine
 
-bpmInput  = None
-NoteVal   = None
-secVal          = None
-beatVal         = None 
+bpmInput    = None
+NoteVal     = None
+secVal      = None
+beatVal     = None 
 introText = '\n----♪ Welcome to my Metronome Program! ♪----\n'\
     '----How to use----\nStep 1: Start by entering a BPM. (This can be any positive value)\n'\
     'Step 2: Choose a note value bellow: \n"Quarter"   = Counts of 4ths\n"Eighth"    = Counts in'\
@@ -46,9 +46,9 @@ while True:
                 deleteLastLine(lineAmount)
         while True:
             try:
-                beatNum, noteVal, bpmInput = userInputs()
+                beatNum, noteVal, bpmInput, beatVal= userInputs()
 
-                print('\nHere are your values!\nBPM: {}\nNote Value: {}\nNumber of beats per measure: {}'.format(bpmInput, noteVal, beatNum))
+                print('\nHere are your values!\nBPM: {}\nNote Value: {}\nTime signature: {}/{}'.format(bpmInput, noteVal, beatNum, beatVal))
                 userStart = input('Are you ready to continue?(Y/N)\n').lower()
                 if isinstance(userStart, str):
                     lineAmount = len(userStart.splitlines())
