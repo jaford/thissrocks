@@ -95,13 +95,6 @@ def metronomeCounter(bpmInput, noteVal, beatNum, beatVal, secVal):
                 sys.stdout.write("\033[K") #Clear to the end of line
                 print(y, end='\r')
             print('\n\nsecVal: {}\ntstep: {}\ntnext: {}\ntdiff: {}\ny: {}\nx: {}\n'.format(secVal, tstep, tnext, tdiff, y, x))
-            # secVal = float(secVal)
-            # tstep = tstep.total_seconds()
-            # tnext = tnext.total_seconds()
-            # tdiff = tdiff.total_seconds()
-            # y = float(y)
-            # x = float(x)
-            # print('These are the converted values to floats:\n\nsecVal: {}\ntstep: {}\ntnext: {}\ntdiff: {}\ny: {}\nx: {}\n'.format(secVal, tstep, tnext, tdiff, y, x))
     except KeyboardInterrupt as key_err:
         print('----You have restarted Metronome----\n'.format(key_err))
     return tstep, tnext
