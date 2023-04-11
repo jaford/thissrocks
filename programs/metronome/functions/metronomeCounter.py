@@ -7,6 +7,22 @@ from termios import tcflush, TCIFLUSH
 logging.basicConfig(level=logging.DEBUG)
 # from metronomeInfo import metronomeHelp, metronomeMath
 
+
+stopSwitch = False
+
+def switch(keyboard_event_info):
+    global stopSwitch
+
+    stopSwitch = True
+    if keyboard.is_pressed('Q') or keyboard.is_pressed('q'):
+        keyboard.unhook_all()
+        print(keyboard_event_info)
+
+def keyPressed():
+    if keyboard.is_pressed('Q') or keyboard.is_pressed('q'):
+        print('\n----You have restarted the Metronome----\nTo exit, enter "Q"\n')     
+    return 
+
 def userInputs():
     tcflush(sys.stdin, TCIFLUSH)
     bpmInput = input('Enter BPM: ').lower()
@@ -74,6 +90,8 @@ def metronomeValues(noteVal, bpmInput):
     return secVal, beatVal
 
 def metronomeCounter(bpmInput, noteVal, beatNum, beatVal, secVal):
+    global stopSwitch
+
     print('\nBPM: {}\nNote Value: {}\nTime signature: {}/{}\n'.format(bpmInput, noteVal, beatNum, beatVal))
     tstep = datetime.timedelta(seconds=secVal)
     tnext = datetime.datetime.now() + tstep
@@ -81,13 +99,16 @@ def metronomeCounter(bpmInput, noteVal, beatNum, beatVal, secVal):
 
     try:
         while True:
-            if keyboard.is_pressed('Q') or keyboard.is_pressed('q'):
-                print('\n----You have restarted the Metronome----\nTo exit, enter "Q"\n')    
+            # This is not working sadly :(
+            # Attempting to thread a keypress while this loop is running? 
+            # May need to learn more about multi threading to do this better! 
+            if keyboard.on_press_key('q', switch) or keyboard.on_press_key('Q', switch):
+                print('\n----You have restarted the Metronome----\nTo exit, enter "Q"\n')     
                 break
             for x in range(0,beatNum):
                 # Leaving this here for future implacation! 
                 # playsound('programs/metronome/metronomeSounds/metronome-85688.mp3')
-                # playsound('/Users/hunterpimparatana/Documents/practice_code/source/thissrocks/programs/metronome/metronomeSounds/metronome-85688.mp3')  
+                # playsound('/Users/hunterpimparatana/Documents/practice_code/source/thissrocks/programs/metronome/metronomeSounds/metronome-85688.mp3') 
                 tdiff = tnext - datetime.datetime.now()
                 time.sleep(tdiff.total_seconds()) # Using the time.sleep allows you to print in n amount of time
                 tnext = tnext + tstep
@@ -95,6 +116,7 @@ def metronomeCounter(bpmInput, noteVal, beatNum, beatVal, secVal):
                 sys.stdout.write("\033[K") #Clear to the end of line
                 print(y, end='\r')
             print('\n\nsecVal: {}\ntstep: {}\ntnext: {}\ntdiff: {}\ny: {}\nx: {}\n'.format(secVal, tstep, tnext, tdiff, y, x))
+        stopSwitch = False
     except KeyboardInterrupt as key_err:
         print('----You have restarted Metronome----\n'.format(key_err))
     return tstep, tnext
