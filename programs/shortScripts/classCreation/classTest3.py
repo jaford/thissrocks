@@ -1,60 +1,9 @@
 import json
 import sys, signal
 import os
+sys.path.append('..')
 from termios import tcflush, TCIFLUSH
-
-def parseData(data):
-    if ('Sharps' and 'Flats') in data:
-        notes = {}
-        sharpNotes  = data['Sharps']
-        flatNotes   = data['Flats']
-        notes['Sharps'] = sharpNotes
-        notes['Flats']  = flatNotes
-    if ('majorIntervals' and 'minorIntervals' and 'dorianIntervals' and 'phrygianIntervals' and 'lydianIntervals' and 'mixolydianIntervals' and 'locrianIntervals' and 'majorPentatonics' and 'minorPentatonics') in data:
-        scaleNames = {}
-        majorIntervals      = data['majorIntervals']
-        minorIntervals      = data['minorIntervals']
-        dorianIntervals     = data['dorianIntervals']
-        phrygianIntervals   = data['phrygianIntervals']
-        lydianIntervals     = data['lydianIntervals']
-        mixolydianIntervals = data['mixolydianIntervals']
-        locrianIntervals    = data['locrianIntervals']
-        majorPentatonics    = data['majorPentatonics']   
-        minorPentatonics    = data['minorPentatonics']  
-        scaleNames['major']             = majorIntervals
-        scaleNames['minor']             = minorIntervals
-        scaleNames['dorian']            = dorianIntervals
-        scaleNames['phrygian']          = phrygianIntervals
-        scaleNames['liydian']           = lydianIntervals
-        scaleNames['mixoliydian']       = mixolydianIntervals
-        scaleNames['locrian']           = locrianIntervals
-        scaleNames['major pentatonic']  = majorPentatonics
-        scaleNames['minor pentatonic']  = minorPentatonics
-    if ( 'major' and 'minor' and 'dorian' and 'phrygian' and 'liydian' and 'mixoliydian' and 'locrian') in data:
-        chordsInKeys = {}
-        majorKeyChords      = data['major']
-        minorKeyChords      = data['minor']
-        dorianKeyChords     = data['dorian']
-        phrygianKeyChords   = data['phrygian']
-        lydianKeyChords     = data['liydian']
-        mixolydianKeyChords = data['mixoliydian']
-        locrianKeyChords    = data['locrian']
-        chordsInKeys['major']       = majorKeyChords
-        chordsInKeys['minor']       = minorKeyChords
-        chordsInKeys['dorian']      = dorianKeyChords
-        chordsInKeys['phrygian']    = phrygianKeyChords
-        chordsInKeys['liydian']     = lydianKeyChords
-        chordsInKeys['mixoliydian'] = mixolydianKeyChords
-        chordsInKeys['locrian']     = locrianKeyChords
-
-    return notes, scaleNames, chordsInKeys
-
-def jsonRead():
-    tcflush(sys.stdin, TCIFLUSH)
-    fileRead = open('data.json')
-    data = json.load(fileRead)
-    
-    return data
+from functions.dataRead import parseData, jsonRead
 
 class scales:
     #constructor function    
@@ -101,6 +50,16 @@ class scales:
         
         return intervals, chords
 
+    def scaleAppending(self, intervals, note, scaleView):
+        scaleLength = len(intervals)
+        scale = [] # Creating an empty list
+        scale.append(note) # add user inputed note to list
+        for i in range(scaleLength - 1):
+            note = scaleView[(scaleView.index(note) + intervals[i]) % 12]
+            scale.append(note)
+        
+        return scale
+
     def scaleNotes(self, intervals):
         userInput = input('Show Sharp or Flat? Enter "Sharp" or "Flat": ').lower()
         note = input('Pick a note: ').strip()
@@ -110,22 +69,15 @@ class scales:
             scaleView = notes['Flats']
         else:
             print('\nThis is not a supported input: "{}"'.format(userInput))
-        
-        scaleLength = len(intervals)
-        scale = [] # Creating an empty list
-        scale.append(note) # add user inputed note to list
-        for i in range(scaleLength - 1):
-            note = scaleView[(scaleView.index(note) + intervals[i]) % 12]
-            scale.append(note)
 
+        scale = self.scaleAppending(intervals, note, scaleView)
+        
         return scale
 
     def displayScale(self, scale):
         if isinstance(scale, list):
             scaleStr = ', '.join(scale)       
-            print('\nHere is your scale!\nScale: {}\n'.format(scale))
-
-        return
+            print('\nHere is your scale!\nScale: {}\n'.format(scaleStr))
 
 
     '''
@@ -137,33 +89,21 @@ class scales:
     def createChords(self):
         
         return
-
     '''
-data = jsonRead()
-notes, scaleNames, chordsInKeys = parseData(data)
 
-# userStart = input('Are you ready to start? (Y/N)\n').lower().strip()
+if __name__ == "__main__":    
+    data = jsonRead()
+    notes, scaleNames, chordsInKeys = parseData(data)
 
-# if userStart == 'y':
-createScale = scales(notes, scaleNames, chordsInKeys)
-intervals, chords = createScale.keyIntervals()
-scale = createScale.scaleNotes(intervals)
-createScale.displayScale(scale)
-
-
-
-# elif userStart == 'n' or userStart == 'q':
-#     print('You have quit the program.\n')
-#     exit()
-# else:
-#     print('You have entered a incorrect value: {}\nQuiting the program...'.format(userStart))
-#     exit()
-
-
-
-
-# minorScale = scales(notes, scaleNames, chordsInKeys)
-
-# Goes into function inside the class
-# minorScale.displayDicts()
-
+    userStart = input('Are you ready to start? (Y/N)\n').lower().strip()
+    if userStart == 'y':
+        createScale = scales(notes, scaleNames, chordsInKeys)
+        intervals, chords = createScale.keyIntervals()
+        scale = createScale.scaleNotes(intervals)
+        createScale.displayScale(scale)
+    elif userStart == 'n' or userStart == 'q':
+        print('You have quit the program.\n')
+        exit()
+    else:
+        print('You have entered a incorrect value: {}\nQuiting the program...'.format(userStart))
+        exit()
