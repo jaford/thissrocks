@@ -80,17 +80,6 @@ class scales:
             print('\nHere is your scale!\nScale: {}\n'.format(scaleStr))
 
 
-    '''
-    Test this later!
-    def chordsList(self, scale, key):
-        chordAppending = '\n'.join('{} {}'.format(scale, key) for scale, key in zip(scale, key))
-        return chordAppending 
-
-    def createChords(self):
-        
-        return
-    '''
-
 if __name__ == "__main__":    
     data = jsonRead()
     notes, scaleNames, chordsInKeys = parseData(data)
