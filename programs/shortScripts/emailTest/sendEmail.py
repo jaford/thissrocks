@@ -6,6 +6,7 @@ from email.message import EmailMessage
 # qvrewmnqekaqbivl
 emailSender = 'hunterpimparatana@gmail.com'
 emailPassword = 'qvrewmnqekaqbivl'
+# emailPassword = '1966Izzy.'
 emailReceiver = 'huntermagicman@live.com'
 
 subject = 'Check out this test :3'
@@ -13,7 +14,7 @@ body = 'Hello receiver,\nThis is a email test. I hope this works because this is
 
 em = EmailMessage()
 em['From'] = emailSender
-em['To'] = emailPassword
+em['To'] = emailReceiver
 em['Subject'] = subject
 em.set_content(body)
 
