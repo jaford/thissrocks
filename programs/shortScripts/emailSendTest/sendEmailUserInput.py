@@ -1,6 +1,30 @@
 import smtplib
+import sys
 import ssl
+import time
+import logging
 from email.message import EmailMessage
+
+def loadBar():
+    print('\nSetting up your mail...')
+
+    # IM A THEIF AND STOLE THIS CODE
+    toolbarWidth = 40
+
+    # setup toolbar
+    sys.stdout.write("[%s]" % (" " * toolbarWidth))
+    sys.stdout.flush()
+    sys.stdout.write("\b" * (toolbarWidth+1)) # return to start of line, after '['
+
+    for i in range(toolbarWidth):
+        time.sleep(0.1) # do real work here
+        # update the bar
+        sys.stdout.write("-")
+        sys.stdout.flush()
+
+    sys.stdout.write("]\n") # this ends the progress bar
+
+    return
 
 def sendMail(dataList):
     emailSender = 'hunterpimparatana@gmail.com'
@@ -43,7 +67,6 @@ def math(x, y):
 
     return resultAdd, resultSub, resultMulti, resultDiv
 
-
 x = int(input('Enter your first number: '))
 y = int(input('Enter your second number: '))
 resultAdd, resultSub, resultMulti, resultDiv = math(x, y)
@@ -55,4 +78,6 @@ restultDict['Multiplcation']    = str(resultMulti)
 restultDict['Division']         = str(resultDiv)
 
 dataList = stringResultBody(restultDict)
+loadBar()
 sendMail(dataList)
+print('\nYour email has been sent!\n')
