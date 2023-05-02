@@ -6,9 +6,9 @@ from email.message import EmailMessage
 # THIS MAY SEND MULTPLE EMAILS?? 
 # HOW CAN I GENERATE NEW STRINGS TO PUT INTO ONE BDDY??
 def emailSender(result):
-    emailSender = 'hunterpimparatana@gmail.com'
-    emailPassword = 'qvrewmnqekaqbivl'
-    emailReceiver = 'huntermagicman@live.com'
+    emailSender = 'hoonterpymailtest@gmail.com'
+    emailPassword = 'cxcvdtzhtnogsust'
+    emailReceiver = 'hunterpimparatana@gmail.com'
 
     subject = 'Check out this test!'
     body = 'Here is the result of your numbers: {}'.format(result)

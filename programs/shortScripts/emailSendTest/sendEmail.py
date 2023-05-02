@@ -3,11 +3,10 @@ import ssl
 from email.message import EmailMessage
 
 # Generated password from App Password Gmail 
-# qvrewmnqekaqbivl
-emailSender = 'hunterpimparatana@gmail.com'
-emailPassword = 'qvrewmnqekaqbivl'
-# emailPassword = '1966Izzy.'
-emailReceiver = 'huntermagicman@live.com'
+# cxcvdtzhtnogsust
+emailSender = 'hoonterpymailtest@gmail.com'
+emailPassword = 'cxcvdtzhtnogsust'
+emailReceiver = 'hunterpimparatana@gmail.com'
 
 subject = 'Check out this test :3'
 body = 'Hello receiver,\nThis is a email test. I hope this works because this is life or death at this point.\nNothing to serious but anyways, gotta blast\n\nKindly,\nHunter Pimparatana.'
