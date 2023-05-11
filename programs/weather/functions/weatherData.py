@@ -42,24 +42,24 @@ async def getWeather():
       d = forecast.date
       forecastDate = d.strftime(f'%m/%d/%Y')
       fTemp = str(forecast.temperature)
-      fLowTemp = str(forecast.lowest_temperature)
       fHighTemp = str(forecast.highest_temperature)
+      fLowTemp = str(forecast.lowest_temperature)
       forcastDay['forcastDate'].append(forecastDate)
       forcastDay['futureTemp'].append(fTemp)
-      forcastDay['highTemp'].append(fLowTemp)
-      forcastDay['lowTemp'].append(fHighTemp)  
+      forcastDay['highTemp'].append(fHighTemp)
+      forcastDay['lowTemp'].append(fLowTemp)  
 
     for hourly in forecast.hourly:
       d = hourly.time
-      forecastDate = d.strftime(f'%I:%M %p')
+      forecastHourly = d.strftime(f'%I:%M %p')
       hTemp = str(hourly.temperature)
       hDescr = str(hourly.description)
-      forcastHour['forcastHour'].append(forecastDate)
+      forcastHour['forcastHour'].append(forecastHourly)
       forcastHour['temperature'].append(hTemp)
       forcastHour['description'].append(hDescr)
-      print(f' --> {hourly!r}')
+      # print(f' --> {hourly!r}')
 
-    return cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, fTemp, fLowTemp, fHighTemp, currentDate, currentTime, forcastDay, forcastHour
+    return cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour
 
 '''
 USE THIS CODE AS REFERANCE TO FORMAT STRINGS IN THE OUTPUT
