@@ -1,3 +1,6 @@
+from tabulate import tabulate
+import pandas as pd
+
 def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour):
     try:    
         # Current weather data set as strings
@@ -15,31 +18,18 @@ def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, cu
 
         print(forcastDay)
         print(type(forcastDay))
-        
-        # headers = ['Forcast Date', 'Future Tempatures', 'Highest Tempature', 'Lowest Tempature']
-        headers = list(forcastDay.keys())
 
-        print(f'{headers[0]: <10}{headers[1]: <15}{headers[2]: <15}{headers[3]}')
-
-        for key, value in forcastDay.items():
-            print(f'{value[0]: <10}{value[1]: <15}{value[2]: <15}{value[3]}')
+        dayForcast = pd.DataFrame(forcastDay)
+        headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
+        fForcast = tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid')
+        # print(fForcast)
         
-        
-        
-        
-        # Print the names of the columns.
-        # print('{:<10} {:<10} {:<10} {:<10}'.format('Forcast Date', 'Future Tempature', 'Highest Tempature', 'Lowest Tempature'))
-        # for key,value in forcastDay.items():
-        #     forcastDate, futureTemp, highTemp, lowTemp = value
-        #     print("{:<10} {:<10} {:<10} {:<10}".format(forcastDay['forcastDate'], forcastDay['futureTemp'], forcastDay['highTemp'], forcastDay['lowTemp']))
-        
+        headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
+        hourForcast = pd.DataFrame(forcastHour)
+        hForcast = tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid')
+        # print(hForcast)
 
         
-        
-        # Figure this one out later
-        # print(type(forcastHour))
-        
-
         '''
         # Since these are coming from a dictionary, I may have to append these to a new list that holds each of these lines to a string in the new list. 
         # Once I do that, I can append all the string values in that list to a single string varible so I can call one item to display my items 
