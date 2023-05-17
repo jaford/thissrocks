@@ -1,7 +1,7 @@
 from tabulate import tabulate
 import pandas as pd
 
-def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour):
+def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent):
     try:    
         # Current weather data set as strings
         cDateTime = ('\nHere is the current stats for Albuquerque\nDate: {}\nTime: {}\n--------'.format(currentDate, currentTime))
@@ -13,22 +13,21 @@ def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, cu
         cWindSOut = ('Wind speed:      {}mph'.format(cWindS))
         cWindDOut = ('Wind direction:  {}\n--------\n'.format(cWindD))
 
-        # print('Here is the next three days forecast in Albuquerque from {}\n--------'.format(currentDate))    
-        # get the weather forecast for a few days
-
-        print(forcastDay)
-        print(type(forcastDay))
-
-        dayForcast = pd.DataFrame(forcastDay)
+        # Creating tables to display the information to terminal. Later possibly in a email format of some sort. Possibly append the strings together?
         headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
+        dayForcast = pd.DataFrame(forcastDay)
         fForcast = tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid')
-        # print(fForcast)
         
         headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
         hourForcast = pd.DataFrame(forcastHour)
         hForcast = tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid')
-        # print(hForcast)
 
+        headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
+        currentHour = pd.DataFrame(forcastCurrent)
+        cForcast = tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid')
+
+        print('\nHere is the current weather and the forcasted weather as well!\n--------\n{}\n{}\n{}\n--------\n'.format(fForcast, hForcast, cForcast))
+    
         
         '''
         # Since these are coming from a dictionary, I may have to append these to a new list that holds each of these lines to a string in the new list. 
