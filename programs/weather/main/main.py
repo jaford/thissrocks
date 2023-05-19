@@ -7,7 +7,7 @@ from datetime import datetime
 from termios import tcflush, TCIFLUSH
 from functions.weatherData import getWeather
 from functions.dataCompile import dataFormating
-# from functions.feh2celConv import feh2cel
+from functions.feh2celConv import feh2cel
 # from functions.progressBar import loadBar
 # from functions.sendEmail import sendMail
 
@@ -15,6 +15,10 @@ from functions.dataCompile import dataFormating
 # Use this to run main.
 cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather())
 dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent)
+
+userInput = input('(Y/N) Would you want to convert from Fahrenheit to Celsius?:  ').lower()
+if userInput == 'y':
+    feh2cel(forcastDay, forcastHour, forcastCurrent)
 
 
 

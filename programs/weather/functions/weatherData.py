@@ -3,6 +3,7 @@ import asyncio
 
 
 async def getWeather():
+  # Noticed program will disconnect. Re-run program until a connection is sucure?
   # declare the client. the measuring unit used defaults to the metric system (celcius, km/h, etc.)
   async with python_weather.Client(unit=python_weather.IMPERIAL) as client:
   # async with python_weather.Client(unit=python_weather.METRIC) as client:
@@ -39,7 +40,6 @@ async def getWeather():
       'description': []
     }
 
-    # Noticed program will disconnect. Re-run program until a connection is sucure?
     # Attempt to save the methods into callable objects from this function
     cTemp = str(weather.current.temperature)
     cFl   = str(weather.current.feels_like)

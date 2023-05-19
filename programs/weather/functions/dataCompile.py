@@ -3,7 +3,8 @@ import pandas as pd
 
 def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent):
     try:    
-        # Current weather data set as strings
+        # Current weather data set as strings\
+        # Can probably replace this at somepoint!
         cDateTime = ('\nHere is the current stats for Albuquerque\nDate: {}\nTime: {}\n--------'.format(currentDate, currentTime))
         cTempOut = (u'Temperature: {}\u00b0'.format(cTemp))
         cFLOut = (u'What it feels like: {}\u00b0'.format(cFl))
@@ -14,6 +15,10 @@ def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, cu
         cWindDOut = ('Wind direction:  {}\n--------\n'.format(cWindD))
 
         # Creating tables to display the information to terminal. Later possibly in a email format of some sort. Possibly append the strings together?
+        headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
+        currentHour = pd.DataFrame(forcastCurrent)
+        cForcast = tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid')
+
         headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
         dayForcast = pd.DataFrame(forcastDay)
         fForcast = tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid')
@@ -22,26 +27,8 @@ def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, cu
         hourForcast = pd.DataFrame(forcastHour)
         hForcast = tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid')
 
-        headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
-        currentHour = pd.DataFrame(forcastCurrent)
-        cForcast = tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid')
-
-        print('\nHere is the current weather and the forcasted weather as well!\n--------\n{}\n{}\n{}\n--------\n'.format(fForcast, hForcast, cForcast))
+        print('\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast))    
     
-        
-        '''
-        # Since these are coming from a dictionary, I may have to append these to a new list that holds each of these lines to a string in the new list. 
-        # Once I do that, I can append all the string values in that list to a single string varible so I can call one item to display my items 
-        forcastDate = ('Date: {}'.format(forecastDate))
-        fTempOut = (u'Average temperature: {}\u00b0'.format(fTemp))
-        fLowTemp = (u'Lowest temperature:  {}\u00b0'.format(fLowTemp))
-        fHighTempOut = (u'Highest temperature: {}\u00b0\n--------\n'.format(fHighTemp))
-
-        forcastDate = ('Date: {}'.format(forecastDate))
-        fTempOut = (u'Average temperature: {}\u00b0'.format(fTemp))
-        fLowTemp = (u'Lowest temperature:  {}\u00b0'.format(fLowTemp))
-        fHighTempOut = (u'Highest temperature: {}\u00b0\n--------\n'.format(fHighTemp))
-        ''' 
     except Exception as err: 
       print('An error has occured: {}'.format(err))
 
