@@ -16,7 +16,7 @@ from functions.feh2celConv import feh2cel
 cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather())
 dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent)
 
-userInput = input('(Y/N) Would you want to convert from Fahrenheit to Celsius?:  ').lower()
+userInput = input('(Y/N) Would you want to convert from Fahrenheit to Celsius for todays forcast?: ').lower()
 if userInput == 'y':
     feh2cel(forcastDay, forcastHour, forcastCurrent)
 
