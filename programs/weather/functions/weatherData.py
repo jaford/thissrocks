@@ -15,18 +15,6 @@ async def getWeather():
     currentTime = dateTime.strftime('%I:%M %p')
 
     # Creating list to append to for data that is being made bellow.
-    forcastCurrent = {
-        'cDate': [],
-        'cTime': [],
-        'cTempOut': [],
-        'cFLOut': [],
-        'cHumOut': [],
-        'cVizOut': [],
-        'cPrecOut': [],
-        'cWindSOut': [],
-        'cWindDOut': []
-    }
-
     forcastDay = {
       'forcastDate': [],
       'futureTemp': [],
@@ -38,6 +26,18 @@ async def getWeather():
       'forcastHour': [],
       'temperature': [],
       'description': []
+    }
+    
+    forcastCurrent = {
+        'cDate': [],
+        'cTime': [],
+        'cTempOut': [],
+        'cFLOut': [],
+        'cHumOut': [],
+        'cVizOut': [],
+        'cPrecOut': [],
+        'cWindSOut': [],
+        'cWindDOut': []
     }
 
     # Attempt to save the methods into callable objects from this function
