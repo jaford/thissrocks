@@ -32,4 +32,4 @@ def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, cu
     except Exception as err: 
       print('An error has occured: {}'.format(err))
 
-      return 
+    return currentHour, dayForcast, hourForcast

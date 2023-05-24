@@ -9,6 +9,9 @@ async def getWeather():
   # async with python_weather.Client(unit=python_weather.METRIC) as client:
 
     # fetch a weather forecast from a city
+    # I can loop through the entire program so user can pick the city. Something like the line bellow this one.
+    # weather = await client.get('userInput')
+    
     weather = await client.get('Albuquerque')
     dateTime = weather.current.date
     currentDate = dateTime.strftime('%m/%d/%Y')
@@ -55,7 +58,7 @@ async def getWeather():
     cVizOut = (u'{}\u0025'.format(cViz))
     cPrecOut = (u'{}\u0025'.format(cPrec))
     cWindSOut = ('{}mph'.format(cWindS))
-    cWindDOut = ('{}\n'.format(cWindD))
+    cWindDOut = ('{}'.format(cWindD))
 
     # Append the Current Forcast to the new list above
     forcastCurrent['cDate'].append(currentDate)

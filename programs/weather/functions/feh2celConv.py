@@ -3,9 +3,6 @@ import pandas as pd
 import re
 
 def feh2celform(tempDegree):
-    print(tempDegree)
-    # tempDegreeEnc = tempDegree.encode("ascii", "ignore")
-    # tempDegreeDec = tempDegreeEnc.decode()
     tempDegreeDec = re.sub('\D', '', tempDegree)
     tempDegree = float(tempDegreeDec)
     try:
@@ -25,11 +22,8 @@ def feh2celform(tempDegree):
     return tempDegreeConv
 
 def feh2cel(forcastDay, forcastHour, forcastCurrent):
-    try:
-        print(forcastDay)    
-        
+    try:        
         # Making a new dictionary to store the converted numbers
-        # NEW THINGS TO DO: Append forcastDay dates into the new dictionary bellow! 
         forcastDayCel = {
             'forcastDate': [],
             'futureTemp': [],
@@ -94,9 +88,9 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
                 for i in date:
                     forcastCurrentCel['cDate'].append(i)
             if keys == 'cTime':
-                time = forcastCurrent['cDate']
+                time = forcastCurrent['cTime']
                 for i in time:
-                    forcastCurrentCel['cDate'].append(i)
+                    forcastCurrentCel['cTime'].append(i)
             if keys == 'cTempOut':
                 for tempDegree in temps:
                     tempDegreeConv = feh2celform(tempDegree)
@@ -104,11 +98,11 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
             if keys == 'cFLOut':
                 for tempDegree in temps:
                     tempDegreeConv = feh2celform(tempDegree)
-                    forcastCurrentCel['cHumOut'].append(tempDegreeConv)
+                    forcastCurrentCel['cFLOut'].append(tempDegreeConv)
             if keys == 'cHumOut':
-                for tempDegree in temps:
-                    tempDegreeConv = feh2celform(tempDegree)
-                    forcastCurrentCel['cHumOut'].append(tempDegreeConv)
+                hum = forcastCurrent['cHumOut']
+                for i in hum:
+                    forcastCurrentCel['cHumOut'].append(i)
             if keys == 'cVizOut':
                 viz = forcastCurrent['cVizOut']
                 for i in viz:
@@ -123,33 +117,32 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
                     forcastCurrentCel['cWindSOut'].append(i)
             if keys == 'cWindDOut':
                 windD = forcastCurrent['cWindDOut']
-                for i in prec:
+                for i in windD:
                     forcastCurrentCel['cWindDOut'].append(i)
                 
 
-        print(forcastDayCel)    
-        print(forcastHourCel)    
-        print(forcastCurrentCel)    
+        print(forcastDayCel, '\n')    
+        print(forcastHourCel, '\n')    
+        print(forcastCurrentCel, '\n')    
             
-        # THE WANT: I want to reprint the tables again but with the values converted.
-        #  --> So far far to cel for day forcast is done! 
+        # Using pandas and tabulate, I can save the pandas boject but I print the tables here.
+        # I could poossibly create the tables again since they save as none type when I attempt to make a object for later use. 
+        # May need some help with that! 
         headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
-        dayForcast = pd.DataFrame(forcastDayCel)
-        fForcastConv = tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid')
+        dayForcastCel = pd.DataFrame(forcastDayCel)
+        fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
         
-        # KINDA DONE
         headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
-        hourForcast = pd.DataFrame(forcastHour)
-        hForcastConv = tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid')
+        hourForcastCel = pd.DataFrame(forcastHourCel)
+        hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
 
-        # KINDA DONE
         headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
-        currentHour = pd.DataFrame(forcastCurrent)
-        cForcastConv = tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid')
+        currentHourCel = pd.DataFrame(forcastCurrentCel)
+        cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
 
-        print('\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast))    
+        print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
     
     except Exception as err: 
       print('An error has occured: {}'.format(err))
 
-    return 
+    return dayForcastCel, hourForcastCel, currentHourCel
