@@ -3,9 +3,9 @@ import ssl
 from email.message import EmailMessage
 
 def stringResult(restultDict):
-    emailSender = 'hunterpimparatana@gmail.com'
-    emailPassword = 'qvrewmnqekaqbivl'
-    emailReceiver = 'huntermagicman@live.com'
+    emailSender = 'hoonterpymailtest@gmail.com'
+    emailPassword = 'cxcvdtzhtnogsust'
+    emailReceiver = 'hunterpimparatana@gmail.com'
 
     subject = 'Check out this test!'
     body = 'Here is the result of your numbers: {}'.format(result)

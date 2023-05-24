@@ -27,8 +27,8 @@ def loadBar():
     return
 
 def sendMail(dataList):
-    emailSender = 'hunterpimparatana@gmail.com'
-    emailPassword = 'qvrewmnqekaqbivl'
+    emailSender = 'hoonterpymailtest@gmail.com'
+    emailPassword = 'cxcvdtzhtnogsust'
     emailReceiver = 'hunterpimparatana@gmail.com'
 
     subject = 'Check out this test!'
