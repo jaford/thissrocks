@@ -128,6 +128,10 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
         # Using pandas and tabulate, I can save the pandas boject but I print the tables here.
         # I could poossibly create the tables again since they save as none type when I attempt to make a object for later use. 
         # May need some help with that! 
+        headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
+        currentHourCel = pd.DataFrame(forcastCurrentCel)
+        cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
+
         headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
         dayForcastCel = pd.DataFrame(forcastDayCel)
         fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
@@ -135,10 +139,6 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
         headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
         hourForcastCel = pd.DataFrame(forcastHourCel)
         hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
-
-        headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
-        currentHourCel = pd.DataFrame(forcastCurrentCel)
-        cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
 
         print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
     
