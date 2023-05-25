@@ -16,31 +16,37 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
     headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
 
-    # NEED TO CHECK HOW and WHY THESE isinstance IS NOT WORKING!
-    print('CHECK 1')
-    if isinstance((currentHour, dayForcast, hourForcast), pd.DataFrame):
-        print('CHECK 2')
-        fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
-        cForcast = str(tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid'))
-        hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
-        body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(currentHour, dayForcast, hourForcast)
-        print(body)
-        if (dayForcastCe and hourForcastCel and currentHourCel) == None:
-            print('User did not convert data to fahrenheit.\n')
-    else:
-        print('This data has not been added: \n{}\n{}\n{}'.format(dayForcastCel, hourForcastCel, currentHourCel))
-    if isinstance((currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel), pd.DataFrame):
-        fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
-        cForcast = str(tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid'))
-        hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
-        fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
-        cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
-        hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
-        body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
-        print(body)
-    else:
-        print('Something went very wrong: ')
-
+    try:
+        # NEED TO CHECK HOW and WHY THESE isinstance IS NOT WORKING!
+        print('CHECK 1')
+        if isinstance(currentHour, pd.DataFrame):
+            print('CHECK 4')
+            cForcast = str(tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid'))
+            if isinstance(dayForcast, pd.DataFrame):
+                print('CHECK 3')
+                fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
+                if isinstance(hourForcast, pd.DataFrame):
+                    print('CHECK 2')
+                    hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
+                    body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast)
+                    # For Testing
+                    print(body)
+        if isinstance(currentHourCel, pd.DataFrame):
+            cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
+            print('CHECK 1 FOR CEL')
+            if isinstance(dayForcastCel, pd.DataFrame):
+                fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
+                print('CHECK 2 FOR CEL')
+                if isinstance(hourForcastCel, pd.DataFrame):
+                    hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
+                    print('CHECK 3 FOR CEL')
+                    body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
+                    # For Testing
+                    print(body)
+        elif (dayForcastCel, hourForcastCel, currentHourCel) == None: 
+            print('This data has not been added: \n{}\n{}\n{}'.format(dayForcastCel, hourForcastCel, currentHourCel))
+    except Exception as err:
+        body = 'There was some sort of error within the program ---> {}'.format(err)
 
     em = EmailMessage()
     em['From'] = emailSender
@@ -48,7 +54,7 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     em['Subject'] = subject
     em.set_content(body)
 
-    # This bellow actually sends the message. The rest contains it into a string and objects to send in said email.
+    # This bellow actually sends the message. The rest contains it into a string and objects to send in email.
     # context = ssl.create_default_context()
 
     # with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
