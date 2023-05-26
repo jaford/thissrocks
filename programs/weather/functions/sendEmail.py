@@ -16,37 +16,28 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
     headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
 
+    # Need to put these isinstance into one argument? Last time it gave an error. Unsure why. 
     try:
-        # NEED TO CHECK HOW and WHY THESE isinstance IS NOT WORKING!
-        print('CHECK 1')
         if isinstance(currentHour, pd.DataFrame):
-            print('CHECK 4')
             cForcast = str(tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid'))
             if isinstance(dayForcast, pd.DataFrame):
-                print('CHECK 3')
                 fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
                 if isinstance(hourForcast, pd.DataFrame):
-                    print('CHECK 2')
                     hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
                     body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast)
-                    # For Testing
-                    print(body)
         if isinstance(currentHourCel, pd.DataFrame):
             cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
-            print('CHECK 1 FOR CEL')
             if isinstance(dayForcastCel, pd.DataFrame):
                 fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
-                print('CHECK 2 FOR CEL')
                 if isinstance(hourForcastCel, pd.DataFrame):
                     hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
-                    print('CHECK 3 FOR CEL')
-                    body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
+                    body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
                     # For Testing
                     print(body)
         elif (dayForcastCel, hourForcastCel, currentHourCel) == None: 
             print('This data has not been added: \n{}\n{}\n{}'.format(dayForcastCel, hourForcastCel, currentHourCel))
     except Exception as err:
-        body = 'There was some sort of error within the program ---> {}'.format(err)
+        body = 'There was an error: ---> {}'.format(err)
 
     em = EmailMessage()
     em['From'] = emailSender

@@ -2,6 +2,7 @@ import python_weather
 import asyncio
 import os
 import sys, signal
+import pandas as pd
 sys.path.append('..')
 from datetime import datetime
 from termios import tcflush, TCIFLUSH
@@ -33,27 +34,37 @@ if userInput == 'y':
     if isinstance (userInput, str):
         lineAmount = len(userInput.splitlines()) - 1
         deleteLastLine(lineAmount)
-    # Can use this later once code is in a continous loop
-    # else: 
-    #     break
     dayForcastCel, hourForcastCel, currentHourCel = feh2cel(forcastDay, forcastHour, forcastCurrent)
     print(currentHourCel)
     print(dayForcastCel)
     print(hourForcastCel)
     print(type(hourForcastCel))
+
 userInput = input('(Y/N) Do you want this information sent to your email?: ').lower()
 if userInput == 'y':
     if isinstance (userInput, str):
         lineAmount = len(userInput.splitlines()) - 1
         deleteLastLine(lineAmount)
-        if (dayForcastCel and hourForcastCel and currentHourCel) == None:
-            sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
-        elif isinstance ((currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel), pd.DataFrame):
-            sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
-        else:
-            print('Something broke very badly. #SAD')
+    if isinstance(currentHourCel, pd.DataFrame):
+        if isinstance(dayForcastCel, pd.DataFrame):
+            if isinstance(hourForcastCel, pd.DataFrame):
+                sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
     else:
-        print('User input is not supported: "{}"'.format(userInput))
+        print(type(currentHourCel))
+        print(type(dayForcastCel))
+        print(type(hourForcastCel))
+        sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
+        print('Cel conversion was not done: \n{}\n{}\n{}\n'.format(dayForcastCel, hourForcastCel, currentHourCel))
+        
+        # DOES NOT WORK :(
+        # if hourForcastCel == None and hourForcastCel == None and currentHourCel == None:
+        #     sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
+        # elif isinstance ((currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel), pd.DataFrame):
+        #     sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
+        # else:
+        #     print('Something broke very badly. #SAD')
+else:
+    print('User input is not supported: "{}"'.format(userInput))
 
 
 
