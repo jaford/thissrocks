@@ -5,16 +5,11 @@ import time
 async def getWeather(city):
   # Noticed program will disconnect. Re-run program until a connection is sucure?
   # declare the client. the measuring unit used defaults to the metric system (celcius, km/h, etc.)
-  start = time.process_time()
   async with python_weather.Client(unit=python_weather.IMPERIAL) as client:
-  # async with python_weather.Client(unit=python_weather.METRIC) as client:
-
     # fetch a weather forecast from a city
-    # I can loop through the entire program so user can pick the city. Something like the line bellow this one.
-    # weather = await client.get('userInput')
-    
+    # I can loop through the entire program so user can pick the city. Something like the line bellow this one.    
+
     # weather = await client.get(city)
-    print(time.process_time() - start)
     weather = await client.get('Albuquerque')
     dateTime = weather.current.date
     currentDate = dateTime.strftime('%m/%d/%Y')

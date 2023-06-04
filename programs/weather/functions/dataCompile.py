@@ -27,7 +27,8 @@ def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, cu
         hourForcast = pd.DataFrame(forcastHour)
         hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
 
-        print('\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast))    
+        # Can print this for testing!
+        # print('\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast))    
 
     except Exception as err: 
       print('An error has occured: {}'.format(err))

@@ -118,13 +118,8 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
             if keys == 'cWindDOut':
                 windD = forcastCurrent['cWindDOut']
                 for i in windD:
-                    forcastCurrentCel['cWindDOut'].append(i)
-                
+                    forcastCurrentCel['cWindDOut'].append(i)   
 
-        print(forcastDayCel, '\n')    
-        print(forcastHourCel, '\n')    
-        print(forcastCurrentCel, '\n')    
-            
         # Using pandas and tabulate, I can save the pandas boject but I print the tables here.
         # I could poossibly create the tables again since they save as none type when I attempt to make a object for later use. 
         # May need some help with that! 
@@ -140,7 +135,8 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
         hourForcastCel = pd.DataFrame(forcastHourCel)
         hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
 
-        print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
+        # Can print fo testing
+        # print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
     
     except Exception as err: 
       print('An error has occured: {}'.format(err))

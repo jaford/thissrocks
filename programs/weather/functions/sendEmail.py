@@ -16,7 +16,6 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
                 if isinstance(hourForcast, pd.DataFrame):
                     hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
                     body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast)
-                    # For Testing 
                     print(body)
         if isinstance(currentHourCel, pd.DataFrame):
             cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
@@ -25,10 +24,13 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
                 if isinstance(hourForcastCel, pd.DataFrame):
                     hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
                     body = 'Here is your data:\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
-                    # For Testing
                     print(body)
         elif (dayForcastCel, hourForcastCel, currentHourCel) == None: 
             print('This data has not been added: \n{}\n{}\n{}'.format(dayForcastCel, hourForcastCel, currentHourCel))
+
+        else: 
+            print('There was a error:\n')
+            pass
     except Exception as err:
         body = 'There was an error: ---> {}'.format(err)    
     
@@ -49,6 +51,7 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
             deleteLastLine(lineAmount)
             emailReceiver = userInput
 
+        # This is hard coded for now! Code above has no use at the moment but is there! 
         emailSender = 'hoonterpymailtest@gmail.com'
         emailPassword = 'cxcvdtzhtnogsust'
         emailReceiver = 'hunterpimparatana@gmail.com'
