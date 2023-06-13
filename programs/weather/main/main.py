@@ -21,6 +21,7 @@ dayForcastCel   = None
 hourForcastCel  = None
 # THIS ACTUALLY WORKS! 
 # Use this to run main.
+
 while True:
     introText = '\n---- Welcome to my Weather Program! ----\n\n----How to use----\n'\
         'Step 1: Enter the city in which you want to see the weather in.\n'\
@@ -42,14 +43,15 @@ while True:
                     deleteLastLine(lineAmount)
                     cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather(city))
                     currentHour, dayForcast, hourForcast, hForcast, fForcast, cForcast = dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent)
+                    print('Here is your weather data:\n\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast))
 
                     userInput = input('(Y/N) Would you want to convert from Fahrenheit to Celsius for todays forcast?: ').lower()
                     if userInput == 'y':
                         lineAmount = len(userInput.splitlines()) - 1
                         deleteLastLine(lineAmount)
                         dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv= feh2cel(forcastDay, forcastHour, forcastCurrent)
+                        print('Here is your weather data:\n\nTemps in celsius:\n{}\n{}\n{}\n').format(cForcastConv, fForcastConv, hForcastConv)
                     elif userInput == 'n':
-                        # New condition to print objects to terminal and ask to email to user! 
                         print('CODE THIS SHIZZ NEXT\n')
                     elif userInput == 'q':
                         print('You have quit the program!\n')
@@ -59,12 +61,9 @@ while True:
                     if userInput == 'y':
                         lineAmount = len(userInput.splitlines()) - 1
                         deleteLastLine(lineAmount)
-                        if isinstance(currentHourCel, pd.DataFrame):
-                            if isinstance(dayForcastCel, pd.DataFrame):
-                                if isinstance(hourForcastCel, pd.DataFrame):
-                                    sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
+                        if isinstance(currentHourCel, pd.DataFrame) and isinstance(dayForcastCel, pd.DataFrame) and isinstance(hourForcastCel, pd.DataFrame):
+                            sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
                         else:
-                            # Testing
                             print('Cel conversion was not done (These should be None): \n{}\n{}\n{}\n'.format(dayForcastCel, hourForcastCel, currentHourCel))
                             sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
                     elif userInput == 'n':
@@ -82,7 +81,6 @@ while True:
                     
     elif userInput == 'n' or userInput == 'q':
         print('You have quit the program.\n')
-        exit()
     else:
         print('You have entered a incorrect value: {}\nQuiting the program...'.format(userStart))
         exit()

@@ -11,21 +11,20 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
     headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
     headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
+
     try:
-        if isinstance(currentHour, pd.DataFrame):
+        if isinstance(currentHour, pd.DataFrame) and isinstance(dayForcast, pd.DataFrame) and isinstance(hourForcast, pd.DataFrame):
             cForcast = str(tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid'))
-            if isinstance(dayForcast, pd.DataFrame):
-                fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
-                if isinstance(hourForcast, pd.DataFrame):
-                    hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
-                    body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast)
-        if isinstance(currentHourCel, pd.DataFrame):
+            fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
+            hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
+            body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast)
+
+        if isinstance(currentHourCel, pd.DataFrame) and isinstance(dayForcastCel, pd.DataFrame) and isinstance(hourForcastCel, pd.DataFrame):
             cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
-            if isinstance(dayForcastCel, pd.DataFrame):
-                fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
-                if isinstance(hourForcastCel, pd.DataFrame):
-                    hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
-                    body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
+            fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
+            hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
+            body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
+
         elif (dayForcastCel, hourForcastCel, currentHourCel) == None: 
             print('This data has not been added: \n{}\n{}\n{}'.format(dayForcastCel, hourForcastCel, currentHourCel))
         else: 
@@ -34,8 +33,7 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     except Exception as err:
         print('There has been a error: --> {}'.format(err))
     
-
-    print(body)
+    # print(body)
     # This long conditional is for testing purpose. Remove these conditionals once program is ready for launch!
     # This also is redunted since the user had already slected yes to this. CHANGE LATER
     userInput = input('Enter the senders email: ').lower()
@@ -47,8 +45,8 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     userInput = input('Enter the receivers email: ').lower()
     if isinstance (userInput, str):
         emailReceiver = userInput
-    lineAmount = len(userInput.splitlines()) + 3 
-    deleteLastLine(lineAmount)
+        lineAmount = len(userInput.splitlines()) + 3 
+        deleteLastLine(lineAmount)
 
         # This is hard coded for now! Code above has no use at the moment but is there! 
         emailSender = 'hoonterpymailtest@gmail.com'
@@ -74,4 +72,4 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     else:
         print('User input is not supported: "{}"'.format(userInput))
 
-    return
+    return body
