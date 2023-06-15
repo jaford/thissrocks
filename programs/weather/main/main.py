@@ -41,8 +41,8 @@ while True:
                     city = input('Enter the city you want to see the weather for. Needs to be spelling accurate: ').lower().capitalize()
                     lineAmount = len(userInput.splitlines())
                     deleteLastLine(lineAmount)
-                    cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather(city))
-                    currentHour, dayForcast, hourForcast, hForcast, fForcast, cForcast = dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent)
+                    forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather(city))
+                    currentHour, dayForcast, hourForcast, hForcast, fForcast, cForcast = dataFormating(forcastDay, forcastHour, forcastCurrent)
                     print('Here is your weather data:\n\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast))
 
                     userInput = input('(Y/N) Would you want to convert from Fahrenheit to Celsius for todays forcast?: ').lower()

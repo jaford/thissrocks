@@ -1,7 +1,7 @@
 import pandas as pd
 from tabulate import tabulate
 
-def dataFormating(cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent):
+def dataFormating(forcastDay, forcastHour, forcastCurrent):
     try:    
 
         # Creating tables to display the information to terminal. Later possibly in a email format of some sort. Possibly append the strings together?

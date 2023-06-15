@@ -139,6 +139,6 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
         # print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
     
     except Exception as err: 
-      print('An error has occured: {}'.format(err))
+        print('An error has occured: {}'.format(err))
 
     return dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv
