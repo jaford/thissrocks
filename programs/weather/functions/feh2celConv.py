@@ -136,9 +136,10 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
         hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
 
         # Can print fo testing
-        # print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
+        print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
     
     except Exception as err: 
         print('An error has occured: {}'.format(err))
 
-    return dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv
+    # return dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv
+    return dayForcastCel, hourForcastCel, currentHourCel

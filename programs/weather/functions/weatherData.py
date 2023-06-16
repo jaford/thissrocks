@@ -89,4 +89,4 @@ async def getWeather(city):
       forcastHour['temperature'].append(hTemp)
       forcastHour['description'].append(hDescr)
 
-    return cTemp, cFl, cHum, cViz, cPrec, cWindS, cWindD, currentDate, currentTime, forcastDay, forcastHour, forcastCurrent
+    return forcastDay, forcastHour, forcastCurrent

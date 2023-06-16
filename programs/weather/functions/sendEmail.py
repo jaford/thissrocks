@@ -33,7 +33,7 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     except Exception as err:
         print('There has been a error: --> {}'.format(err))
     
-    # print(body)
+    print(body)
     # This long conditional is for testing purpose. Remove these conditionals once program is ready for launch!
     # This also is redunted since the user had already slected yes to this. CHANGE LATER
     userInput = input('Enter the senders email: ').lower()
@@ -45,7 +45,7 @@ def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel
     userInput = input('Enter the receivers email: ').lower()
     if isinstance (userInput, str):
         emailReceiver = userInput
-        lineAmount = len(userInput.splitlines()) + 3 
+        lineAmount = len(userInput.splitlines()) + 2
         deleteLastLine(lineAmount)
 
         # This is hard coded for now! Code above has no use at the moment but is there! 
