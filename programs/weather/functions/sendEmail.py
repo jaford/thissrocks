@@ -6,34 +6,39 @@ import pandas as pd
 from email.message import EmailMessage
 from .lineRemove import deleteLastLine
 
-def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel):
+# def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel):
+def sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv):
     # Need to put these isinstance into one argument? Last time it gave an error. Unsure why. 
     headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
     headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
     headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
 
-    try:
-        if isinstance(currentHour, pd.DataFrame) and isinstance(dayForcast, pd.DataFrame) and isinstance(hourForcast, pd.DataFrame):
-            cForcast = str(tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid'))
-            fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
-            hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
-            body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast)
-
-        if isinstance(currentHourCel, pd.DataFrame) and isinstance(dayForcastCel, pd.DataFrame) and isinstance(hourForcastCel, pd.DataFrame):
-            cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
-            fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
-            hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
-            body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
-
-        elif (dayForcastCel, hourForcastCel, currentHourCel) == None: 
-            print('This data has not been added: \n{}\n{}\n{}'.format(dayForcastCel, hourForcastCel, currentHourCel))
-        else: 
-            print('There was a error:\n')
-            pass   
-    except Exception as err:
-        print('There has been a error: --> {}'.format(err))
-    
+    body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
     print(body)
+
+
+    # May not need this! s
+    # try:
+    #     if isinstance(currentHour, pd.DataFrame) and isinstance(dayForcast, pd.DataFrame) and isinstance(hourForcast, pd.DataFrame):
+    #         cForcast = str(tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid'))
+    #         fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
+    #         hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
+    #         body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast)
+
+    #     if isinstance(currentHourCel, pd.DataFrame) and isinstance(dayForcastCel, pd.DataFrame) and isinstance(hourForcastCel, pd.DataFrame):
+    #         cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
+    #         fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
+    #         hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
+    #         body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
+
+    #     elif (dayForcastCel, hourForcastCel, currentHourCel) == None: 
+    #         print('This data has not been added: \n{}\n{}\n{}'.format(dayForcastCel, hourForcastCel, currentHourCel))
+    #     else: 
+    #         print('There was a error:\n')
+    #         pass   
+    # except Exception as err:
+    #     print('There has been a error: --> {}'.format(err))
+    
     # This long conditional is for testing purpose. Remove these conditionals once program is ready for launch!
     # This also is redunted since the user had already slected yes to this. CHANGE LATER
     userInput = input('Enter the senders email: ').lower()

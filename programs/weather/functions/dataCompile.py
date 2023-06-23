@@ -3,7 +3,6 @@ from tabulate import tabulate
 
 def dataFormating(forcastDay, forcastHour, forcastCurrent):
     try:    
-
         # Creating tables to display the information to terminal. Later possibly in a email format of some sort. Possibly append the strings together?
         headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
         currentHour = pd.DataFrame(forcastCurrent)
@@ -20,4 +19,5 @@ def dataFormating(forcastDay, forcastHour, forcastCurrent):
     except Exception as err: 
       print('An error has occured: {}'.format(err))
 
-    return currentHour, dayForcast, hourForcast, hForcast, fForcast, cForcast
+    # return currentHour, dayForcast, hourForcast, hForcast, fForcast, cForcast
+    return hForcast, fForcast, cForcast

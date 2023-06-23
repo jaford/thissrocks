@@ -6,18 +6,12 @@ def feh2celform(tempDegree):
     tempDegreeDec = re.sub('\D', '', tempDegree)
     tempDegree = float(tempDegreeDec)
     try:
-        if isinstance(tempDegree, str):
-            print('"{}" is not a number!'.format(tempDegree))
-        else: 
-            fahrenheit = float(tempDegree)
-            celsius = ((fahrenheit - 32) * (5 / 9))
-            tempDegreeConv = str(round(celsius, 2))
-            # Print this for testing if needed!
-            # print(u'Fahrenheit: {}\u00b0\nCelsius: {}\u00b0'.format(tempDegree, tempDegreeConv))
-    except Exception as err:
+        fahrenheit = float(tempDegree)
+        celsius = ((fahrenheit - 32) * (5 / 9))
+        tempDegreeConv = str(round(celsius, 2))
+    except (ValueError, TypeError):
         celsiusError = str(tempDegree)
-        print('"{}" is not a number!'.format(celsiusError))
-        pass
+        print('"{}" is not a valid temperature!'.format(tempDegree))
 
     return tempDegreeConv
 
@@ -142,4 +136,5 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
         print('An error has occured: {}'.format(err))
 
     # return dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv
-    return dayForcastCel, hourForcastCel, currentHourCel
+    # return dayForcastCel, hourForcastCel, currentHourCel
+    return cForcastConv, fForcastConv, hForcastConv
