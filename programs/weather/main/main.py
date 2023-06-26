@@ -13,15 +13,6 @@ from functions.progressBar import loadBar
 from functions.sendEmail import sendMail
 from functions.lineRemove  import deleteLastLine
 
-# currentHour = None
-# dayForcast  = None
-# hourForcas  = None
-# currentHourCel  = None
-# dayForcastCel   = None
-# hourForcastCel  = None
-# THIS ACTUALLY WORKS! 
-# Use this to run main.
-
 while True:
     introText = '\n---- Welcome to my Weather Program! ----\n\n----How to use----\n'\
         'Step 1: Enter the city in which you want to see the weather in.\n'\
@@ -42,38 +33,14 @@ while True:
                 deleteLastLine(lineAmount)
                 forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather(city))
                 hForcast, fForcast, cForcast = dataFormating(forcastDay, forcastHour, forcastCurrent)
+                cForcastConv, fForcastConv, hForcastConv = feh2cel(forcastDay, forcastHour, forcastCurrent)
+                print('\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv))
 
-                userInput = input('(Y/N) Would you want to convert from Fahrenheit to Celsius for todays forcast?: ').lower()
-                if userInput == 'y':
-                    lineAmount = len(userInput.splitlines()) - 1
-                    deleteLastLine(lineAmount)
-
-                    # Getting issues when running and returning the objects from this functon. :(
-                    # dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv= feh2cel(forcastDay, forcastHour, forcastCurrent)
-                    # dayForcastCel, hourForcastCel, currentHourCel = feh2cel(forcastDay, forcastHour, forcastCurrent)
-                    cForcastConv, fForcastConv, hForcastConv = feh2cel(forcastDay, forcastHour, forcastCurrent)
-                    
-                    # print for testing
-                    # print('Here is your weather data:\n\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcastConv, fForcastConv, hForcastConv))
-
-                elif userInput == 'n':
-                    print('CODE THIS SHIZZ NEXT\n')
-                elif userInput == 'q':
-                    print('You have quit the program!\n')
-                    exit()
-                
                 userInput = input('(Y/N) Do you want this information sent to your email?: ').lower()
+                lineAmount = len(userInput.splitlines()) - 1
+                deleteLastLine(lineAmount)
                 if userInput == 'y':
-                    lineAmount = len(userInput.splitlines()) - 1
-                    deleteLastLine(lineAmount)
-                    sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
-                    
-                    # TODO: --> Need to write logic for when the user chooses no to convert to cel. 
-                    # if isinstance(currentHourCel, pd.DataFrame) and isinstance(dayForcastCel, pd.DataFrame) and isinstance(hourForcastCel, pd.DataFrame):
-                    #     sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
-                    # else:
-                    #     print('Cel conversion was not done (These should be None): \n{}\n{}\n{}\n'.format(dayForcastCel, hourForcastCel, currentHourCel))
-                    #     sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel)
+                    body = sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
                 elif userInput == 'n':
                     # New condition to print objects to terminal! 
                     print('CODE THIS SHIZZ NEXT\n')
@@ -83,6 +50,23 @@ while True:
                 else:
                     print('User input is not supported: "{}"'.format(userInput))
                     exit()
+
+                userInput = input('(Y/N) Do you wish to convert this data to a excel file?: ').lower()
+                    lineAmount = len(userInput.splitlines()) - 1
+                    deleteLastLine(lineAmount)
+                if userInput == 'y':
+                    # TODO --> Create new functions and logic to do this next step. 
+                    print('Create logic in order to send info into a excel file')
+                elif userInput == 'n':
+                    # New condition to print objects to terminal! 
+                    print('CODE THIS SHIZZ NEXT\n')
+                elif userInput == 'q':
+                    print('You have quit the program!\n')
+                    exit()
+                else:
+                    print('User input is not supported: "{}"'.format(userInput))
+                    exit()
+
                     
     elif userInput == 'n' or userInput == 'q':
         print('You have quit the program.\n')

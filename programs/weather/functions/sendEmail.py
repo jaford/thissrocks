@@ -14,67 +14,31 @@ def sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastC
     headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
 
     body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
-    print(body)
 
+    emailSender = input('Enter the senders email: ').lower()
+    emailPassword = input('Enter the senders email password: ')
+    emailReceiver = input('Enter the receivers email: ').lower()
+    lineAmount = len(userInput.splitlines()) + 2
+    deleteLastLine(lineAmount)
 
-    # May not need this! s
-    # try:
-    #     if isinstance(currentHour, pd.DataFrame) and isinstance(dayForcast, pd.DataFrame) and isinstance(hourForcast, pd.DataFrame):
-    #         cForcast = str(tabulate(currentHour, headers = headerCurrentHour, tablefmt = 'fancy_grid'))
-    #         fForcast = str(tabulate(dayForcast, headers = headerForcastDay, tablefmt = 'fancy_grid'))
-    #         hForcast = str(tabulate(hourForcast, headers = headerForcastHour, tablefmt = 'fancy_grid'))
-    #         body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\n'.format(cForcast, hForcast, fForcast)
+    # This is hard coded for now! Code above has no use at the moment but is there! 
+    emailSender = 'hoonterpymailtest@gmail.com'
+    emailPassword = 'cxcvdtzhtnogsust'
+    emailReceiver = 'hunterpimparatana@gmail.com'
 
-    #     if isinstance(currentHourCel, pd.DataFrame) and isinstance(dayForcastCel, pd.DataFrame) and isinstance(hourForcastCel, pd.DataFrame):
-    #         cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
-    #         fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
-    #         hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
-    #         body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
+    subject = 'Check out this test!'
+    mailSigniture = '\nKindly,\nHunter Pimparatana.\nEmail: hunterpimparatana@gmail.com\nMobile: (505)-918-4031'
+    em = EmailMessage()
+    em['From'] = emailSender
+    em['To'] = emailReceiver
+    em['Subject'] = subject
+    em.set_content(body)
 
-    #     elif (dayForcastCel, hourForcastCel, currentHourCel) == None: 
-    #         print('This data has not been added: \n{}\n{}\n{}'.format(dayForcastCel, hourForcastCel, currentHourCel))
-    #     else: 
-    #         print('There was a error:\n')
-    #         pass   
-    # except Exception as err:
-    #     print('There has been a error: --> {}'.format(err))
-    
-    # This long conditional is for testing purpose. Remove these conditionals once program is ready for launch!
-    # This also is redunted since the user had already slected yes to this. CHANGE LATER
-    userInput = input('Enter the senders email: ').lower()
-    if isinstance (userInput, str):
-        emailSender = userInput
-    userInput = input('Enter the senders email password: ')
-    if isinstance (userInput, str):
-        emailPassword = userInput
-    userInput = input('Enter the receivers email: ').lower()
-    if isinstance (userInput, str):
-        emailReceiver = userInput
-        lineAmount = len(userInput.splitlines()) + 2
-        deleteLastLine(lineAmount)
+    # This bellow actually sends the message. The rest contains it into a string and objects to send in email.
+    context = ssl.create_default_context()
 
-        # This is hard coded for now! Code above has no use at the moment but is there! 
-        emailSender = 'hoonterpymailtest@gmail.com'
-        emailPassword = 'cxcvdtzhtnogsust'
-        emailReceiver = 'hunterpimparatana@gmail.com'
-
-        subject = 'Check out this test!'
-        mailSigniture = '\nKindly,\nHunter Pimparatana.\nEmail: hunterpimparatana@gmail.com\nMobile: (505)-918-4031'
-        em = EmailMessage()
-        em['From'] = emailSender
-        em['To'] = emailReceiver
-        em['Subject'] = subject
-        em.set_content(body)
-
-        # This bellow actually sends the message. The rest contains it into a string and objects to send in email.
-        # context = ssl.create_default_context()
-
-        # with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-        #     smtp.login(emailSender, emailPassword)
-        #     smtp.sendmail(emailSender, emailReceiver, em.as_string())
-    elif userInput == 'n' or userInput == 'q':
-        print('You have quit the program.\n')
-    else:
-        print('User input is not supported: "{}"'.format(userInput))
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(emailSender, emailPassword)
+        smtp.sendmail(emailSender, emailReceiver, em.as_string())
 
     return body
