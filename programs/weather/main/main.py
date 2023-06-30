@@ -12,6 +12,7 @@ from functions.feh2celConv import feh2cel
 from functions.progressBar import loadBar
 from functions.sendEmail import sendMail
 from functions.lineRemove  import deleteLastLine
+from functions.excelConv import excelConv
 
 while True:
     introText = '\n---- Welcome to my Weather Program! ----\n\n----How to use----\n'\
@@ -28,6 +29,7 @@ while True:
     deleteLastLine(lineAmount)
     if userInput == 'y':
         while True: 
+                print('Use "Albuquerque" as an example.')
                 city = input('Enter the city you want to see the weather for. Needs to be spelling accurate: ').lower().capitalize()
                 lineAmount = len(userInput.splitlines())
                 deleteLastLine(lineAmount)
@@ -42,8 +44,7 @@ while True:
                 if userInput == 'y':
                     body = sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
                 elif userInput == 'n':
-                    # New condition to print objects to terminal! 
-                    print('CODE THIS SHIZZ NEXT\n')
+                    print('Continuing on!\n\n')
                 elif userInput == 'q':
                     print('You have quit the program!\n')
                     exit()
@@ -56,10 +57,12 @@ while True:
                     deleteLastLine(lineAmount)
                 if userInput == 'y':
                     # TODO --> Create new functions and logic to do this next step. 
+                    excelConv(forcastDay, forcastHour, forcastCurrent)
                     print('Create logic in order to send info into a excel file')
                 elif userInput == 'n':
                     # New condition to print objects to terminal! 
                     print('CODE THIS SHIZZ NEXT\n')
+                    break
                 elif userInput == 'q':
                     print('You have quit the program!\n')
                     exit()
