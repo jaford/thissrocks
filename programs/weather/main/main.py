@@ -35,7 +35,7 @@ while True:
                 deleteLastLine(lineAmount)
                 forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather(city))
                 hForcast, fForcast, cForcast = dataFormating(forcastDay, forcastHour, forcastCurrent)
-                cForcastConv, fForcastConv, hForcastConv = feh2cel(forcastDay, forcastHour, forcastCurrent)
+                cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel = feh2cel(forcastDay, forcastHour, forcastCurrent)
                 print('\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv))
 
                 userInput = input('(Y/N) Do you want this information sent to your email?: ').lower()
@@ -57,7 +57,7 @@ while True:
                     deleteLastLine(lineAmount)
                 if userInput == 'y':
                     # TODO --> Create new functions and logic to do this next step. 
-                    excelConv(forcastDay, forcastHour, forcastCurrent)
+                    excelConv(forcastDay, forcastHour, forcastCurrent, forcastCurrentCel, forcastDayCel, forcastHourCel)
                     print('Create logic in order to send info into a excel file')
                 elif userInput == 'n':
                     # New condition to print objects to terminal! 

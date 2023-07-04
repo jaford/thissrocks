@@ -1,6 +1,6 @@
 import csv
 
-def excelConv(forcastDay, forcastHour, forcastCurrent):
+def excelConv(forcastDay, forcastHour, forcastCurrent, forcastCurrentCel, forcastDayCel, forcastHourCel):
 
 
 

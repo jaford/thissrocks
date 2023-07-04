@@ -137,4 +137,4 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
 
     # return dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv
     # return dayForcastCel, hourForcastCel, currentHourCel
-    return cForcastConv, fForcastConv, hForcastConv
+    return cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel
