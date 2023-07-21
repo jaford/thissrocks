@@ -6,48 +6,27 @@ def feh2celform(tempDegree):
     tempDegreeDec = re.sub('\D', '', tempDegree)
     tempDegree = float(tempDegreeDec)
     try:
-        if isinstance(tempDegree, str):
-            print('"{}" is not a number!'.format(tempDegree))
-        else: 
-            fahrenheit = float(tempDegree)
-            celsius = ((fahrenheit - 32) * (5 / 9))
-            tempDegreeConv = str(round(celsius, 2))
-            # Print this for testing if needed!
-            # print(u'Fahrenheit: {}\u00b0\nCelsius: {}\u00b0'.format(tempDegree, tempDegreeConv))
-    except Exception as err:
+        fahrenheit = float(tempDegree)
+        celsius = ((fahrenheit - 32) * (5 / 9))
+        tempDegreeConv = str(round(celsius, 2))
+    except (ValueError, TypeError):
         celsiusError = str(tempDegree)
-        print('"{}" is not a number!'.format(celsiusError))
-        pass
+        print('"{}" is not a valid temperature!'.format(tempDegree))
 
     return tempDegreeConv
 
+def createEmptyDict(originalDict):
+    newDict = {}
+    for key in originalDict:
+        newDict[f'{key}'] = []
+    return newDict
+
 def feh2cel(forcastDay, forcastHour, forcastCurrent):
     try:        
-        # Making a new dictionary to store the converted numbers
-        forcastDayCel = {
-            'forcastDate': [],
-            'futureTemp': [],
-            'highTemp': [],
-            'lowTemp': []
-        }
-
-        forcastHourCel = {
-            'forcastHour': [],
-            'temperature': [],
-            'description': []
-        }
-
-        forcastCurrentCel = {
-            'cDate': [],
-            'cTime': [],
-            'cTempOut': [],
-            'cFLOut': [],
-            'cHumOut': [],
-            'cVizOut': [],
-            'cPrecOut': [],
-            'cWindSOut': [],
-            'cWindDOut': []
-        }
+        # Making new ictionaries to store the converted numbers
+        forcastDayCel = createEmptyDict(forcastDay)
+        forcastHourCel = createEmptyDict(forcastHour)
+        forcastCurrentCel = createEmptyDict(forcastCurrent)
 
         for keys in forcastDay.keys():
             temps = forcastDay[keys]
@@ -118,16 +97,15 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
             if keys == 'cWindDOut':
                 windD = forcastCurrent['cWindDOut']
                 for i in windD:
-                    forcastCurrentCel['cWindDOut'].append(i)
-                
+                    forcastCurrentCel['cWindDOut'].append(i)   
 
-        print(forcastDayCel, '\n')    
-        print(forcastHourCel, '\n')    
-        print(forcastCurrentCel, '\n')    
-            
         # Using pandas and tabulate, I can save the pandas boject but I print the tables here.
         # I could poossibly create the tables again since they save as none type when I attempt to make a object for later use. 
         # May need some help with that! 
+        headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
+        currentHourCel = pd.DataFrame(forcastCurrentCel)
+        cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
+
         headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
         dayForcastCel = pd.DataFrame(forcastDayCel)
         fForcastConv = tabulate(dayForcastCel, headers = headerForcastDay, tablefmt = 'fancy_grid')
@@ -136,13 +114,12 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
         hourForcastCel = pd.DataFrame(forcastHourCel)
         hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
 
-        headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
-        currentHourCel = pd.DataFrame(forcastCurrentCel)
-        cForcastConv = tabulate(currentHourCel, headers = headerCurrentHour, tablefmt = 'fancy_grid')
-
+        # Can print fo testing
         print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
     
     except Exception as err: 
-      print('An error has occured: {}'.format(err))
+        print('An error has occured: {}'.format(err))
 
-    return dayForcastCel, hourForcastCel, currentHourCel
+    # return dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv
+    # return dayForcastCel, hourForcastCel, currentHourCel
+    return cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel
