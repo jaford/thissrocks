@@ -38,11 +38,12 @@ while True:
                 cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel = feh2cel(forcastDay, forcastHour, forcastCurrent)
                 print('\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv))
 
+                forcastDataList = [cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel]
                 userInput = input('(Y/N) Do you want this information sent to your email?: ').lower()
                 lineAmount = len(userInput.splitlines()) - 1
                 deleteLastLine(lineAmount)
                 if userInput == 'y':
-                    body = sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
+                    body = sendMail(forcastDataList, hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
                 elif userInput == 'n':
                     print('Continuing on!\n\n')
                 elif userInput == 'q':
@@ -53,12 +54,10 @@ while True:
                     exit()
 
                 userInput = input('(Y/N) Do you wish to convert this data to a excel file?: ').lower()
-                    lineAmount = len(userInput.splitlines()) - 1
-                    deleteLastLine(lineAmount)
+                lineAmount = len(userInput.splitlines()) - 1
+                deleteLastLine(lineAmount)
                 if userInput == 'y':
-                    # TODO --> Create new functions and logic to do this next step. 
-                    excelConv(forcastDay, forcastHour, forcastCurrent, forcastCurrentCel, forcastDayCel, forcastHourCel)
-                    print('Create logic in order to send info into a excel file')
+                    excelConv(forcastDataList)
                 elif userInput == 'n':
                     # New condition to print objects to terminal! 
                     print('CODE THIS SHIZZ NEXT\n')

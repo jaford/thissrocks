@@ -6,7 +6,7 @@ import pandas as pd
 from email.message import EmailMessage
 from .lineRemove import deleteLastLine
 
-# def sendMail(currentHour, dayForcast, hourForcast, dayForcastCel, hourForcastCel, currentHourCel):
+# Arguments listed in here are Tablu strings.
 def sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv):
     # Need to put these isinstance into one argument? Last time it gave an error. Unsure why. 
     headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']

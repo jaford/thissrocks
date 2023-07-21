@@ -15,33 +15,18 @@ def feh2celform(tempDegree):
 
     return tempDegreeConv
 
+def createEmptyDict(originalDict):
+    newDict = {}
+    for key in originalDict:
+        newDict[f'{key}'] = []
+    return newDict
+
 def feh2cel(forcastDay, forcastHour, forcastCurrent):
     try:        
-        # Making a new dictionary to store the converted numbers
-        forcastDayCel = {
-            'forcastDate': [],
-            'futureTemp': [],
-            'highTemp': [],
-            'lowTemp': []
-        }
-
-        forcastHourCel = {
-            'forcastHour': [],
-            'temperature': [],
-            'description': []
-        }
-
-        forcastCurrentCel = {
-            'cDate': [],
-            'cTime': [],
-            'cTempOut': [],
-            'cFLOut': [],
-            'cHumOut': [],
-            'cVizOut': [],
-            'cPrecOut': [],
-            'cWindSOut': [],
-            'cWindDOut': []
-        }
+        # Making new ictionaries to store the converted numbers
+        forcastDayCel = createEmptyDict(forcastDay)
+        forcastHourCel = createEmptyDict(forcastHour)
+        forcastCurrentCel = createEmptyDict(forcastCurrent)
 
         for keys in forcastDay.keys():
             temps = forcastDay[keys]
