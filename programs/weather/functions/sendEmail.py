@@ -9,9 +9,9 @@ from .lineRemove import deleteLastLine
 # Arguments listed in here are Tablu strings.
 def sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv):
     # Need to put these isinstance into one argument? Last time it gave an error. Unsure why. 
-    headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
-    headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
-    headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
+    # headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
+    # headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
+    # headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
 
     body = '\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv)
 

@@ -15,6 +15,7 @@ def feh2celform(tempDegree):
 
     return tempDegreeConv
 
+# This looks unused for the time being. May need to look back into what I was doing to make this work or what I using it for.
 def createEmptyDict(originalDict):
     newDict = {}
     for key in originalDict:
@@ -23,7 +24,7 @@ def createEmptyDict(originalDict):
 
 def feh2cel(forcastDay, forcastHour, forcastCurrent):
     try:        
-        # Making new ictionaries to store the converted numbers
+        # Making new dictionaries to store the converted numbers
         forcastDayCel = createEmptyDict(forcastDay)
         forcastHourCel = createEmptyDict(forcastHour)
         forcastCurrentCel = createEmptyDict(forcastCurrent)
@@ -115,7 +116,7 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
         hForcastConv = tabulate(hourForcastCel, headers = headerForcastHour, tablefmt = 'fancy_grid')
 
         # Can print fo testing
-        print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
+        # print('\n{}\n{}\n{}\n'.format(cForcastConv, hForcastConv, fForcastConv))    
     
     except Exception as err: 
         print('An error has occured: {}'.format(err))

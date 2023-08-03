@@ -38,12 +38,12 @@ while True:
                 cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel = feh2cel(forcastDay, forcastHour, forcastCurrent)
                 print('\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv))
 
-                forcastDataList = [cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel]
+                forcastDataList = [forcastDay, forcastHour, forcastCurrent, forcastDayCel, forcastHourCel, forcastCurrentCel]
                 userInput = input('(Y/N) Do you want this information sent to your email?: ').lower()
                 lineAmount = len(userInput.splitlines()) - 1
                 deleteLastLine(lineAmount)
                 if userInput == 'y':
-                    body = sendMail(forcastDataList, hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
+                    body = sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
                 elif userInput == 'n':
                     print('Continuing on!\n\n')
                 elif userInput == 'q':
