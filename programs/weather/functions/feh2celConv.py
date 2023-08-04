@@ -15,7 +15,6 @@ def feh2celform(tempDegree):
 
     return tempDegreeConv
 
-# This looks unused for the time being. May need to look back into what I was doing to make this work or what I using it for.
 def createEmptyDict(originalDict):
     newDict = {}
     for key in originalDict:

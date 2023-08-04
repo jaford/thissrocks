@@ -12,7 +12,7 @@ async def getWeather(city):
     # weather = await client.get(city)
     weather = await client.get('Albuquerque')
     dateTime = weather.current.date
-    currentDate = dateTime.strftime('%m/%d/%Y')
+    currentDate = dateTime.strftime('%m-%d-%Y')
     currentTime = dateTime.strftime('%I:%M %p')
 
     # Creating list to append to for data that is being made bellow.
@@ -71,7 +71,7 @@ async def getWeather(city):
 
     for forecast in weather.forecasts:
       d = forecast.date
-      forecastDate = d.strftime(f'%m/%d/%Y')
+      forecastDate = d.strftime(f'%m-%d-%Y')
       fTemp = str(forecast.temperature)
       fHighTemp = str(forecast.highest_temperature)
       fLowTemp = str(forecast.lowest_temperature)
