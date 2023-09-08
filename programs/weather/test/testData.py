@@ -100,7 +100,7 @@ class TestWeatherAPI(unittest.TestCase):
             'description': ['Clear', 'Clear', 'Sunny', 'Sunny', 'Sunny', 'Clear', 'Sunny', 'clear']
         }
 
-        forcastCurrentCel = {
+        expectedforcastCurrentCel = {
             'cDate': ['06/11/2023'],
             'cTime': ['10:02 AM'],
             'cTempOut': ['20.56'],
@@ -111,22 +111,23 @@ class TestWeatherAPI(unittest.TestCase):
             'cWindSOut': ['2mph'],
             'cWindDOut': ['North']
         }
-        expectedConvCForcast = pd.DataFrame(forcastCurrentCel)
 
-        forcastDayCel = {
+        expectedforcastDayCel = {
             'forcastDate': ['06/11/2023 ', '06/12/2023 ', '06/13/2023 '],
-            'futureTemp': ['31.11', '30', '31.67'],
+            'futureTemp': ['31.11', '30.0', '31.67'],
             'highTemp': ['32.22', '31.11', '33.33'],
             'lowTemp': ['28.89', '27.22', '27.78']
         }
-        expectedConvDForcast = pd.DataFrame(forcastDayCel)
 
-        forcastHourCel = {
+        expectedforcastHourCel = {
             'forcastHour': ['12:00 AM', '03:00 AM', '06:00 AM', '09:00 AM', '12:00 PM', '03:00 PM', '06:00 PM', '09:00 PM'],
-            'temperature': ['31.11', '30', '31.67', '32.22', '31.11', '33.33', '28.89', '27.22'],
+            'temperature': ['31.11', '30.0', '31.67', '32.22', '31.11', '33.33', '28.89', '27.22'],
             'description': ['Clear', 'Clear', 'Sunny', 'Sunny', 'Sunny', 'Clear', 'Sunny', 'clear']
         }
-        expectedConvHForcast = pd.DataFrame(forcastHourCel)
+
+        expectedConvCForcast = pd.DataFrame(expectedforcastCurrentCel)
+        expectedConvDForcast = pd.DataFrame(expectedforcastDayCel)
+        expectedConvHForcast = pd.DataFrame(expectedforcastHourCel)
 
         # Assertions (RUN IN PYTHON3)
         # Test data
@@ -135,6 +136,10 @@ class TestWeatherAPI(unittest.TestCase):
         self.assertEqual(self.forcastHour, expectedHForcast, f"forcastHour assertion failed:\nExpected: {expectedHForcast}\nActual: {self.forcastHour}")
 
         # Test data converted to cel
+        self.assertEqual(self.cForcastConv, expectedforcastCurrentCel, f"cForcastConv assertion failed:\nExpected: {expectedforcastCurrentCel}\nActual: {self.cForcastConv}")
+        self.assertEqual(self.fForcastConv, expectedforcastDayCel, f"fForcastConv assertion failed:\nExpected: {expectedforcastDayCel}\nActual: {self.fForcastConv}")
+        self.assertEqual(self.hForcastConv, expectedforcastHourCel, f"hForcastConv assertion failed:\nExpected: {expectedforcastHourCel}\nActual: {self.hForcastConv}")
+
         # self.assertEqual(self.dayForcastCel, expectedConvDForcast, f'hForcast assertion failed:\nExpected: {expectedConvDForcast}\nActual: {self.dayForcastCel}')
         # assert_frame_equal(self.dayForcastCel, expectedConvDForcast, check_dtype=False)
 
@@ -164,14 +169,20 @@ class TestWeatherAPI(unittest.TestCase):
         # self.assertEqual(currentHourCel, expectedHForcastCel, f"currentHourCel assertion failed:\nExpected: {expectedHForcastCel}\nActual: {currentHourCel}")
 
         # # Test data pandas objects into feh2cel function
-        # self.assertEqual(cForcastConv, expectedCForcastCel, f"cForcastConv assertion failed:\nExpected: {expectedCForcastCel}\nActual: {cForcastConv}")
-        # self.assertEqual(fForcastConv, expectedFForcastCel, f"fForcastConv assertion failed:\nExpected: {expectedFForcastCel}\nActual: {fForcastConv}")
-        # self.assertEqual(hForcastConv, expectedHForcastCel, f"hForcastConv assertion failed:\nExpected: {expectedHForcastCel}\nActual: {currentHourCel}")
+        # self.assertEqual(self.cForcastConv, expectedCForcastCel, f"cForcastConv assertion failed:\nExpected: {expectedCForcastCel}\nActual: {cForcastConv}")
+        # self.assertEqual(self.fForcastConv, expectedFForcastCel, f"fForcastConv assertion failed:\nExpected: {expectedFForcastCel}\nActual: {fForcastConv}")
+        # self.assertEqual(self.hForcastConv, expectedHForcastCel, f"hForcastConv assertion failed:\nExpected: {expectedHForcastCel}\nActual: {currentHourCel}")
         
         if self._outcome.success:
             headerForcastDay = ['Forcast Date', 'Tempature', 'Highest Tempature', 'Lowest Tempature']
             headerCurrentHour = ['Current Date', 'Current Time', 'Current Tempature', 'What it feels like', 'Humidity', 'Visibility', 'Precipitation', 'Wind speed', 'Wind direction']
             headerForcastHour = ['Forcast Hour', 'Tempature', 'Description']
+            cForcastConv = tabulate(expectedConvCForcast, headers = headerCurrentHour, tablefmt = 'fancy_grid')
+            fForcastConv = tabulate(expectedConvDForcast, headers = headerForcastDay, tablefmt = 'fancy_grid')            
+            hForcastConv = tabulate(expectedConvHForcast, headers = headerForcastHour, tablefmt = 'fancy_grid')
+            self.cForcastConv = cForcastConv
+            self.fForcastConv = fForcastConv
+            self.hForcastConv = hForcastConv
 
             print('\nYour intial data test have passed!\n')
             print(f'\nHere is the mock weather data:\n\n{self.cForcast}\n{self.fForcast}\n{self.hForcast}\n')
