@@ -10,7 +10,7 @@ def excelConv(forcastDataList):
 
     for data in forcastDataList:
         dictName = next(iter(data))
-        print(f'Dictionary that I am currenty in --> "{dictName}"\nThe data within said dict:\n{data}')
+        print(f'Dictionary that I am currenty in --> "{dictName}"\nThe data within current dict:\n{data}')
         filename = f'weatherData_{currentDate}.xlsx'
         outputFile = os.path.join(outputDir, filename)
 
