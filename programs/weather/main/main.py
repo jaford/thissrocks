@@ -31,6 +31,9 @@ while True:
         while True: 
                 print('Use "Albuquerque" as an example.')
                 city = input('Enter the city you want to see the weather for. Needs to be spelling accurate: ').lower().capitalize()
+                if city == 'q' or city == 'quit':
+                    print('You have left the program!\n')
+                    exit()
                 lineAmount = len(userInput.splitlines())
                 deleteLastLine(lineAmount)
                 forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather(city))
@@ -38,12 +41,29 @@ while True:
                 cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel = feh2cel(forcastDay, forcastHour, forcastCurrent)
                 print('\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv))
 
-                forcastDataList = [cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel]
+                forcastDataList = [forcastDay, forcastHour, forcastCurrent, forcastDayCel, forcastHourCel, forcastCurrentCel]
+                userInput = input('(Y/N) Do you wish to convert this data to a excel file?\n').lower()
+                lineAmount = len(userInput.splitlines()) - 1
+                deleteLastLine(lineAmount)
+                if userInput == 'y':
+                    excelConv(forcastDataList)
+                elif userInput == 'n':
+                    # New condition to print objects to terminal! 
+                    print('CODE THIS SHIZZ NEXT\n')
+                    print('\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n\The data here is represetned in strings.'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv))
+                    break
+                elif userInput == 'q':
+                    print('You have quit the program!\n')
+                    exit()
+                else:
+                    print('User input is not supported: "{}"'.format(userInput))
+                    exit()
+                    
                 userInput = input('(Y/N) Do you want this information sent to your email?: ').lower()
                 lineAmount = len(userInput.splitlines()) - 1
                 deleteLastLine(lineAmount)
                 if userInput == 'y':
-                    body = sendMail(forcastDataList, hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
+                    body = sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
                 elif userInput == 'n':
                     print('Continuing on!\n\n')
                 elif userInput == 'q':
@@ -52,23 +72,6 @@ while True:
                 else:
                     print('User input is not supported: "{}"'.format(userInput))
                     exit()
-
-                userInput = input('(Y/N) Do you wish to convert this data to a excel file?: ').lower()
-                lineAmount = len(userInput.splitlines()) - 1
-                deleteLastLine(lineAmount)
-                if userInput == 'y':
-                    excelConv(forcastDataList)
-                elif userInput == 'n':
-                    # New condition to print objects to terminal! 
-                    print('CODE THIS SHIZZ NEXT\n')
-                    break
-                elif userInput == 'q':
-                    print('You have quit the program!\n')
-                    exit()
-                else:
-                    print('User input is not supported: "{}"'.format(userInput))
-                    exit()
-
                     
     elif userInput == 'n' or userInput == 'q':
         print('You have quit the program.\n')

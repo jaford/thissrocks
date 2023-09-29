@@ -45,11 +45,11 @@ async def getweather():
         print('Date: {}'.format(forecastDate))
         print(u'Average temperature: {}\u00b0'.format(forecast.temperature))
         print(u'Lowest temperature:  {}\u00b0'.format(forecast.lowest_temperature))
-        print(u'Highest temperature: {}\u00b0\n'.format(forecast.highest_temperature))
+        print(u'Highest temperature: {}\u00b0'.format(forecast.highest_temperature))
       print('--------\n')  
       # hourly forecasts
       for hourly in forecast.hourly:
-        print(f' --> {hourly!r}')
+        print(f' --> {hourly!r}\n')
 
     except Exception as err: 
       print('An error has occured: {}'.format(err))
