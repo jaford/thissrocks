@@ -9,6 +9,7 @@ async def getWeather(city):
     # fetch a weather forecast from a city
     # I can loop through the entire program so user can pick the city. Something like the line bellow this one.    
 
+    # Easy fix to enure I can get weather data from any city
     # weather = await client.get(city)
     weather = await client.get('Albuquerque')
     dateTime = weather.current.date

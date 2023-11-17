@@ -46,7 +46,7 @@ while True:
         line_amount = len(solution_amount.splitlines())
         delete_last_line(line_amount)
 
-        print(f'\n\nHere are the inputs entered:\nTable Length --> {table_length}\nTotal Length of all solutions --> {solution_length}\nTotal amonut of solutions --> {solution_amount}\n\n')
+        print(f'\n\nHere are the inputs entered:\nTable Length --> a = {table_length}\nTotal Length of all solutions --> b = {solution_length}\nTotal amonut of solutions --> c = {solution_amount}\n\n')
         try:
             if table_length.isdigit():
                 a = int(table_length)

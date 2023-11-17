@@ -30,7 +30,7 @@ while True:
     if userInput == 'y':
         while True: 
                 print('Use "Albuquerque" as an example.')
-                city = input('Enter the city you want to see the weather for. Needs to be spelling accurate: ').lower().capitalize()
+                city = input('Enter the city you want to see the weather for. Needs to be accurate in spelling: ').lower().capitalize()
                 if city == 'q' or city == 'quit':
                     print('You have left the program!\n')
                     exit()
@@ -49,8 +49,8 @@ while True:
                     excelConv(forcastDataList)
                 elif userInput == 'n':
                     # New condition to print objects to terminal! 
-                    print('CODE THIS SHIZZ NEXT\n')
-                    print('\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n\The data here is represetned in strings.'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv))
+                    # print('\nHere is your data:\n\nTemps in fahrenheit\n{}\n{}\n{}\nTemps in celsius:\n{}\n{}\n{}\n\The data here is represetned in strings.'.format(cForcast, fForcast, hForcast, cForcastConv, fForcastConv, hForcastConv))
+                    print(f'\nHere is your data:\n\nTemps in fahrenheit\n{cForcast}\n{fForcast}\n{hForcast}\nTemps in celsius:\n{cForcastConv}\n{fForcastConv}\n{hForcastConv}\n\The data here is represetned in strings.')
                     break
                 elif userInput == 'q':
                     print('You have quit the program!\n')
