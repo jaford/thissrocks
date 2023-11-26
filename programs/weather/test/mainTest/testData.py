@@ -6,52 +6,59 @@ from tabulate import tabulate
 import sys
 import os
 
+sys.path.append('..')
+from mockTestData.mockWeatherData import weatherDataTest
+
+# Remove the parent directory from sys.path
+if '..' in sys.path:
+    sys.path.remove('..')
+
 # Get the directory path of the current script
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Add the directories containing main.py and functions.py to the sys.path
-main_dir = os.path.abspath(os.path.join(current_dir, '..', 'main'))
-functions_dir = os.path.abspath(os.path.join(current_dir, '..', 'functions'))
+main_dir = os.path.abspath(os.path.join(current_dir, '..', '..', 'main'))
+functions_dir = os.path.abspath(os.path.join(current_dir, '..', '..', 'functions'))
 sys.path.insert(0, main_dir)
 sys.path.insert(0, functions_dir)
-
 from dataCompile import dataFormating
 from feh2celConv import feh2cel
 
-def mockWeatherData():
-    # Simulate API response or generate mock weather data
-    forcastCurrent = {
-        'cDate': ['06/11/2023'],
-        'cTime': ['10:02 AM'],
-        'cTempOut': ['69°'],
-        'cFLOut': ['69°'],
-        'cHumOut': ['18%'],
-        'cVizOut': ['9%'],
-        'cPrecOut': ['0.0%'],
-        'cWindSOut': ['2mph'],
-        'cWindDOut': ['North']
-    }
 
-    forcastDay = {
-        'forcastDate': ['06/11/2023 ', '06/12/2023 ', '06/13/2023 '],
-        'futureTemp': ['88', '86', '89'],
-        'highTemp': ['90', '88', '92'],
-        'lowTemp': ['84', '81', '82']
-    }
+# def mockWeatherData():
+#     # Simulate API response or generate mock weather data
+#     forcastCurrent = {
+#         'cDate': ['06/11/2023'],
+#         'cTime': ['10:02 AM'],
+#         'cTempOut': ['69°'],
+#         'cFLOut': ['69°'],
+#         'cHumOut': ['18%'],
+#         'cVizOut': ['9%'],
+#         'cPrecOut': ['0.0%'],
+#         'cWindSOut': ['2mph'],
+#         'cWindDOut': ['North']
+#     }
 
-    forcastHour = {
-        'forcastHour': ['12:00 AM', '03:00 AM', '06:00 AM', '09:00 AM', '12:00 PM', '03:00 PM', '06:00 PM', '09:00 PM'],
-        'temperature': ['88', '86', '89', '90', '88', '92', '84', '81'],
-        'description': ['Clear', 'Clear', 'Sunny', 'Sunny', 'Sunny', 'Clear', 'Sunny', 'clear']
-    }
+#     forcastDay = {
+#         'forcastDate': ['06/11/2023 ', '06/12/2023 ', '06/13/2023 '],
+#         'futureTemp': ['88', '86', '89'],
+#         'highTemp': ['90', '88', '92'],
+#         'lowTemp': ['84', '81', '82']
+#     }
+
+#     forcastHour = {
+#         'forcastHour': ['12:00 AM', '03:00 AM', '06:00 AM', '09:00 AM', '12:00 PM', '03:00 PM', '06:00 PM', '09:00 PM'],
+#         'temperature': ['88', '86', '89', '90', '88', '92', '84', '81'],
+#         'description': ['Clear', 'Clear', 'Sunny', 'Sunny', 'Sunny', 'Clear', 'Sunny', 'clear']
+#     }
     
 
-    return forcastDay, forcastHour, forcastCurrent
+#     return forcastDay, forcastHour, forcastCurrent
 
 class TestWeatherAPI(unittest.TestCase):
     def setUp(self):
         # Set up the necessary test fixtures
-        forcastDay, forcastHour, forcastCurrent = mockWeatherData()
+        forcastDay, forcastHour, forcastCurrent = weatherDataTest()
         self.forcastDay = forcastDay  # Assigning value to instance variable
         self.forcastHour = forcastHour  # Assigning value to instance variable
         self.forcastCurrent = forcastCurrent  # Assigning value to instance variable
