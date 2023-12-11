@@ -1,11 +1,12 @@
 import time
 import sys
+from tabulate import tabulate
+
 
 def delete_last_line(line_amount):
     for x in range(line_amount + 1):
         sys.stdout.write('\x1b[1A')
         sys.stdout.write('\x1b[2K')
-
 
 def calc_table_fixtures(a, b, c):
 
@@ -13,56 +14,65 @@ def calc_table_fixtures(a, b, c):
     solution_distance = calc1 / c
     solution_start_distance = solution_distance / 2
     
+    result_table = [
+        ['Parameter', 'Value'],
+        ['Distance of each solution (x)', f'{solution_distance:.1f} inches'],
+        ['Distance from the edge of the table to the first solution (x/2)', f'{solution_start_distance:.1f} inches']
+    ]
 
-    result = f'Here are your results\nThe distance between each solution --> {solution_distance} inches\nThe distance of the first solution from the edge of the table --> {solution_start_distance} inches'
+    return result_table
 
-    return result
+intro_text = '\n---- Table Fixture Calculator ----\n\n----How to use----\n'\
+    'All of the units that are bellow are assumed in inches.\n'\
+    'Here is the base equation to use if you want to follow along.\n'\
+    '(a - b)/c = x\n'\
+    'a = length of table\n'\
+    'b = length of all solutions\n'\
+    'c = the quanity of solutions on the fixture\n'\
+    'Step 1: Enter the length on the fixture.\n'\
+    'Step 2: Length of all solutions (Follow guide to see if you need to add spacing for things such as Apple Pencil, Watch Chargers, etc...\n'\
+    'Step 3: The amount of the solutions on the fixture.\n'\
+    'Step 4: Once all the information has been entered, view the results that populated..\n'\
+
+print(intro_text)
+
+a = None
+b = None
+c = None
 
 while True:
-    intro_text = '\n---- Table Fixture Calculator ----\n\n----How to use----\n'\
-        'All of the units that are bellow are assumed in inches.\n'\
-        'Here is the base equation to use if you want to follow along.\n'\
-        '(a - b)/c = x\n'\
-        'a = length of table\n'\
-        'b = length of all solutions\n'\
-        'c = the quanity of solutions on the fixture\n'\
-        'Step 1: Enter the length on the fixture.\n'\
-        'Step 2: Length of all solutions (Follow guide to see if you need to add spacing for things such as Apple Pencil, Watch Chargers, etc...\n'\
-        'Step 3: The amount of the solutions on the fixture.\n'\
-        'Step 4: Once all the information has been entered, view the results that populated..\n'\
-
-    print(intro_text)
-
     while True:
         table_length = input('\nEnter the length of the table: ')
-        line_amount = len(table_length.splitlines())
-        delete_last_line(line_amount)
+        if table_length.lower() == 'q':
+            print('You have quit the program!')
+            quit()
 
         solution_length = input('\nEnter the length of all solutions: ')
-        line_amount = len(solution_length.splitlines())
-        delete_last_line(line_amount)
+        if solution_length.lower() == 'q':
+            print('You have quit the program!')
+            quit()
 
         solution_amount = input('\nEnter the amount of solutions: ')
-        line_amount = len(solution_amount.splitlines())
-        delete_last_line(line_amount)
+        if solution_amount.lower() == 'q':
+            print('You have quit the program!')
+            quit()
 
         print(f'\n\nHere are the inputs entered:\nTable Length --> a = {table_length}\nTotal Length of all solutions --> b = {solution_length}\nTotal amonut of solutions --> c = {solution_amount}\n\n')
         try:
-            if table_length.isdigit():
-                a = int(table_length)
-            if solution_length.isdigit():
-                b = int(solution_length)
-            if solution_amount.isdigit():
+            if table_length.replace('.', '', 1).isdigit() and solution_length.replace('.', '', 1).isdigit() and solution_amount.isdigit():
+                a = float(table_length)
+                b = float(solution_length)
                 c = int(solution_amount)
             else: 
                 print(f'"{table_length}", "{solution_length}", and "{solution_amount}" is not a supported input. Leaving the program.\n')
                 exit()
 
-            results = calc_table_fixtures(a, b, c)
-            print(results)
-            print('\nRun the program again in order to create new fixture solutions!\n')
-            exit()
+            result_table = calc_table_fixtures(a, b, c)
+            print("\n---- Your Results ----\n")
+            print(tabulate(result_table, tablefmt="fancy_grid"))
+            print('\n-----Enter new values if needed. if not press Q to quit the program!-----')    
+            break
 
         except ValueError as err:
-            print(f'"{err}" <--- is your current error!\n')
+            print(f'Here is your error ----> "{err}"\n')
 
