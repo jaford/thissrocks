@@ -1,3 +1,4 @@
+import asyncio
 import unittest
 import sys
 import os
@@ -16,3 +17,18 @@ functions_dir = os.path.abspath(os.path.join(current_dir, '..', '..', 'functions
 sys.path.insert(0, main_dir)
 sys.path.insert(0, functions_dir)
 from weatherData import getWeather
+
+# CODE THE REST OH MY GOD THIS SUCKS TO WRITE TESTs
+class TestWeatherAPI(unittest.IsolatedAsyncioTestCase):
+    async def test_empty_city_name(self):
+        forcastDay, forcastHour, forcastCurrent = await getWeather("")
+        self.assertIstNone(forcastDay)
+        self.assertIstNone(forcastHour)
+        self.assertIstNone(forcastCurrent)
+
+    async def test_invalid_city_name(self):
+        forcastDay, forcastHour, forcastCurrent = await getWeather("Invalid City")
+        self.assertIstNone(forcastDay)
+        self.assertIstNone(forcastHour)
+        self.assertIstNone(forcastCurrent)
+
