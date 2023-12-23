@@ -11,6 +11,7 @@ from functions.dataCompile import dataFormating
 from functions.feh2celConv import feh2cel
 from functions.progressBar import loadBar
 from functions.sendEmail import sendMail
+from functions.locationData import get_location_ip
 from functions.lineRemove  import deleteLastLine
 from functions.excelConv import excelConv
 
@@ -19,8 +20,9 @@ introText = '\n---- Welcome to my Weather Program! ----\n\n----How to use----\n'
     'Step 2: Convert the tempatures into celsius if you want to see both displayed.\n'\
     'Step 3: Select to see if you want to information to display on your terminal or sent as email to yourself. (AKA ME AS OF NOW)\n'\
     '\n---- Current issues/upcoming features ----\n'\
+    '\n---- This program will also tell you that if its good  ot leave the house! ----\n'\
     'Add to where you can enter the cities name\nCreate unit test to for my program to better run testing. (Create random values for the lists/dictionaries)\n'\
-    'Have a enterable email (Sender & reciver)\nAdd color logging at a later point!\n'\
+    'Have program automatically know where you are.\n'\
 
 print(introText)
 
@@ -30,18 +32,10 @@ while True:
             lineAmount = len(userInput.splitlines() + introText.splitlines())
             deleteLastLine(lineAmount)
             if userInput == 'y':
-                while True: 
-                        print('Use "Albuquerque" as an example.')
-                        city = input('Enter the city you want to see the weather for. Needs to be accurate in spelling: ').lower().capitalize()
-                        if city == 'q' or city == 'quit':
-                            print('You have left the program!\n')
-                            exit()
-                        elif city == "":
-                            print('\nThere was no input...\nStarting program over!\n')
-                            break
-                        else:
-                            print(f'User input was not reconized: --> {city}')
-                            exit()
+                location_data = get_location_ip()
+                for key, value in location_data.items():
+                    if key == 'city':
+                        city = value
                         lineAmount = len(userInput.splitlines())
                         deleteLastLine(lineAmount)
                         forcastDay, forcastHour, forcastCurrent = asyncio.run(getWeather(city))
@@ -78,7 +72,10 @@ while True:
                         else:
                             print('User input is not supported: "{}"'.format(userInput))
                             exit()
-                            
+                    elif key == "":
+                        print('\nUnable to find location... \nStarting program over!\n')
+                        break
+
             elif userInput == 'n' or userInput == 'q':
                 print('You have quit the program.\n')
             else:
