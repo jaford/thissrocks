@@ -5,3 +5,4 @@ from .lineRemove    import deleteLastLine
 from .progressBar   import loadBar
 from .sendEmail     import sendMail
 from .weatherData   import getWeather
+from .locationData  import get_location_ip

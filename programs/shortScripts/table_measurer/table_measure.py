@@ -9,7 +9,6 @@ def delete_last_line(line_amount):
         sys.stdout.write('\x1b[2K')
 
 def calc_table_fixtures(a, b, c):
-
     calc1 = (a - b)
     solution_distance = calc1 / c
     solution_start_distance = solution_distance / 2

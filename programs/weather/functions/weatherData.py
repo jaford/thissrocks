@@ -101,6 +101,6 @@ async def getWeather(city):
             else: 
                 await asyncio.sleep(2 ** attempt)
         except python_weather.exceptions.LocationNotFoundError:
-            print(f'The enteted city "{}" does not exist or can not be found.')
+            print(f'The enteted city "{city}" does not exist or can not be found.')
 
 
