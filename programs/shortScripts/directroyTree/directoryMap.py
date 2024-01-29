@@ -14,6 +14,6 @@ def folderStructure(directoryMap, indent=''):
     return folderStruc
 
 # Hard code whatever directory!
-directoryMap = '/Users/hunterpimparatana/Documents/practice_code/source/thissrocks/programs/weather'
+directoryMap = '/Users/hunterpimparatana/Documents/practice_code/source/thissrocks/programs/weather/'
 folderStruc = folderStructure(directoryMap)
 print(folderStruc)

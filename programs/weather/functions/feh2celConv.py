@@ -122,4 +122,6 @@ def feh2cel(forcastDay, forcastHour, forcastCurrent):
 
     # return dayForcastCel, hourForcastCel, currentHourCel, cForcastConv, fForcastConv, hForcastConv
     # return dayForcastCel, hourForcastCel, currentHourCel
+    
+    # The first three (cForcastConv, fForcastConv, hForcastConv) vars are panadas dataframes
     return cForcastConv, fForcastConv, hForcastConv, forcastCurrentCel, forcastDayCel, forcastHourCel

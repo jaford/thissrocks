@@ -6,14 +6,15 @@ import pandas as pd
 sys.path.append('..')
 from datetime import datetime
 from termios import tcflush, TCIFLUSH
-from functions.weatherData import getWeather
-from functions.dataCompile import dataFormating
-from functions.feh2celConv import feh2cel
-from functions.progressBar import loadBar
-from functions.sendEmail import sendMail
+from functions.dataCompile  import dataFormating
+from functions.excelConv    import excelConv
+from functions.feh2celConv  import feh2cel
+from functions.lineRemove   import deleteLastLine
+from functions.progressBar  import loadBar
+from functions.sendEmail    import sendMail
+from functions.weatherData  import getWeather
 from functions.locationData import get_location_ip
-from functions.lineRemove  import deleteLastLine
-from functions.excelConv import excelConv
+from functions.graphicRep   import tempPlot
 
 introText = '\n---- Welcome to my Weather Program! ----\n\n----How to use----\n'\
     'Step 1: Enter the city in which you want to see the weather in.\n'\
@@ -51,7 +52,7 @@ while True:
                             excelConv(forcastDataList, city)
                         elif userInput == 'n':
                             # New condition to print objects to terminal! 
-                            print(f'\nHere is your data:\n\nTemps in fahrenheit\n{cForcast}\n{fForcast}\n{hForcast}\nTemps in celsius:\n{cForcastConv}\n{fForcastConv}\n{hForcastConv}\n\The data here is represetned in strings.')
+                            print(f'\nHere is your data:\n\nTemps in fahrenheit\n{cForcast}\n{fForcast}\n{hForcast}\nTemps in celsius:\n{cForcastConv}\n{fForcastConv}\n{hForcastConv}\n')
                         elif userInput == 'q':
                             print('You have quit the program!\n')
                             exit()
@@ -72,18 +73,32 @@ while True:
                         else:
                             print('User input is not supported: "{}"'.format(userInput))
                             exit()
+                            
+                        userInput = input('(Y/N) Do you want this information seen in a graph?: ').lower()
+                        lineAmount = len(userInput.splitlines()) - 1
+                        deleteLastLine(lineAmount)
+                        if userInput == 'y':
+                            # Does not work due to modules on local device being a silly boi.
+                            tempPlot(forcastDataList)
+                        elif userInput == 'n':
+                            print('Continuing on!\n\n')
+                        elif userInput == 'q':
+                            print('You have quit the program!\n')
+                            exit()
+                        else:
+                            print('User input is not supported: "{}"'.format(userInput))
+                            exit()
+                            
                     elif key == "":
                         print('\nUnable to find location... \nStarting program over!\n')
                         break
 
             elif userInput == 'n' or userInput == 'q':
                 print('You have quit the program.\n')
+                exit()
             else:
                 print('You have entered a incorrect value: {}\nQuiting the program...'.format(userStart))
                 exit()
         except KeyboardInterrupt:
             print('\nProgram has been interrupted: Exiting...\n')
             sys.exit(0)
-        except Exception as err:
-            print(f'\nThere has been an unexpected error in the program: --> {str(err)}\n')
-            sys.exit(1)
