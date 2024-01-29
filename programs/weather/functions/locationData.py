@@ -18,12 +18,12 @@ def get_location_ip():
         location_data['state'] = data['region']
         location_data['gps_loc'] = data['loc']
 
-        for key, value in location_data.items():
-            if isinstance(value, str):
-                location_data[key] = value.lower()
-                
-        print(location_data)
-
+        # Used for debugging
+        # for key, value in location_data.items():
+        #     if isinstance(value, str):
+        #         location_data[key] = value.lower()
+        #         print(location_data[key])
+            
         return location_data
 
     except Exception as err:

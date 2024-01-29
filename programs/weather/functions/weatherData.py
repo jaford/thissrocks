@@ -1,4 +1,5 @@
 import asyncio
+import aiohttp
 import python_weather
 import time
 
@@ -10,7 +11,7 @@ async def getWeather(city):
             # declare the client. the measuring unit used defaults to the metric system (celsius, km/h, etc.)
             async with python_weather.Client(unit=python_weather.IMPERIAL) as client:
                 
-                # fetch a weather forecast from a city
+              # fetch a weather forecast from a city 
               # weather = await client.get('Albuquerque')
               weather = await client.get(city)
               dateTime = weather.current.date
@@ -90,7 +91,7 @@ async def getWeather(city):
                 forcastHour['forcastHour'].append(forecastHourly)
                 forcastHour['temperature'].append(hTemp)
                 forcastHour['description'].append(hDescr)
-
+              
               return forcastDay, forcastHour, forcastCurrent
 
         except asyncio.TimeoutError:
@@ -100,7 +101,10 @@ async def getWeather(city):
                 return None, None, None
             else: 
                 await asyncio.sleep(2 ** attempt)
-        except python_weather.exceptions.LocationNotFoundError:
-            print(f'The enteted city "{city}" does not exist or can not be found.')
+        except aiohttp.client_exceptions.ContentTypeError as e:
+          print(f"Error: {e}")
+          raise  # Raise the exception to see the full traceback
 
-
+        # except aiohttp.client_exceptions.ServerDisconnectedError as err:
+        #   print(f'Error connecting to weather api. Please try again later!\nHere is the error: {err}')
+        #   return None, None, None

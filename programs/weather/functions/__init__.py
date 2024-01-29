@@ -6,3 +6,4 @@ from .progressBar   import loadBar
 from .sendEmail     import sendMail
 from .weatherData   import getWeather
 from .locationData  import get_location_ip
+from .graphicRep    import tempPlot
