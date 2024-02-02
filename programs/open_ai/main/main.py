@@ -1,24 +1,28 @@
 import os
-import openai
+from openai import OpenAI
+import sys, signal
+sys.path.append('..')
+from functions.readenv    import read_envs_api_key
+from functions.model_list import openai_models
 
-# API KEY DELETE THIS LATER OH MY GOD SCARY
-# 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
-# Set your OpenAI API key
-openai.api_key = 'your-api-key'  # Replace with your actual API key
+# Set the current working directory to the directory of main.py
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+openai_api_key = read_envs_api_key()
+client = OpenAI(api_key=openai_api_key)
+openai_models(client)
 
-# Get the OpenAI API key from the environment variable
-openai.api_key = os.environ.get('OPENAI_API_KEY')
+if client.api_key is None:
+    print("OpenAI API key not found. Make sure to set it in the .env file.")
+else:
+    # Define the prompt
+    prompt = "What is the capital of Canada?"
 
-# Define the prompt
-prompt = "What is the capital of Canada?"
+    # Make a request to the OpenAI API
+    response = client.completions.create(
+        model="gpt-3.5-turbo",  # You can also use "text-davinci-002" or "text-davinci-001"
+        prompt=prompt,
+        max_tokens=50)
 
-# Make a request to the OpenAI API
-response = openai.Completion.create(
-    engine="text-davinci-003",  # You can also use "text-davinci-002" or "text-davinci-001"
-    prompt=prompt,
-    max_tokens=50
-)
-
-# Get and print the generated text
-generated_text = response['choices'][0]['text']
-print(f"Generated text: {generated_text}")
+    # Get and print the generated text
+    generated_text = response.choices[0].text
+    print(f"Generated text: {generated_text}")
