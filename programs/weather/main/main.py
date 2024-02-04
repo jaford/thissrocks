@@ -14,7 +14,7 @@ from functions.progressBar  import loadBar
 from functions.sendEmail    import sendMail
 from functions.weatherData  import getWeather
 from functions.locationData import get_location_ip
-from functions.graphicRep   import tempPlot
+from functions.graphicRep   import plot_forcast_data
 
 introText = '\n---- Welcome to my Weather Program! ----\n\n----How to use----\n'\
     'Step 1: Enter the city in which you want to see the weather in.\n'\
@@ -45,6 +45,22 @@ while True:
                         print(f'\nHere is your data for {city}:\n\nTemps in fahrenheit\n{cForcast}\n{fForcast}\n{hForcast}\nTemps in celsius:\n{cForcastConv}\n{fForcastConv}\n{hForcastConv}\n')
 
                         forcastDataList = [forcastDay, forcastHour, forcastCurrent, forcastDayCel, forcastHourCel, forcastCurrentCel]
+                        
+                        userInput = input('(Y/N) Do you want this information seen in a graph?: ').lower()
+                        lineAmount = len(userInput.splitlines()) - 1
+                        deleteLastLine(lineAmount)
+                        if userInput == 'y':
+                            # Does not work due to modules on local device being a silly boi.
+                            plot_forcast_data(forcastDataList)
+                        elif userInput == 'n':
+                            print('Continuing on!\n\n')
+                        elif userInput == 'q':
+                            print('You have quit the program!\n')
+                            exit()
+                        else:
+                            print('User input is not supported: "{}"'.format(userInput))
+                            exit()
+                            
                         userInput = input('(Y/N) Do you wish to convert this data to a excel file?\n').lower()
                         lineAmount = len(userInput.splitlines()) - 1
                         deleteLastLine(lineAmount)
@@ -65,21 +81,6 @@ while True:
                         deleteLastLine(lineAmount)
                         if userInput == 'y':
                             body = sendMail(hForcast, fForcast, cForcast, cForcastConv, fForcastConv, hForcastConv)
-                        elif userInput == 'n':
-                            print('Continuing on!\n\n')
-                        elif userInput == 'q':
-                            print('You have quit the program!\n')
-                            exit()
-                        else:
-                            print('User input is not supported: "{}"'.format(userInput))
-                            exit()
-                            
-                        userInput = input('(Y/N) Do you want this information seen in a graph?: ').lower()
-                        lineAmount = len(userInput.splitlines()) - 1
-                        deleteLastLine(lineAmount)
-                        if userInput == 'y':
-                            # Does not work due to modules on local device being a silly boi.
-                            tempPlot(forcastDataList)
                         elif userInput == 'n':
                             print('Continuing on!\n\n')
                         elif userInput == 'q':
