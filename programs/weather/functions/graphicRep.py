@@ -20,7 +20,9 @@ def daily_forecast_plot(daily_forecast):
 
 def plot_forcast_data(forcastDataList):
         for forcast_data in forcastDataList:
+                print('Check 1')
                 if 'forcastDay' in forcast_data:
+                        print('Check 2')
                         fig = daily_forecast_plot(forcast_data)
                         print('DEBUG PRINT')
                         fig.show()
