@@ -45,6 +45,4 @@ def plot_forcast_data(forcastDataList):
                       barmode='group')
         
         return fig
-
-        return
     
