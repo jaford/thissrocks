@@ -1,9 +1,6 @@
 import numpy as np
 import math
 
-# Reference note A4
-A4_frequency = 440.0
-
 # Number of half steps for each note from A4
 notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 # Initialize an empty dictionary to store note positions
@@ -19,6 +16,9 @@ octave_offset = 4
 
 # Function to calculate the frequency of a given note
 def calculate_frequency(note, octave):
+    # Reference note A4
+    A4_frequency = 440.0
+    
     # Calculate number of half steps from A4
     n = note_positions[note] - note_positions['A'] + 12 * (octave - 4)
     return A4_frequency * (2 ** (n / 12))
